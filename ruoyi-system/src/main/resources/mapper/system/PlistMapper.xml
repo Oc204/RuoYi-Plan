@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PlistMapper">
+    
+    <resultMap type="Plist" id="PlistResult">
+        <result property="id"    column="id"    />
+        <result property="listName"    column="list_name"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="weight"    column="weight"    />
+        <result property="parentId"    column="parent_id"    />
+    </resultMap>
+
+    <sql id="selectPlistVo">
+        select id, list_name, user_id, create_by, create_time, update_by, update_time, remark, plan_id, weight, parent_id from plist
+    </sql>
+
+    <select id="selectPlistList" parameterType="Plist" resultMap="PlistResult">
+        <include refid="selectPlistVo"/>
+        <where>  
+            <if test="listName != null  and listName != ''"> and list_name like concat('%', #{listName}, '%')</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="planId != null "> and plan_id = #{planId}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectPlistById" parameterType="Long" resultMap="PlistResult">
+        <include refid="selectPlistVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPlist" parameterType="Plist" useGeneratedKeys="true" keyProperty="id">
+        insert into plist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="listName != null">list_name,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="planId != null">plan_id,</if>
+            <if test="weight != null">weight,</if>
+            <if test="parentId != null">parent_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="listName != null">#{listName},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="planId != null">#{planId},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="parentId != null">#{parentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePlist" parameterType="Plist">
+        update plist
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="listName != null">list_name = #{listName},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePlistById" parameterType="Long">
+        delete from plist where id = #{id}
+    </delete>
+
+    <delete id="deletePlistByIds" parameterType="String">
+        delete from plist where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PlanMapper">
+    
+    <resultMap type="Plan" id="PlanResult">
+        <result property="id"    column="id"    />
+        <result property="planName"    column="plan_name"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="weight"    column="weight"    />
+    </resultMap>
+
+    <sql id="selectPlanVo">
+        select id, plan_name, user_id, create_by, create_time, update_by, update_time, remark, weight from plan
+    </sql>
+
+    <select id="selectPlanList" parameterType="Plan" resultMap="PlanResult">
+        <include refid="selectPlanVo"/>
+        <where>  
+            <if test="planName != null  and planName != ''"> and plan_name like concat('%', #{planName}, '%')</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+        </where>
+    </select>
+    
+    <select id="selectPlanById" parameterType="Long" resultMap="PlanResult">
+        <include refid="selectPlanVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPlan" parameterType="Plan" useGeneratedKeys="true" keyProperty="id">
+        insert into plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planName != null">plan_name,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="weight != null">weight,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planName != null">#{planName},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="weight != null">#{weight},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePlan" parameterType="Plan">
+        update plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planName != null">plan_name = #{planName},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="weight != null">weight = #{weight},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePlanById" parameterType="Long">
+        delete from plan where id = #{id}
+    </delete>
+
+    <delete id="deletePlanByIds" parameterType="String">
+        delete from plan where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TaskSubtaskMapper">
+    
+    <resultMap type="TaskSubtask" id="TaskSubtaskResult">
+        <result property="id"    column="id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="subtaskId"    column="subtask_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectTaskSubtaskVo">
+        select id, task_id, subtask_id, create_time from task_subtask
+    </sql>
+
+    <select id="selectTaskSubtaskList" parameterType="TaskSubtask" resultMap="TaskSubtaskResult">
+        <include refid="selectTaskSubtaskVo"/>
+        <where>  
+            <if test="taskId != null "> and task_id = #{taskId}</if>
+            <if test="subtaskId != null "> and subtask_id = #{subtaskId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTaskSubtaskById" parameterType="Long" resultMap="TaskSubtaskResult">
+        <include refid="selectTaskSubtaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTaskSubtask" parameterType="TaskSubtask">
+        insert into task_subtask
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="subtaskId != null">subtask_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="subtaskId != null">#{subtaskId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTaskSubtask" parameterType="TaskSubtask">
+        update task_subtask
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="subtaskId != null">subtask_id = #{subtaskId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTaskSubtaskById" parameterType="Long">
+        delete from task_subtask where id = #{id}
+    </delete>
+
+    <delete id="deleteTaskSubtaskByIds" parameterType="String">
+        delete from task_subtask where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

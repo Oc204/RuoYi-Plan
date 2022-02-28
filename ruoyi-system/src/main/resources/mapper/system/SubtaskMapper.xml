@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SubtaskMapper">
+    
+    <resultMap type="Subtask" id="SubtaskResult">
+        <result property="id"    column="id"    />
+        <result property="subtaskName"    column="subtask_name"    />
+        <result property="tomatoNumber"    column="tomato_number"    />
+        <result property="dueDate"    column="due_date"    />
+        <result property="level"    column="level"    />
+        <result property="finish"    column="finish"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="taskId"    column="task_id"    />
+    </resultMap>
+
+    <sql id="selectSubtaskVo">
+        select id, subtask_name, tomato_number, due_date, level, finish, user_id, create_by, create_time, update_by, update_time, remark, task_id from subtask
+    </sql>
+
+    <select id="selectSubtaskList" parameterType="Subtask" resultMap="SubtaskResult">
+        <include refid="selectSubtaskVo"/>
+        <where>  
+            <if test="subtaskName != null  and subtaskName != ''"> and subtask_name like concat('%', #{subtaskName}, '%')</if>
+            <if test="tomatoNumber != null  and tomatoNumber != ''"> and tomato_number = #{tomatoNumber}</if>
+            <if test="dueDate != null "> and due_date = #{dueDate}</if>
+            <if test="level != null  and level != ''"> and level = #{level}</if>
+            <if test="finish != null  and finish != ''"> and finish = #{finish}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="taskId != null "> and task_id = #{taskId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSubtaskById" parameterType="Long" resultMap="SubtaskResult">
+        <include refid="selectSubtaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSubtask" parameterType="Subtask" useGeneratedKeys="true" keyProperty="id">
+        insert into subtask
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="subtaskName != null">subtask_name,</if>
+            <if test="tomatoNumber != null">tomato_number,</if>
+            <if test="dueDate != null">due_date,</if>
+            <if test="level != null">level,</if>
+            <if test="finish != null">finish,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="taskId != null">task_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="subtaskName != null">#{subtaskName},</if>
+            <if test="tomatoNumber != null">#{tomatoNumber},</if>
+            <if test="dueDate != null">#{dueDate},</if>
+            <if test="level != null">#{level},</if>
+            <if test="finish != null">#{finish},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="taskId != null">#{taskId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSubtask" parameterType="Subtask">
+        update subtask
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="subtaskName != null">subtask_name = #{subtaskName},</if>
+            <if test="tomatoNumber != null">tomato_number = #{tomatoNumber},</if>
+            <if test="dueDate != null">due_date = #{dueDate},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="finish != null">finish = #{finish},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSubtaskById" parameterType="Long">
+        delete from subtask where id = #{id}
+    </delete>
+
+    <delete id="deleteSubtaskByIds" parameterType="String">
+        delete from subtask where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

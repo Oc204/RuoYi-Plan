@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TaskMapper">
+    
+    <resultMap type="Task" id="TaskResult">
+        <result property="id"    column="id"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="tomatoNumber"    column="tomato_number"    />
+        <result property="dueDate"    column="due_date"    />
+        <result property="level"    column="level"    />
+        <result property="finish"    column="finish"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="plistId"    column="plist_id"    />
+        <result property="weight"    column="weight"    />
+        <result property="parentId"    column="parent_id"    />
+    </resultMap>
+
+    <sql id="selectTaskVo">
+        select id, task_name, tomato_number, due_date, level, finish, user_id, create_by, create_time, update_by, update_time, remark, plist_id, weight, parent_id from task
+    </sql>
+
+    <select id="selectTaskList" parameterType="Task" resultMap="TaskResult">
+        <include refid="selectTaskVo"/>
+        <where>  
+            <if test="taskName != null  and taskName != ''"> and task_name like concat('%', #{taskName}, '%')</if>
+            <if test="tomatoNumber != null  and tomatoNumber != ''"> and tomato_number = #{tomatoNumber}</if>
+            <if test="dueDate != null "> and due_date = #{dueDate}</if>
+            <if test="level != null  and level != ''"> and level = #{level}</if>
+            <if test="finish != null  and finish != ''"> and finish = #{finish}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="plistId != null "> and plist_id = #{plistId}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTaskById" parameterType="Long" resultMap="TaskResult">
+        <include refid="selectTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTask" parameterType="Task" useGeneratedKeys="true" keyProperty="id">
+        insert into task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskName != null">task_name,</if>
+            <if test="tomatoNumber != null">tomato_number,</if>
+            <if test="dueDate != null">due_date,</if>
+            <if test="level != null">level,</if>
+            <if test="finish != null">finish,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="plistId != null">plist_id,</if>
+            <if test="weight != null">weight,</if>
+            <if test="parentId != null">parent_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskName != null">#{taskName},</if>
+            <if test="tomatoNumber != null">#{tomatoNumber},</if>
+            <if test="dueDate != null">#{dueDate},</if>
+            <if test="level != null">#{level},</if>
+            <if test="finish != null">#{finish},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="plistId != null">#{plistId},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="parentId != null">#{parentId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTask" parameterType="Task">
+        update task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskName != null">task_name = #{taskName},</if>
+            <if test="tomatoNumber != null">tomato_number = #{tomatoNumber},</if>
+            <if test="dueDate != null">due_date = #{dueDate},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="finish != null">finish = #{finish},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="plistId != null">plist_id = #{plistId},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTaskById" parameterType="Long">
+        delete from task where id = #{id}
+    </delete>
+
+    <delete id="deleteTaskByIds" parameterType="String">
+        delete from task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
