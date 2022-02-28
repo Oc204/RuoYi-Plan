@@ -37,7 +37,7 @@ public class PlanController extends BaseController
     /**
      * 查询计划列表
      */
-    @PreAuthorize("@ss.hasPermi('system:plan:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plan:list')")
     @GetMapping("/list")
     public TableDataInfo list(Plan plan)
     {
@@ -49,7 +49,7 @@ public class PlanController extends BaseController
     /**
      * 导出计划列表
      */
-    @PreAuthorize("@ss.hasPermi('system:plan:export')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plan:export')")
     @Log(title = "计划", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Plan plan)
@@ -62,7 +62,7 @@ public class PlanController extends BaseController
     /**
      * 获取计划详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:plan:query')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plan:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class PlanController extends BaseController
     /**
      * 新增计划
      */
-    @PreAuthorize("@ss.hasPermi('system:plan:add')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plan:add')")
     @Log(title = "计划", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Plan plan)
@@ -83,7 +83,7 @@ public class PlanController extends BaseController
     /**
      * 修改计划
      */
-    @PreAuthorize("@ss.hasPermi('system:plan:edit')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plan:edit')")
     @Log(title = "计划", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Plan plan)
@@ -94,7 +94,7 @@ public class PlanController extends BaseController
     /**
      * 删除计划
      */
-    @PreAuthorize("@ss.hasPermi('system:plan:remove')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plan:remove')")
     @Log(title = "计划", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

@@ -23,9 +23,8 @@ public class PlanPlist extends BaseEntity
     private Long planId;
 
     /** 清单id
- */
-    @Excel(name = "清单id
-")
+    */
+    @Excel(name = "清单id ")
     private Long listId;
 
     public void setId(Long id) 

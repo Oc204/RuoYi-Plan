@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询清单任务关联列表
 export function listTask(query) {
   return request({
-    url: '/system/task/list',
+    url: '/mytodo/task/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listTask(query) {
 // 查询清单任务关联详细
 export function getTask(id) {
   return request({
-    url: '/system/task/' + id,
+    url: '/mytodo/task/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getTask(id) {
 // 新增清单任务关联
 export function addTask(data) {
   return request({
-    url: '/system/task',
+    url: '/mytodo/task',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addTask(data) {
 // 修改清单任务关联
 export function updateTask(data) {
   return request({
-    url: '/system/task',
+    url: '/mytodo/task',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateTask(data) {
 // 删除清单任务关联
 export function delTask(id) {
   return request({
-    url: '/system/task/' + id,
+    url: '/mytodo/task/' + id,
     method: 'delete'
   })
 }

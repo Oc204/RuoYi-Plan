@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2022-03-01
  */
 @RestController
-@RequestMapping("/mytodo/subtask")
+@RequestMapping("/mytodo/tasksubtask")
 public class TaskSubtaskController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class TaskSubtaskController extends BaseController
     /**
      * 查询任务子任务关联列表
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:list')")
     @GetMapping("/list")
     public TableDataInfo list(TaskSubtask taskSubtask)
     {
@@ -49,7 +49,7 @@ public class TaskSubtaskController extends BaseController
     /**
      * 导出任务子任务关联列表
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:export')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:export')")
     @Log(title = "任务子任务关联", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TaskSubtask taskSubtask)
@@ -62,7 +62,7 @@ public class TaskSubtaskController extends BaseController
     /**
      * 获取任务子任务关联详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:query')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class TaskSubtaskController extends BaseController
     /**
      * 新增任务子任务关联
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:add')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:add')")
     @Log(title = "任务子任务关联", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TaskSubtask taskSubtask)
@@ -83,7 +83,7 @@ public class TaskSubtaskController extends BaseController
     /**
      * 修改任务子任务关联
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:edit')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:edit')")
     @Log(title = "任务子任务关联", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TaskSubtask taskSubtask)
@@ -94,7 +94,7 @@ public class TaskSubtaskController extends BaseController
     /**
      * 删除任务子任务关联
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:remove')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:remove')")
     @Log(title = "任务子任务关联", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

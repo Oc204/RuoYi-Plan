@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2022-03-01
  */
 @RestController
-@RequestMapping("/mytodo/task")
+@RequestMapping("/mytodo/plisttask")
 public class PlistTaskController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class PlistTaskController extends BaseController
     /**
      * 查询清单任务关联列表
      */
-    @PreAuthorize("@ss.hasPermi('system:task:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:list')")
     @GetMapping("/list")
     public TableDataInfo list(PlistTask plistTask)
     {
@@ -49,7 +49,7 @@ public class PlistTaskController extends BaseController
     /**
      * 导出清单任务关联列表
      */
-    @PreAuthorize("@ss.hasPermi('system:task:export')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:export')")
     @Log(title = "清单任务关联", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, PlistTask plistTask)
@@ -62,7 +62,7 @@ public class PlistTaskController extends BaseController
     /**
      * 获取清单任务关联详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:task:query')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class PlistTaskController extends BaseController
     /**
      * 新增清单任务关联
      */
-    @PreAuthorize("@ss.hasPermi('system:task:add')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:add')")
     @Log(title = "清单任务关联", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody PlistTask plistTask)
@@ -83,7 +83,7 @@ public class PlistTaskController extends BaseController
     /**
      * 修改清单任务关联
      */
-    @PreAuthorize("@ss.hasPermi('system:task:edit')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:edit')")
     @Log(title = "清单任务关联", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody PlistTask plistTask)
@@ -94,7 +94,7 @@ public class PlistTaskController extends BaseController
     /**
      * 删除清单任务关联
      */
-    @PreAuthorize("@ss.hasPermi('system:task:remove')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:remove')")
     @Log(title = "清单任务关联", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

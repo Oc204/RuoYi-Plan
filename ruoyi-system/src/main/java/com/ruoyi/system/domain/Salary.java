@@ -38,9 +38,8 @@ public class Salary extends BaseEntity
     private Date salaryDate;
 
     /** 发薪明细
- */
-    @Excel(name = "发薪明细
-")
+    */
+    @Excel(name = "发薪明细 ")
     private Long salaryDetail;
 
     /** 关联图片 */

@@ -37,7 +37,7 @@ public class SubtaskController extends BaseController
     /**
      * 查询子任务列表
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:list')")
     @GetMapping("/list")
     public TableDataInfo list(Subtask subtask)
     {
@@ -49,7 +49,7 @@ public class SubtaskController extends BaseController
     /**
      * 导出子任务列表
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:export')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:export')")
     @Log(title = "子任务", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Subtask subtask)
@@ -62,7 +62,7 @@ public class SubtaskController extends BaseController
     /**
      * 获取子任务详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:query')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class SubtaskController extends BaseController
     /**
      * 新增子任务
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:add')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:add')")
     @Log(title = "子任务", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Subtask subtask)
@@ -83,7 +83,7 @@ public class SubtaskController extends BaseController
     /**
      * 修改子任务
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:edit')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:edit')")
     @Log(title = "子任务", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Subtask subtask)
@@ -94,7 +94,7 @@ public class SubtaskController extends BaseController
     /**
      * 删除子任务
      */
-    @PreAuthorize("@ss.hasPermi('system:subtask:remove')")
+    @PreAuthorize("@ss.hasPermi('mytodo:subtask:remove')")
     @Log(title = "子任务", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

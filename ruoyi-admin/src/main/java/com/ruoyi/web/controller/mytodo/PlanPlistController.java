@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2022-03-01
  */
 @RestController
-@RequestMapping("/mytodo/plist")
+@RequestMapping("/mytodo/planplist")
 public class PlanPlistController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class PlanPlistController extends BaseController
     /**
      * 查询计划清单关联列表
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:list')")
     @GetMapping("/list")
     public TableDataInfo list(PlanPlist planPlist)
     {
@@ -49,7 +49,7 @@ public class PlanPlistController extends BaseController
     /**
      * 导出计划清单关联列表
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:export')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:export')")
     @Log(title = "计划清单关联", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, PlanPlist planPlist)
@@ -62,7 +62,7 @@ public class PlanPlistController extends BaseController
     /**
      * 获取计划清单关联详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:query')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class PlanPlistController extends BaseController
     /**
      * 新增计划清单关联
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:add')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:add')")
     @Log(title = "计划清单关联", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody PlanPlist planPlist)
@@ -83,7 +83,7 @@ public class PlanPlistController extends BaseController
     /**
      * 修改计划清单关联
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:edit')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:edit')")
     @Log(title = "计划清单关联", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody PlanPlist planPlist)
@@ -94,7 +94,7 @@ public class PlanPlistController extends BaseController
     /**
      * 删除计划清单关联
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:remove')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:remove')")
     @Log(title = "计划清单关联", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

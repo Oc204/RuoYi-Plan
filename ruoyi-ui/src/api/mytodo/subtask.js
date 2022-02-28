@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询子任务列表
 export function listSubtask(query) {
   return request({
-    url: '/system/subtask/list',
+    url: '/mytodo/subtask/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listSubtask(query) {
 // 查询子任务详细
 export function getSubtask(id) {
   return request({
-    url: '/system/subtask/' + id,
+    url: '/mytodo/subtask/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getSubtask(id) {
 // 新增子任务
 export function addSubtask(data) {
   return request({
-    url: '/system/subtask',
+    url: '/mytodo/subtask',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addSubtask(data) {
 // 修改子任务
 export function updateSubtask(data) {
   return request({
-    url: '/system/subtask',
+    url: '/mytodo/subtask',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateSubtask(data) {
 // 删除子任务
 export function delSubtask(id) {
   return request({
-    url: '/system/subtask/' + id,
+    url: '/mytodo/subtask/' + id,
     method: 'delete'
   })
 }

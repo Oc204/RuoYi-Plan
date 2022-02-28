@@ -37,7 +37,7 @@ public class SalaryController extends BaseController
     /**
      * 查询计划列表
      */
-    @PreAuthorize("@ss.hasPermi('system:salary:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:salary:list')")
     @GetMapping("/list")
     public TableDataInfo list(Salary salary)
     {
@@ -49,7 +49,7 @@ public class SalaryController extends BaseController
     /**
      * 导出计划列表
      */
-    @PreAuthorize("@ss.hasPermi('system:salary:export')")
+    @PreAuthorize("@ss.hasPermi('mytodo:salary:export')")
     @Log(title = "计划", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Salary salary)
@@ -62,7 +62,7 @@ public class SalaryController extends BaseController
     /**
      * 获取计划详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:salary:query')")
+    @PreAuthorize("@ss.hasPermi('mytodo:salary:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class SalaryController extends BaseController
     /**
      * 新增计划
      */
-    @PreAuthorize("@ss.hasPermi('system:salary:add')")
+    @PreAuthorize("@ss.hasPermi('mytodo:salary:add')")
     @Log(title = "计划", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Salary salary)
@@ -83,7 +83,7 @@ public class SalaryController extends BaseController
     /**
      * 修改计划
      */
-    @PreAuthorize("@ss.hasPermi('system:salary:edit')")
+    @PreAuthorize("@ss.hasPermi('mytodo:salary:edit')")
     @Log(title = "计划", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Salary salary)
@@ -94,7 +94,7 @@ public class SalaryController extends BaseController
     /**
      * 删除计划
      */
-    @PreAuthorize("@ss.hasPermi('system:salary:remove')")
+    @PreAuthorize("@ss.hasPermi('mytodo:salary:remove')")
     @Log(title = "计划", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

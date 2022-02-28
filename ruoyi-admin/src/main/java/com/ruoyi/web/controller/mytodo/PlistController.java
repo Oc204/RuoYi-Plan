@@ -37,7 +37,7 @@ public class PlistController extends BaseController
     /**
      * 查询清单列表
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:list')")
     @GetMapping("/list")
     public TableDataInfo list(Plist plist)
     {
@@ -49,7 +49,7 @@ public class PlistController extends BaseController
     /**
      * 导出清单列表
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:export')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:export')")
     @Log(title = "清单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Plist plist)
@@ -62,7 +62,7 @@ public class PlistController extends BaseController
     /**
      * 获取清单详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:query')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class PlistController extends BaseController
     /**
      * 新增清单
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:add')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:add')")
     @Log(title = "清单", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Plist plist)
@@ -83,7 +83,7 @@ public class PlistController extends BaseController
     /**
      * 修改清单
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:edit')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:edit')")
     @Log(title = "清单", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Plist plist)
@@ -94,7 +94,7 @@ public class PlistController extends BaseController
     /**
      * 删除清单
      */
-    @PreAuthorize("@ss.hasPermi('system:plist:remove')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:remove')")
     @Log(title = "清单", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

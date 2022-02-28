@@ -37,7 +37,7 @@ public class TaskController extends BaseController
     /**
      * 查询任务列表
      */
-    @PreAuthorize("@ss.hasPermi('system:task:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:list')")
     @GetMapping("/list")
     public TableDataInfo list(Task task)
     {
@@ -49,7 +49,7 @@ public class TaskController extends BaseController
     /**
      * 导出任务列表
      */
-    @PreAuthorize("@ss.hasPermi('system:task:export')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:export')")
     @Log(title = "任务", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Task task)
@@ -62,7 +62,7 @@ public class TaskController extends BaseController
     /**
      * 获取任务详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:task:query')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class TaskController extends BaseController
     /**
      * 新增任务
      */
-    @PreAuthorize("@ss.hasPermi('system:task:add')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:add')")
     @Log(title = "任务", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Task task)
@@ -83,7 +83,7 @@ public class TaskController extends BaseController
     /**
      * 修改任务
      */
-    @PreAuthorize("@ss.hasPermi('system:task:edit')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:edit')")
     @Log(title = "任务", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Task task)
@@ -94,7 +94,7 @@ public class TaskController extends BaseController
     /**
      * 删除任务
      */
-    @PreAuthorize("@ss.hasPermi('system:task:remove')")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:remove')")
     @Log(title = "任务", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
