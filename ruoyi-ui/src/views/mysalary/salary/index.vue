@@ -120,8 +120,7 @@
           <span>{{ parseTime(scope.row.salaryDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="发薪明细
-" align="center" prop="salaryDetail" />
+      <el-table-column label="发薪明细" align="center" prop="salaryDetail" />
       <el-table-column label="关联图片" align="center" prop="salaryPic" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -142,7 +141,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -174,10 +173,8 @@
             placeholder="请选择发薪日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="发薪明细
-" prop="salaryDetail">
-          <el-input v-model="form.salaryDetail" placeholder="请输入发薪明细
-" />
+        <el-form-item label="发薪明细" prop="salaryDetail">
+          <el-input v-model="form.salaryDetail" placeholder="请输入发薪明细" />
         </el-form-item>
         <el-form-item label="关联图片" prop="salaryPic">
           <el-input v-model="form.salaryPic" placeholder="请输入关联图片" />
@@ -192,7 +189,7 @@
 </template>
 
 <script>
-import { listSalary, getSalary, delSalary, addSalary, updateSalary } from "@/api/system/salary";
+import { listSalary, getSalary, delSalary, addSalary, updateSalary } from "@/api/mysalary/salary";
 
 export default {
   name: "Salary",

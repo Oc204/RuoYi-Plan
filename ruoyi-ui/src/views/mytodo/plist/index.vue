@@ -77,8 +77,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="${comment}" align="center" prop="id" />
       <el-table-column label="计划id" align="center" prop="planId" />
-      <el-table-column label="清单id
-" align="center" prop="listId" />
+      <el-table-column label="清单id" align="center" prop="listId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -98,7 +97,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -113,10 +112,8 @@
         <el-form-item label="计划id" prop="planId">
           <el-input v-model="form.planId" placeholder="请输入计划id" />
         </el-form-item>
-        <el-form-item label="清单id
-" prop="listId">
-          <el-input v-model="form.listId" placeholder="请输入清单id
-" />
+        <el-form-item label="清单id" prop="listId">
+          <el-input v-model="form.listId" placeholder="请输入清单id" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -128,7 +125,7 @@
 </template>
 
 <script>
-import { listPlist, getPlist, delPlist, addPlist, updatePlist } from "@/api/system/plist";
+import { listPlist, getPlist, delPlist, addPlist, updatePlist } from "@/api/mytodo/plist";
 
 export default {
   name: "Plist",

@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.mytodo;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +46,18 @@ public class TaskController extends BaseController
         startPage();
         List<Task> list = taskService.selectTaskList(task);
         return getDataTable(list);
+    }
+
+    /**
+     * 查询当前登录用户、当前清单下的任务
+     */
+    @ApiOperation("查询当前登录用户的任务列表")
+    @PreAuthorize("@ss.hasPermi('mytodo:task:list')")
+    @GetMapping("/user/plist/list")
+    public AjaxResult currentTaskList(Task task) {
+        task.setUserId(getUserId());
+        List<Task> result = taskService.selectTaskList(task);
+        return AjaxResult.success(result);
     }
 
     /**

@@ -106,7 +106,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import { listPlan, getPlan, delPlan, addPlan, updatePlan } from "@/api/system/plan";
+import { listPlan, getPlan, delPlan, addPlan, updatePlan } from "@/api/mytodo/plan";
 
 export default {
   name: "Plan",

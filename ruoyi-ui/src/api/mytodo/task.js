@@ -9,6 +9,15 @@ export function listTask(query) {
   })
 }
 
+// 查询当前用户当前清单的任务列表
+export function currentTaskList(query) {
+  return request({
+    url: '/mytodo/task/user/plist/list',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询清单任务关联详细
 export function getTask(id) {
   return request({

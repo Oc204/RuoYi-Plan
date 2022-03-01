@@ -149,7 +149,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -200,7 +200,7 @@
 </template>
 
 <script>
-import { listSubtask, getSubtask, delSubtask, addSubtask, updateSubtask } from "@/api/system/subtask";
+import { listSubtask, getSubtask, delSubtask, addSubtask, updateSubtask } from "@/api/mytodo/subtask";
 
 export default {
   name: "Subtask",

@@ -2,8 +2,11 @@ package com.ruoyi.web.controller.mytodo;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,6 +47,18 @@ public class PlistController extends BaseController
         startPage();
         List<Plist> list = plistService.selectPlistList(plist);
         return getDataTable(list);
+    }
+
+    /**
+     * 查询当前登录用户的清单列表
+     */
+    @ApiOperation("查询当前登录用户的清单列表")
+    @PreAuthorize("@ss.hasPermi('system:plist:list')")
+    @GetMapping("/user/list")
+    public AjaxResult currentUserList(Plist plist) {
+        plist.setUserId(getUserId());
+        List<Plist> result = plistService.selectPlistList(plist) ;
+        return AjaxResult.success(result);
     }
 
     /**

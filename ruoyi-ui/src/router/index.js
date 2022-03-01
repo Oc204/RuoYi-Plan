@@ -161,6 +161,20 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
+  },
+  {
+    path: '/mytodo/mytask',
+    component: Layout,
+    hidden: true,
+    permissions: ['mytodo:task:list'],
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/mytodo/task/myTask'),
+        name: 'GenEdit',
+        meta: { title: '我的任务详情', activeMenu: '/mytodo/mytodo' }
+      }
+    ]
   }
 ]
 

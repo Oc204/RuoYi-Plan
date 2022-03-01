@@ -1,4 +1,4 @@
-package com.ruoyi.web.controller.mytodo;
+package com.ruoyi.web.controller.mysalary;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2022-03-01
  */
 @RestController
-@RequestMapping("/mytodo/salary")
+@RequestMapping("/mysalary/salary")
 public class SalaryController extends BaseController
 {
     @Autowired

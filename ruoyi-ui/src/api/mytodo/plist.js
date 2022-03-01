@@ -17,6 +17,15 @@ export function getPlist(id) {
   })
 }
 
+// 查询计划清单关联列表
+export function listCurrentUserPlist(query) {
+  return request({
+    url: '/mytodo/plist/user/list',
+    method: 'get',
+    params: query
+  })
+}
+
 // 新增计划清单关联
 export function addPlist(data) {
   return request({
