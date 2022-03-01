@@ -10,24 +10,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="用户id" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入用户id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="排序号" prop="weight">
-        <el-input
-          v-model="queryParams.weight"
-          placeholder="请输入排序号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="发薪日期" prop="salaryDate">
         <el-date-picker clearable size="small"
           v-model="queryParams.salaryDate"
@@ -36,21 +18,10 @@
           placeholder="请选择发薪日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="发薪明细
-" prop="salaryDetail">
+      <el-form-item label="发薪明细" prop="salaryDetail">
         <el-input
           v-model="queryParams.salaryDetail"
-          placeholder="请输入发薪明细
-"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="关联图片" prop="salaryPic">
-        <el-input
-          v-model="queryParams.salaryPic"
-          placeholder="请输入关联图片"
+          placeholder="请输入发薪明细"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -112,7 +83,7 @@
       <el-table-column type="selection" width="55" align="center" />
 <!--      <el-table-column label="${comment}" align="center" prop="id" />-->
       <el-table-column label="工资名称" align="center" prop="salaryName" />
-      <el-table-column label="用户id" align="center" prop="userId" />
+<!--      <el-table-column label="用户id" align="center" prop="userId" />-->
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="排序号" align="center" prop="weight" />
       <el-table-column label="发薪日期" align="center" prop="salaryDate" width="180">
@@ -156,14 +127,11 @@
         <el-form-item label="工资名称" prop="salaryName">
           <el-input v-model="form.salaryName" placeholder="请输入工资名称" />
         </el-form-item>
-        <el-form-item label="用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户id" />
-        </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
         <el-form-item label="排序号" prop="weight">
-          <el-input v-model="form.weight" placeholder="请输入排序号" />
+          <el-input-number v-model="form.weight" placeholder="请输入排序号" />
         </el-form-item>
         <el-form-item label="发薪日期" prop="salaryDate">
           <el-date-picker clearable size="small"
@@ -218,7 +186,6 @@ export default {
         pageNum: 1,
         pageSize: 10,
         salaryName: null,
-        userId: null,
         weight: null,
         salaryDate: null,
         salaryDetail: null,
@@ -254,7 +221,6 @@ export default {
       this.form = {
         id: null,
         salaryName: null,
-        userId: null,
         createBy: null,
         createTime: null,
         updateBy: null,

@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -40,7 +41,7 @@ public class Salary extends BaseEntity
     /** 发薪明细
     */
     @Excel(name = "发薪明细 ")
-    private Long salaryDetail;
+    private BigDecimal salaryDetail;
 
     /** 关联图片 */
     @Excel(name = "关联图片")
@@ -91,12 +92,12 @@ public class Salary extends BaseEntity
     {
         return salaryDate;
     }
-    public void setSalaryDetail(Long salaryDetail) 
+    public void setSalaryDetail(BigDecimal salaryDetail)
     {
         this.salaryDetail = salaryDetail;
     }
 
-    public Long getSalaryDetail() 
+    public BigDecimal getSalaryDetail()
     {
         return salaryDetail;
     }
