@@ -110,7 +110,7 @@
 
     <el-table v-loading="loading" :data="salaryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
+<!--      <el-table-column label="${comment}" align="center" prop="id" />-->
       <el-table-column label="工资名称" align="center" prop="salaryName" />
       <el-table-column label="用户id" align="center" prop="userId" />
       <el-table-column label="备注" align="center" prop="remark" />

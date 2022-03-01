@@ -77,6 +77,7 @@ public class SalaryController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Salary salary)
     {
+        salary.setCreateBy(getUsername());
         return toAjax(salaryService.insertSalary(salary));
     }
 
@@ -88,6 +89,7 @@ public class SalaryController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Salary salary)
     {
+        salary.setUpdateBy(getUsername());
         return toAjax(salaryService.updateSalary(salary));
     }
 

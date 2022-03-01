@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.SalaryMapper;
@@ -54,6 +55,7 @@ public class SalaryServiceImpl implements ISalaryService
     public int insertSalary(Salary salary)
     {
         salary.setCreateTime(DateUtils.getNowDate());
+        salary.setUserId(SecurityUtils.getUserId());
         return salaryMapper.insertSalary(salary);
     }
 

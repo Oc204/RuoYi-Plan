@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TaskMapper;
@@ -54,6 +55,7 @@ public class TaskServiceImpl implements ITaskService
     public int insertTask(Task task)
     {
         task.setCreateTime(DateUtils.getNowDate());
+        task.setUserId(SecurityUtils.getUserId());
         return taskMapper.insertTask(task);
     }
 

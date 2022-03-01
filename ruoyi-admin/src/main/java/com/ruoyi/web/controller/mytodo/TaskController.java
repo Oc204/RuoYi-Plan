@@ -91,6 +91,7 @@ public class TaskController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Task task)
     {
+        task.setCreateBy(getUsername());
         return toAjax(taskService.insertTask(task));
     }
 
@@ -102,6 +103,7 @@ public class TaskController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Task task)
     {
+        task.setUpdateBy(getUsername());
         return toAjax(taskService.updateTask(task));
     }
 

@@ -92,6 +92,7 @@ public class PlistController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Plist plist)
     {
+        plist.setCreateBy(getUsername());
         return toAjax(plistService.insertPlist(plist));
     }
 
@@ -103,6 +104,7 @@ public class PlistController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Plist plist)
     {
+        plist.setUpdateBy(getUsername());
         return toAjax(plistService.updatePlist(plist));
     }
 
