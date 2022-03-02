@@ -29,6 +29,8 @@ import Editor from "@/components/Editor"
 import FileUpload from "@/components/FileUpload"
 // 图片上传组件
 import ImageUpload from "@/components/ImageUpload"
+// 图片上传组件
+import MinioImageUpload from "@/components/MinioImageUpload"
 // 图片预览组件
 import ImagePreview from "@/components/ImagePreview"
 // 字典标签组件
@@ -57,6 +59,7 @@ Vue.component('Editor', Editor)
 Vue.component('FileUpload', FileUpload)
 Vue.component('ImageUpload', ImageUpload)
 Vue.component('ImagePreview', ImagePreview)
+Vue.component('MinioImageUpload', MinioImageUpload)
 
 Vue.use(directive)
 Vue.use(plugins)

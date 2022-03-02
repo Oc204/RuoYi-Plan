@@ -76,6 +76,15 @@
           v-hasPermi="['system:salary:export']"
         >导出</el-button>
       </el-col>
+        <el-col :span="1.5">
+          <el-button
+            type="success"
+            plain
+            icon="el-icon-download"
+            size="mini"
+            @click="handleDownPicTest"
+          >下载图片测试</el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -145,7 +154,9 @@
           <el-input v-model="form.salaryDetail" placeholder="请输入发薪明细" />
         </el-form-item>
         <el-form-item label="关联图片" prop="salaryPic">
-          <el-input v-model="form.salaryPic" placeholder="请输入关联图片" />
+          <MinioImageUpload ref="salaryPic" v-model="form.salaryPic"/>
+
+<!--          <el-input v-model="form.salaryPic" placeholder="请输入关联图片" />-->
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -157,10 +168,14 @@
 </template>
 
 <script>
-import { listSalary, getSalary, delSalary, addSalary, updateSalary } from "@/api/mysalary/salary";
+import MinioImageUpload from "@/components/MinioImageUpload"
+import { listSalary, getSalary, delSalary, addSalary, updateSalary, picTest} from "@/api/mysalary/salary";
 
 export default {
   name: "Salary",
+  components:{
+    MinioImageUpload
+  },
   data() {
     return {
       // 遮罩层
@@ -297,9 +312,17 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('system/salary/export', {
+      this.download('mysalary/salary/export', {
         ...this.queryParams
       }, `salary_${new Date().getTime()}.xlsx`)
+    },
+    /** 导出按钮操作 */
+    handleDownPicTest() {
+      picTest().then(response => {
+        this.$modal.msgSuccess("修改成功");
+        this.open = false;
+        this.getList();
+      });
     }
   }
 };

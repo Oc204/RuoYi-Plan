@@ -42,3 +42,15 @@ export function delSalary(id) {
     method: 'delete'
   })
 }
+
+// 下载图片测试
+export function picTest() {
+  return request({
+    url: '/system/minio/downloadFile?bucket=ruoyi-plan&objectName=wallhaven-odk96l.jpg',
+    method: 'get'
+    // data: {
+    //   bucket: 'ruoyi-plan',
+    //   objectName: 'wallhaven-odk96l.jpg'
+    // }
+  })
+}

@@ -121,3 +121,9 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# minio配置
+minio:
+  url: http://124.222.90.146:9000
+  accessKey: minioadmin #Access key账户
+  secretKey: minioadmin  #Secret key密码
