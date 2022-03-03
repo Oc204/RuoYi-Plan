@@ -92,16 +92,14 @@
         </template>
       </el-table-column>
       <el-table-column label="发薪明细" align="center" prop="salaryDetail" />
-<!--      <template slot-scope="scope">-->
-<!--        <img :src="scope.row.salaryPic" alt="" style="width: 100px;height: 100px">-->
-<!--      </template>-->
       <el-table-column label="关联图片" align="center" prop="salaryPic">
         <template slot-scope="scope">
-          　　<img v-for="item in scope.row.salaryPic" :src="item" width="40" height="40" class="head_pic"/>
+<!--          　　<img v-for="item in scope.row.salaryPic" :src="item" width="40" height="40" class="head_pic"/>-->
+          <ImagePreview v-for="item in scope.row.salaryPic" :src="item" width="50%" height="50%" class="head_pic" />
         </template>
       </el-table-column>
 
-      <el-table-column label="关联图片" align="center" prop="salaryPic" />
+<!--      <el-table-column label="关联图片" align="center" prop="salaryPic" />-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
