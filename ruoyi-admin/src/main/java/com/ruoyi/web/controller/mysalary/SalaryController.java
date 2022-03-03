@@ -1,7 +1,13 @@
 package com.ruoyi.web.controller.mysalary;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.framework.config.ServerConfig;
+import com.ruoyi.system.domain.vo.SalaryVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +38,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 public class SalaryController extends BaseController
 {
     @Autowired
+    private ServerConfig serverConfig;
+
+    @Autowired
     private ISalaryService salaryService;
 
     /**
@@ -43,7 +52,26 @@ public class SalaryController extends BaseController
     {
         startPage();
         List<Salary> list = salaryService.selectSalaryList(salary);
-        return getDataTable(list);
+        List<SalaryVo> voList = new ArrayList<>() ;
+        for(int i=0; i<list.size(); i++) {
+            SalaryVo vo = new SalaryVo() ;
+            BeanUtils.copyProperties(list.get(i),vo);
+
+            if(list.get(i).getSalaryPic() != null) {
+                String[] arr = list.get(i).getSalaryPic().split(",") ;
+                if (arr.length > 0) {
+                    List<String> picList = new ArrayList<>() ;
+                    for (String str : arr) {
+                        str = serverConfig.getUrl() + str ;
+                        picList.add(str) ;
+                    }
+                    vo.setSalaryPic(picList);
+                }
+            }
+
+            voList.add(vo) ;
+        }
+        return getDataTable(voList);
     }
 
     /**
