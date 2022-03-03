@@ -3,20 +3,14 @@ package com.ruoyi.common.utils;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.ruoyi.common.utils.bean.Fileinfo;
+import io.minio.*;
+import io.minio.http.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import io.minio.BucketExistsArgs;
-import io.minio.GetObjectArgs;
-import io.minio.ListObjectsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
-import io.minio.RemoveBucketArgs;
-import io.minio.RemoveObjectArgs;
-import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 
@@ -39,9 +33,17 @@ public class MinioUtil {
     /**
      * 上传一个文件
      */
-    public void uploadFile(InputStream stream, String bucket, String objectName) throws Exception {
+    public String uploadFile(InputStream stream, String bucket, String objectName) throws Exception {
         minioClient.putObject(PutObjectArgs.builder().bucket(bucket).object(objectName)
                 .stream(stream, -1, 10485760).build());
+
+        String url = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                .method(Method.PUT)
+                .bucket(bucket).object(objectName)
+                .expiry(2, TimeUnit.DAYS)
+                .build());
+
+        return url ;
     }
 
     /**
@@ -99,6 +101,23 @@ public class MinioUtil {
      */
     public void deleteObject(String bucket, String objectName) throws Exception {
         minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucket).object(objectName).build());
+    }
+
+    /**
+     *
+     * 获取minio文件的下载地址
+     * @param bucket 桶名
+     * @param fileName  文件名
+     */
+    public String getFileUrl(String bucket, String fileName) throws Exception {
+
+        String url = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                .method(Method.PUT)
+                .bucket(bucket).object(fileName)
+                .expiry(2, TimeUnit.DAYS)
+                .build());
+
+        return url ;
     }
 }
 

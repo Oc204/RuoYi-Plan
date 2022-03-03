@@ -25,16 +25,22 @@ public class MInioController {
     @ResponseBody
     public AjaxResult fileupload(@RequestParam MultipartFile file) throws Exception { //, @RequestParam String bucket,        @RequestParam(required=false) String objectName
 
-        String objectName = file.getName() ;
+        String fileName = file.getName() ;
         String bucket = "ruoyi-plan" ;
+        String url = "" ;
 
         minioUtil.createBucket(bucket);
-        if (objectName != null) {
-            minioUtil.uploadFile(file.getInputStream(), bucket, objectName+"/"+file.getOriginalFilename());
+        if (fileName != null) {
+            url = minioUtil.uploadFile(file.getInputStream(), bucket, fileName+"/"+file.getOriginalFilename());
         } else {
-            minioUtil.uploadFile(file.getInputStream(), bucket, file.getOriginalFilename());
+            url = minioUtil.uploadFile(file.getInputStream(), bucket, file.getOriginalFilename());
         }
-        return AjaxResult.success();
+
+        AjaxResult ajax = AjaxResult.success() ;
+        ajax.put("url", url);
+        ajax.put("fileName", fileName);
+
+        return ajax;
     }
 
     @ApiOperation("下载一个文件")

@@ -139,9 +139,9 @@
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
-        <el-form-item label="排序号" prop="weight">
-          <el-input-number v-model="form.weight" placeholder="请输入排序号" />
-        </el-form-item>
+<!--        <el-form-item label="排序号" prop="weight">-->
+<!--          <el-input-number v-model="form.weight" placeholder="请输入排序号" />-->
+<!--        </el-form-item>-->
         <el-form-item label="发薪日期" prop="salaryDate">
           <el-date-picker clearable size="small"
             v-model="form.salaryDate"
@@ -154,7 +154,7 @@
           <el-input v-model="form.salaryDetail" placeholder="请输入发薪明细" />
         </el-form-item>
         <el-form-item label="关联图片" prop="salaryPic">
-          <MinioImageUpload ref="salaryPic" v-model="form.salaryPic"/>
+          <ImageUpload ref="salaryPic" v-model="form.salaryPic"/>
 
 <!--          <el-input v-model="form.salaryPic" placeholder="请输入关联图片" />-->
         </el-form-item>
@@ -168,14 +168,11 @@
 </template>
 
 <script>
-import MinioImageUpload from "@/components/MinioImageUpload"
+// import MinioImageUpload from "@/components/MinioImageUpload"
 import { listSalary, getSalary, delSalary, addSalary, updateSalary, picTest} from "@/api/mysalary/salary";
 
 export default {
   name: "Salary",
-  components:{
-    MinioImageUpload
-  },
   data() {
     return {
       // 遮罩层
