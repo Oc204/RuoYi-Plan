@@ -53,7 +53,7 @@ public class PlistController extends BaseController
      * 查询当前登录用户的清单列表
      */
     @ApiOperation("查询当前登录用户的清单列表")
-    @PreAuthorize("@ss.hasPermi('system:plist:list')")
+    @PreAuthorize("@ss.hasPermi('mytodo:plist:list')")
     @GetMapping("/user/list")
     public AjaxResult currentUserList(Plist plist) {
         plist.setUserId(getUserId());

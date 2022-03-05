@@ -51,6 +51,7 @@ public class SalaryController extends BaseController
     public TableDataInfo list(Salary salary)
     {
         startPage();
+        salary.setUserId(getUserId());
         List<Salary> list = salaryService.selectSalaryList(salary);
         List<SalaryVo> voList = new ArrayList<>() ;
         for(int i=0; i<list.size(); i++) {
