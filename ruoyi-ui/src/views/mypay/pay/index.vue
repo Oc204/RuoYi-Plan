@@ -81,6 +81,11 @@
 
     <el-table v-loading="loading" :data="payList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="序号" align="center"  width="50"> <!-- prop="id"-->
+        <template scope="scope">
+          <span>{{(queryParams.pageNum-1)*queryParams.pageSize+(scope.$index + 1)}} </span>
+        </template>
+      </el-table-column>
       <el-table-column label="支出名称" align="center" prop="payName" />
 <!--      <el-table-column label="用户id" align="center" prop="userId" />-->
       <el-table-column label="备注" align="center" prop="remark" />
