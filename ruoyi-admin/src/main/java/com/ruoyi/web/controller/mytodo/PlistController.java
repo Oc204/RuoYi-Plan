@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,7 +18,7 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.Plist;
+import com.ruoyi.common.core.domain.entity.Plist;
 import com.ruoyi.system.service.IPlistService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -59,6 +58,16 @@ public class PlistController extends BaseController
         plist.setUserId(getUserId());
         List<Plist> result = plistService.selectPlistList(plist) ;
         return AjaxResult.success(result);
+    }
+
+    /**
+     * 获取清单下拉树列表
+     */
+    @GetMapping("/treeselect")
+    public AjaxResult treeselect(Plist plist)
+    {
+        List<Plist> result = plistService.selectPlistList(plist);
+        return AjaxResult.success(plistService.buildPlistTreeSelect(result));
     }
 
     /**

@@ -1,25 +1,79 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-      <el-form-item label="清单名称" prop="listName">
+    <el-row :gutter="20">
+
+    <!--部门数据-->
+    <el-col :span="4" :xs="24">
+      <div class="head-container">
         <el-input
-          v-model="queryParams.listName"
+          v-model="plistName"
           placeholder="请输入清单名称"
+          clearable
+          size="small"
+          prefix-icon="el-icon-search"
+          style="margin-bottom: 20px"
+        />
+      </div>
+      <div class="head-container">
+        <el-tree
+          :data="pListOptions"
+          :props="defaultProps"
+          :expand-on-click-node="false"
+          :filter-node-method="filterNode"
+          ref="tree"
+          default-expand-all
+          @node-click="handleNodeClick"
+        />
+      </div>
+    </el-col>
+
+      <el-col :span="20" :xs="24">
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
+      <el-form-item label="当前列表所属清单：">{{plistName}}
+
+        <!--        <el-input-->
+        <!--          v-model="this.plistName"-->
+        <!--        />-->
+      </el-form-item>
+      <el-form-item label="任务名称" prop="taskName">
+        <el-input
+          v-model="queryParams.taskName"
+          placeholder="请输入任务名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
+        <el-input
+          v-model="queryParams.plistId"
+          @keyup.enter.native="handleQuery"
+          v-show="false"
+        />
       </el-form-item>
-<!--      <el-form-item label="状态" prop="status">-->
-<!--        <el-select v-model="queryParams.status" placeholder="菜单状态" clearable size="small">-->
-<!--          <el-option-->
-<!--            v-for="dict in dict.type.sys_normal_disable"-->
-<!--            :key="dict.value"-->
-<!--            :label="dict.label"-->
-<!--            :value="dict.value"-->
-<!--          />-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
+      <el-form-item label="优先级" prop="weight">
+        <el-select
+          v-model="queryParams.weight"
+          placeholder="任务优先级"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option label="低" value="0"></el-option>
+          <el-option label="中" value="1"></el-option>
+          <el-option label="高" value="2"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="是否完成" prop="finish">
+        <el-select
+          v-model="queryParams.finish"
+          placeholder="完成状态"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option label="是" value="1"></el-option>
+          <el-option label="否" value="0"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -52,15 +106,52 @@
     <el-table
       v-if="refreshTable"
       v-loading="loading"
-      :data="pListList"
-      highlight-current-row
+      :data="taskList"
       row-key="id"
       :default-expand-all="isExpandAll"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="listName" label="清单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
-      <el-table-column prop="weight" label="排序" width="60"></el-table-column>
-      <el-table-column prop="remark" label="备注" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column label="任务名称" align="center" prop="taskName" />
+      <el-table-column label="番茄数" align="center" prop="tomatoNumber" />
+      <el-table-column label="到期日" align="center" prop="dueDate" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.dueDate, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="优先级" align="center" prop="level" >
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.level === '2' "
+            type="danger"
+            size="mini"
+          >高</el-button>
+          <el-button
+            v-else-if="scope.row.level === '1'"
+            type="warning"
+            size="mini"
+          >中</el-button>
+          <el-button
+            v-else-if="scope.row.level === '0'"
+            type="success"
+            size="mini"
+          >低</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="是否完成" align="center" prop="finish" >
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.finish === '0' "
+            type="danger"
+            size="mini"
+          >否</el-button>
+          <el-button
+            v-else-if="scope.row.finish === '1'"
+            type="success"
+            size="mini"
+          >是</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -68,13 +159,13 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-search"
-            @click="handleDetail(scope.row)"
-            v-hasPermi="['system:menu:edit']"
-          >查看任务</el-button>
+          <!--          <el-button-->
+          <!--            size="mini"-->
+          <!--            type="text"-->
+          <!--            icon="el-icon-search"-->
+          <!--            @click="handleDetail(scope.row)"-->
+          <!--            v-hasPermi="['system:menu:edit']"-->
+          <!--          >查看详情</el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -99,37 +190,69 @@
         </template>
       </el-table-column>
     </el-table>
+      </el-col>
+    </el-row>
 
     <!-- 添加或修改菜单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="680px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="上级菜单">
+            <el-form-item label="上级任务">
               <treeselect
                 v-model="form.parentId"
-                :options="pListOptions"
+                :options="taskListOptions"
                 :normalizer="normalizer"
                 :show-count="true"
-                placeholder="选择上级菜单"
+                placeholder="选择上级任务"
               />
             </el-form-item>
           </el-col>
 
           <el-col :span="24">
-            <el-form-item label="清单名称" prop="listName">
-              <el-input v-model="form.listName" placeholder="请输入清单名称" />
+            <el-form-item label="任务名称" prop="taskName">
+              <el-input v-model="form.taskName" placeholder="请输入任务名称" />
             </el-form-item>
           </el-col>
-          <!--        <el-form-item label="用户id" prop="userId">-->
-          <!--          <el-input v-model="form.userId" placeholder="请输入用户id" />-->
-          <!--        </el-form-item>-->
+          <el-col :span="24">
+            <el-form-item label="番茄数" prop="tomatoNumber">
+              <el-input type="number" v-model="form.tomatoNumber" placeholder="请输入番茄数" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="到期日" prop="dueDate">
+              <el-date-picker clearable size="small"
+                              v-model="form.dueDate"
+                              type="datetime"
+                              value-format="yyyy-MM-dd HH:mm:ss"
+                              placeholder="选择到期日">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="优先级" prop="level">
+              <el-radio-group v-model="form.level">
+                <el-radio label="0">低</el-radio>
+                <el-radio label="1">中</el-radio>
+                <el-radio label="2">高</el-radio>
+              </el-radio-group>
+              <!--            <el-input v-model="form.level" placeholder="请输入优先级" />-->
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="是否完成" prop="finish">
+              <el-radio-group v-model="form.finish">
+                <el-radio label="0">否</el-radio>
+                <el-radio label="1">是</el-radio>
+              </el-radio-group>
+              <!--            <el-input v-model="form.finish" placeholder="请输入是否完成" />-->
+            </el-form-item>
+          </el-col>
           <el-col :span="24">
             <el-form-item label="备注" prop="remark">
-            <el-input type="textarea" v-model="form.remark" placeholder="请输入备注" />
+              <el-input type="textarea" v-model="form.remark" placeholder="请输入备注" />
             </el-form-item>
           </el-col>
-
           <el-col :span="12">
             <el-form-item label="显示排序" prop="weight">
               <el-input-number v-model="form.weight" controls-position="right" :min="0" />
@@ -148,14 +271,9 @@
 
 <script>
 
-import {
-  listPlist,
-  getPlist,
-  delPlist,
-  addPlist,
-  updatePlist,
-  listCurrentUserPlist
-} from "@/api/mytodo/plist";
+import { listTask, getTask, delTask, addTask, updateTask ,currentTaskList} from "@/api/mytodo/task";
+import {treeselect } from "@/api/mytodo/plist";
+
 
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
@@ -171,10 +289,20 @@ export default {
       loading: true,
       // 显示搜索条件
       showSearch: true,
-      // 清单表格树数据
-      pListList: [],
+      // 任务表格树数据
+      taskList: [],
+      // 关联的清单id
+      plistId: undefined,
+      // 清单树选项
+      taskListOptions: [],
       // 清单树选项
       pListOptions: [],
+      // 当前任务列表所属清单
+      plistName: undefined,
+      defaultProps: {
+        children: "children",
+        label: "label"
+      },
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -185,7 +313,9 @@ export default {
       refreshTable: true,
       // 查询参数
       queryParams: {
-        listName: undefined,
+        taskName: undefined,
+        weight: undefined,
+        finish: undefined,
         visible: undefined
       },
       // 表单参数
@@ -195,25 +325,44 @@ export default {
         weight: [
           { required: true, message: "显示顺序不能为空", trigger: "blur" }
         ],
-        listName: [
-          { required: true, message: "清单名称不能为空", trigger: "blur" }
+        taskName: [
+          { required: true, message: "任务名称不能为空", trigger: "blur" }
         ],
+        level: [
+          { required: true, message: "请选择优先级", trigger: "blur" }
+        ],
+        finish: [
+          { required: true, message: "请选择完成状态", trigger: "blur" }
+        ]
       }
     };
   },
   created() {
+    this.initData();
     this.getList();
+    this.getPlistTreeselect();
+
   },
   methods: {
+    /** 初始化操作*/
+    initData() {
+      this.plistId = this.$route.query && this.$route.query.plistId ;
+      this.form.plistId = this.plistId ;
+      // this.plistName = this.$route.query && this.$route.query.plistName ;
+      // console.log("get plistId" + this.plistId + "  this.plistName: " + this.plistName) ;
+      //this.queryParams.plistId = this.plistId ;
+    },
     // 选择图标
     selected(name) {
       this.form.icon = name;
     },
-    /** 查询菜单列表 */
+    /** 查询任务列表 */
     getList() {
       this.loading = true;
-      listCurrentUserPlist(this.queryParams).then(response => {
-        this.pListList = this.handleTree(response.data, "id");
+      this.queryParams.plistId = this.plistId ;
+      currentTaskList(this.queryParams).then(response => {
+        console.log("格式化查询数据"+JSON.stringify(this.queryParams)) ;
+        this.taskList = this.handleTree(response.data, "id");
         this.loading = false;
       });
     },
@@ -224,17 +373,22 @@ export default {
       }
       return {
         id: node.id,
-        label: node.listName,
+        label: node.taskName,
         children: node.children
       };
     },
     /** 查询菜单下拉树结构 */
     getTreeselect() {
-      listCurrentUserPlist().then(response => {
-        this.pListOptions = [];
-        const pList = { id: 0, listName: '主清单', children: [] };
-        pList.children = this.handleTree(response.data, "id");
-        this.pListOptions.push(pList);
+      currentTaskList().then(response => {
+        this.taskListOptions = [];
+        const task = { id: 0, taskName: '主任务', children: [] };
+        task.children = this.handleTree(response.data, "id");
+        this.taskListOptions.push(task);
+      });
+    },
+    getPlistTreeselect() {
+      treeselect().then(response => {
+        this.pListOptions = response.data;
       });
     },
     // 取消按钮
@@ -247,7 +401,7 @@ export default {
       this.form = {
         id: undefined,
         parentId: 0,
-        listName: undefined,
+        taskName: undefined,
         weight: undefined
       };
       this.resetForm("form");
@@ -261,12 +415,15 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    /**查看清单下的任务操作 */
-    handleDetail(row) {
-      this.$router.push({ path: '/mytodo/mytask/index', query: {
-          plistId: row.id,
-          plistName: row.listName
-        } });
+    // 筛选节点
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
+    // 节点单击事件
+    handleNodeClick(data) {
+      this.queryParams.id = data.id;
+      this.handleQuery();
     },
     /** 新增按钮操作 */
     handleAdd(row) {
@@ -292,10 +449,10 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.getTreeselect();
-      getPlist(row.id).then(response => {
+      getTask(row.id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改清单";
+        this.title = "修改任务";
       });
     },
     /** 提交按钮 */
@@ -303,13 +460,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != undefined) {
-            updatePlist(this.form).then(response => {
+            updateTask(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addPlist(this.form).then(response => {
+            addTask(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -321,7 +478,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       this.$modal.confirm('是否确认删除名称为"' + row.listName + '"的数据项？').then(function() {
-        return delPlist(row.id);
+        return delTask(row.id);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

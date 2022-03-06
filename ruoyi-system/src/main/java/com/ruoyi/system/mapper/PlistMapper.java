@@ -1,7 +1,7 @@
 package com.ruoyi.system.mapper;
 
+import com.ruoyi.common.core.domain.entity.Plist;
 import java.util.List;
-import com.ruoyi.system.domain.Plist;
 
 /**
  * 清单Mapper接口

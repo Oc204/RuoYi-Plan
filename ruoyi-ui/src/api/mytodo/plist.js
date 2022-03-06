@@ -17,6 +17,14 @@ export function getPlist(id) {
   })
 }
 
+// 查询计划清单下拉树结构
+export function treeselect() {
+  return request({
+    url: '/mytodo/plist/treeselect',
+    method: 'get'
+  })
+}
+
 // 查询计划清单关联列表
 export function listCurrentUserPlist(query) {
   return request({

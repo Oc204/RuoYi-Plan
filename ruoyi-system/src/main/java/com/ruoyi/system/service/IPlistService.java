@@ -1,8 +1,9 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
-import com.ruoyi.system.domain.Plist;
 
+import com.ruoyi.common.core.domain.TreeSelect;
+import com.ruoyi.common.core.domain.entity.Plist;
 /**
  * 清单Service接口
  * 
@@ -58,4 +59,14 @@ public interface IPlistService
      * @return 结果
      */
     public int deletePlistById(Long id);
+
+    /**
+     * 构建前端所需要树结构
+     *
+     * @param plist 清单列表
+     * @return 树结构列表
+     */
+    public List<Plist> buildPlistTree(List<Plist> plists);
+
+    List<TreeSelect> buildPlistTreeSelect(List<Plist> result);
 }

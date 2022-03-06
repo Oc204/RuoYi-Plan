@@ -1,14 +1,19 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.ruoyi.common.core.domain.TreeSelect;
+import com.ruoyi.common.core.domain.entity.Plist;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.PlistMapper;
-import com.ruoyi.system.domain.Plist;
 import com.ruoyi.system.service.IPlistService;
 
 /**
@@ -96,5 +101,80 @@ public class PlistServiceImpl implements IPlistService
     public int deletePlistById(Long id)
     {
         return plistMapper.deletePlistById(id);
+    }
+
+    @Override
+    public List<Plist> buildPlistTree(List<Plist> plists) {
+
+        List<Plist> returnList = new ArrayList<Plist>();
+        List<Long> tempList = new ArrayList<Long>();
+        for (Plist plist : plists)
+        {
+            tempList.add(plist.getId());
+        }
+        for (Plist plist : plists)
+        {
+            // 如果是顶级节点, 遍历该父节点的所有子节点
+            if (!tempList.contains(plist.getParentId()))
+            {
+                recursionFn(plists, plist);
+                returnList.add(plist);
+            }
+        }
+        if (returnList.isEmpty())
+        {
+            returnList = plists;
+        }
+        return returnList;
+    }
+
+    @Override
+    public List<TreeSelect> buildPlistTreeSelect(List<Plist> result) {
+
+        List<Plist> deptTrees = buildPlistTree(result);
+        return deptTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
+    /**
+     * 递归列表
+     */
+    private void recursionFn(List<Plist> list, Plist t)
+    {
+        // 得到子节点列表
+        List<Plist> childList = getChildList(list, t);
+        t.setChildren(childList);
+        for (Plist tChild : childList)
+        {
+            if (hasChild(list, tChild))
+            {
+                recursionFn(list, tChild);
+            }
+        }
+    }
+
+    /**
+     * 得到子节点列表
+     */
+    private List<Plist> getChildList(List<Plist> list, Plist t)
+    {
+        List<Plist> tlist = new ArrayList<Plist>();
+        Iterator<Plist> it = list.iterator();
+        while (it.hasNext())
+        {
+            Plist n = (Plist) it.next();
+            if (StringUtils.isNotNull(n.getParentId()) && n.getParentId().longValue() == t.getId().longValue())
+            {
+                tlist.add(n);
+            }
+        }
+        return tlist;
+    }
+
+    /**
+     * 判断是否有子节点
+     */
+    private boolean hasChild(List<Plist> list, Plist t)
+    {
+        return getChildList(list, t).size() > 0;
     }
 }

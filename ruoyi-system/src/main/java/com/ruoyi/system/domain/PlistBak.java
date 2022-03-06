@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2022-03-01
  */
-public class Plist extends BaseEntity
+public class PlistBak extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
