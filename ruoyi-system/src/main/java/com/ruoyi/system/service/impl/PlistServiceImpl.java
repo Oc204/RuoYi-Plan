@@ -5,9 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.TreeSelect;
 import com.ruoyi.common.core.domain.entity.Plist;
+import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.model.LoginUser;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -63,6 +66,10 @@ public class PlistServiceImpl implements IPlistService
     {
         plist.setCreateTime(DateUtils.getNowDate());
         plist.setUserId(SecurityUtils.getUserId());
+
+        Plist info = plistMapper.selectPlistById(plist.getParentId());
+        plist.setAncestors(info.getAncestors() + "," + plist.getParentId());
+
         return plistMapper.insertPlist(plist);
     }
 
@@ -76,7 +83,38 @@ public class PlistServiceImpl implements IPlistService
     public int updatePlist(Plist plist)
     {
         plist.setUpdateTime(DateUtils.getNowDate());
+
+        Plist newParentDept = plistMapper.selectPlistById(plist.getParentId());
+        Plist oldDept = plistMapper.selectPlistById(plist.getId());
+        if (StringUtils.isNotNull(newParentDept) && StringUtils.isNotNull(oldDept))
+        {
+            String newAncestors = newParentDept.getAncestors() + "," + newParentDept.getId();
+            String oldAncestors = oldDept.getAncestors();
+            plist.setAncestors(newAncestors);
+            updateDeptChildren(plist.getId(), newAncestors, oldAncestors);
+        }
+
         return plistMapper.updatePlist(plist);
+    }
+
+    /**
+     * 修改子元素关系
+     *
+     * @param id 被修改的清单ID
+     * @param newAncestors 新的父ID集合
+     * @param oldAncestors 旧的父ID集合
+     */
+    public void updateDeptChildren(Long id, String newAncestors, String oldAncestors)
+    {
+        List<Plist> children = plistMapper.selectChildrenPlistById(id);
+        for (Plist child : children)
+        {
+            child.setAncestors(child.getAncestors().replaceFirst(oldAncestors, newAncestors));
+        }
+        if (children.size() > 0)
+        {
+            plistMapper.updatePlistChildren(children);
+        }
     }
 
     /**

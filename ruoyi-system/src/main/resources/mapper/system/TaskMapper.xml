@@ -35,7 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="level != null  and level != ''"> and level = #{level}</if>
             <if test="finish != null  and finish != ''"> and finish = #{finish}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="plistId != null "> and plist_id = #{plistId}</if>
+            <if test="plistId != null ">
+                AND (plist_id = #{plistId} OR plist_id IN ( SELECT p.id FROM plist p WHERE find_in_set(#{plistId}, ancestors) ))
+            </if>
             <if test="weight != null "> and weight = #{weight}</if>
             <if test="parentId != null "> and parent_id = #{parentId}</if>
         </where>

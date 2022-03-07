@@ -28,6 +28,14 @@ public interface PlistMapper
     public List<Plist> selectPlistList(Plist plist);
 
     /**
+     * 根据ID查询所有清单
+     *
+     * @param id 清单ID
+     * @return 清单列表
+     */
+    public List<Plist> selectChildrenPlistById(Long id);
+
+    /**
      * 新增清单
      * 
      * @param plist 清单
@@ -58,4 +66,11 @@ public interface PlistMapper
      * @return 结果
      */
     public int deletePlistByIds(Long[] ids);
+
+    /**
+     * 修改子元素关系
+     * @param children
+     * @return
+     */
+    public int updatePlistChildren(List<Plist> children);
 }

@@ -316,7 +316,8 @@ export default {
         taskName: undefined,
         weight: undefined,
         finish: undefined,
-        visible: undefined
+        visible: undefined,
+        plistId: undefined
       },
       // 表单参数
       form: {},
@@ -359,7 +360,7 @@ export default {
     /** 查询任务列表 */
     getList() {
       this.loading = true;
-      this.queryParams.plistId = this.plistId ;
+      //this.queryParams.plistId = this.plistId ;
       currentTaskList(this.queryParams).then(response => {
         console.log("格式化查询数据"+JSON.stringify(this.queryParams)) ;
         this.taskList = this.handleTree(response.data, "id");
@@ -408,6 +409,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      this.queryParams.pageNum = 1;
       this.getList();
     },
     /** 重置按钮操作 */
@@ -422,7 +424,7 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data) {
-      this.queryParams.id = data.id;
+      this.queryParams.plistId = data.id;
       this.handleQuery();
     },
     /** 新增按钮操作 */

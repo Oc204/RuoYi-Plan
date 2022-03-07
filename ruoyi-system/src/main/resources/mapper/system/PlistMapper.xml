@@ -16,10 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="planId"    column="plan_id"    />
         <result property="weight"    column="weight"    />
         <result property="parentId"    column="parent_id"    />
+        <result property="ancestors"    column="ancestors"    />
     </resultMap>
 
     <sql id="selectPlistVo">
-        select id, list_name, user_id, create_by, create_time, update_by, update_time, remark, plan_id, weight, parent_id from plist
+        select id, list_name, user_id, create_by, create_time, update_by, update_time, remark, plan_id, weight, parent_id, ancestors from plist
     </sql>
 
     <select id="selectPlistList" parameterType="Plist" resultMap="PlistResult">
@@ -30,12 +31,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="planId != null "> and plan_id = #{planId}</if>
             <if test="weight != null "> and weight = #{weight}</if>
             <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="ancestors != null "> and ancestors = #{ancestors}</if>
         </where>
     </select>
     
     <select id="selectPlistById" parameterType="Long" resultMap="PlistResult">
         <include refid="selectPlistVo"/>
         where id = #{id}
+    </select>
+
+    <select id="selectChildrenPlisttById" parameterType="Long" resultMap="PlistResult">
+        select * from plist where find_in_set(#{id}, ancestors)
     </select>
         
     <insert id="insertPlist" parameterType="Plist" useGeneratedKeys="true" keyProperty="id">
@@ -51,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="planId != null">plan_id,</if>
             <if test="weight != null">weight,</if>
             <if test="parentId != null">parent_id,</if>
+            <if test="ancestors != null">ancestors,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="listName != null">#{listName},</if>
@@ -63,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="planId != null">#{planId},</if>
             <if test="weight != null">#{weight},</if>
             <if test="parentId != null">#{parentId},</if>
+            <if test="ancestors != null">#{ancestors},</if>
          </trim>
     </insert>
 
@@ -79,8 +87,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="planId != null">plan_id = #{planId},</if>
             <if test="weight != null">weight = #{weight},</if>
             <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="ancestors != null">ancestors = #{ancestors},</if>
         </trim>
         where id = #{id}
+    </update>
+
+    <update id="updateDeptChildren" parameterType="java.util.List">
+        update sys_dept set ancestors =
+        <foreach collection="children" item="item" index="index"
+                 separator=" " open="case id" close="end">
+            when #{item.id} then #{item.ancestors}
+        </foreach>
+        where id in
+        <foreach collection="children" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
     </update>
 
     <delete id="deletePlistById" parameterType="Long">
