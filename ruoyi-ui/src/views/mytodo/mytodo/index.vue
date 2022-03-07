@@ -29,7 +29,7 @@
 
       <el-col :span="20" :xs="24">
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-      <el-form-item label="当前列表所属清单：">{{plistName}}
+      <el-form-item label="当前列表所属清单:">{{currentPlistName}}
 
         <!--        <el-input-->
         <!--          v-model="this.plistName"-->
@@ -298,6 +298,7 @@ export default {
       // 清单树选项
       pListOptions: [],
       // 当前任务列表所属清单
+      currentPlistName: undefined,
       plistName: undefined,
       defaultProps: {
         children: "children",
@@ -337,6 +338,12 @@ export default {
         ]
       }
     };
+  },
+  watch: {
+    // 根据名称筛选清单树
+    plistName(val) {
+      this.$refs.tree.filter(val);
+    }
   },
   created() {
     this.initData();
@@ -425,6 +432,7 @@ export default {
     // 节点单击事件
     handleNodeClick(data) {
       this.queryParams.plistId = data.id;
+      this.currentPlistName = data.label;
       this.handleQuery();
     },
     /** 新增按钮操作 */
