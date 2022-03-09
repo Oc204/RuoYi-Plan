@@ -108,6 +108,24 @@ public class TaskController extends BaseController
     }
 
     /**
+     * 自动增加番茄数
+     */
+    @PreAuthorize("@ss.hasPermi('mytodo:task:edit')")
+    @Log(title = "自动增加番茄数", businessType = BusinessType.UPDATE)
+    @GetMapping("/autoAddTomatoNum/{taskId}")
+    public AjaxResult autoAddTomatoNum(@PathVariable("taskId")Long taskId)
+    {
+        Task task = taskService.selectTaskById(taskId) ;
+
+        int tomatoNum = 1 ;
+        if(task.getTomatoNumber().isEmpty()) {
+            tomatoNum = Integer.parseInt(task.getTomatoNumber()) + 1 ;
+        }
+        task.setTomatoNumber(String.valueOf(tomatoNum));
+        return toAjax(taskService.updateTask(task));
+    }
+
+    /**
      * 删除任务
      */
     @PreAuthorize("@ss.hasPermi('mytodo:task:remove')")

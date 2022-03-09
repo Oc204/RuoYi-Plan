@@ -287,7 +287,7 @@
 
 <script>
 
-import { listTask, getTask, delTask, addTask, updateTask ,currentTaskList} from "@/api/mytodo/task";
+import { listTask, getTask, delTask, addTask, updateTask ,currentTaskList, autoAddTomatoNum} from "@/api/mytodo/task";
 import {treeselect } from "@/api/mytodo/plist";
 
 
@@ -388,7 +388,7 @@ export default {
       this.form.plistId = this.plistId ;
 
       this.realmin = this.min = 0 ;
-      this.realsec = this.sec = 7 ;
+      this.realsec = this.sec = 5 ;
       // this.plistName = this.$route.query && this.$route.query.plistName ;
       // console.log("get plistId" + this.plistId + "  this.plistName: " + this.plistName) ;
       //this.queryParams.plistId = this.plistId ;
@@ -569,7 +569,7 @@ export default {
             this.pause = false ;
 
             // TODO任务结束番茄数加一
-
+            this.addTomatoNum(row.id);
           } else {
             this.realsec -= 1;
             this.str.message = this.realmin +":" + this.realsec ;
@@ -586,7 +586,11 @@ export default {
       }
     },
 
+    addTomatoNum(taskId){
+      autoAddTomatoNum(taskId).then(response => {
 
+      });
+    }
 
   }
 };

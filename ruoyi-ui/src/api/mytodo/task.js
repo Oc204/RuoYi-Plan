@@ -44,6 +44,14 @@ export function updateTask(data) {
   })
 }
 
+// 自动增加番茄数
+export function autoAddTomatoNum(taskId) {
+  return request({
+    url: '/mytodo/task/autoAddTomatoNum/' + taskId,
+    method: 'get'
+  })
+}
+
 // 删除清单任务关联
 export function delTask(id) {
   return request({
