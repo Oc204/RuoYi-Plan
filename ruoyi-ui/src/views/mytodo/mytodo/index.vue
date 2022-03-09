@@ -187,6 +187,22 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:menu:remove']"
           >删除</el-button>
+          <el-button
+            v-show=play
+            size="small"
+            type="primary"
+            icon="el-icon-video-play"
+            @click="handlPlay(true)"
+            circle
+          />
+          <el-button
+            v-show=pause
+            size="small"
+            type="primary"
+            icon="el-icon-video-pause"
+            @click="handlPlay(false)"
+            circle
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -308,6 +324,16 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 显示计时器开始
+      play: true,
+      // 显示计时器停止
+      pause: false,
+      // 计时器
+      timer: undefined,
+      str: undefined,
+      num: 0,
+      min: 25,
+      sec: 0,
       // 是否展开，默认全部折叠
       isExpandAll: false,
       // 重新渲染表格状态
@@ -493,7 +519,76 @@ export default {
         this.getList();
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
+    },
+    handlPlay(data) {
+      if(data){
+        this.play = false ;
+        this.pause = true ;
+
+        var cd = new Date();
+        this.timer = this.zeroPadding(cd.getHours(), 2) + ':' + this.zeroPadding(cd.getMinutes(), 2) + ':' + this.zeroPadding(cd.getSeconds(), 2);
+
+        this.str = this.$notify({
+          title: '任务开始',
+          message: this.min + " : "+ this.sec,
+          duration: 0,
+          position: 'bottom-right',
+        });
+
+        setInterval(this.changeMsg,1000);
+
+      }else{
+        this.play = true ;
+        this.pause = false ;
+
+        //setInterval(this.clog, 1000);
+      }
+    },
+
+    zeroPadding(num, digit) {
+      var zero = '';
+      for(var i = 0; i < digit; i++) {
+        zero += '0';
+      }
+    return (zero + num).slice(-digit);
+    },
+    changeMsg() {
+      console.log("this.timer" + this.min + ":" + this.sec) ;
+      this.num++ ;
+      if (this.sec === 0 && this.min !== 0) {
+        this.sec = 59;
+        this.min -= 1;
+      } else if (this.min === 0 && this.sec === 0) {
+        this.sec = 0;
+      } else {
+        this.sec -= 1;
+        this.str.message = this.min +":" + this.sec ;
+      }
+    },
+    countdown () {
+      this.timer = setInterval(function () {
+
+        this.min--
+        if(this.min===0){
+          clearInterval(this.timer)
+        }
+        console.log(this.min)
+        this.str.message = this.min  ;
+
+        // if (this.seconds === 0 && this.minutes !== 0) {
+        //   this.seconds = 59;
+        //   this.minutes -= 1;
+        // } else if (this.minutes === 0 && this.seconds === 0) {
+        //   this.seconds = 0;
+        //   clearInterval(this.timer);
+        // } else {
+        //   this.seconds -= 1;
+        //   console.log(this.minutes + "," + this.seconds) ;
+        //   this.str.message = this.minutes + ":"+ this.seconds ;
+        // }
+      }, 1000)
     }
+
   }
 };
 </script>
