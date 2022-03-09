@@ -192,7 +192,7 @@
             size="small"
             type="primary"
             icon="el-icon-video-play"
-            @click="handlPlay(true)"
+            @click="handlPlay(true,scope.row)"
             circle
           />
           <el-button
@@ -200,7 +200,7 @@
             size="small"
             type="primary"
             icon="el-icon-video-pause"
-            @click="handlPlay(false)"
+            @click="handlPlay(false,scope.row)"
             circle
           />
         </template>
@@ -329,11 +329,16 @@ export default {
       // 显示计时器停止
       pause: false,
       // 计时器
-      timer: undefined,
+      currentTaskId: undefined,
       str: undefined,
       num: 0,
-      min: 25,
+      min: 0,
       sec: 0,
+      // 实时分
+      realmin: 0,
+      // 实时秒
+      realsec: 0,
+      timer: undefined,
       // 是否展开，默认全部折叠
       isExpandAll: false,
       // 重新渲染表格状态
@@ -375,13 +380,15 @@ export default {
     this.initData();
     this.getList();
     this.getPlistTreeselect();
-
   },
   methods: {
     /** 初始化操作*/
     initData() {
       this.plistId = this.$route.query && this.$route.query.plistId ;
       this.form.plistId = this.plistId ;
+
+      this.realmin = this.min = 0 ;
+      this.realsec = this.sec = 7 ;
       // this.plistName = this.$route.query && this.$route.query.plistName ;
       // console.log("get plistId" + this.plistId + "  this.plistName: " + this.plistName) ;
       //this.queryParams.plistId = this.plistId ;
@@ -520,74 +527,66 @@ export default {
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     },
-    handlPlay(data) {
-      if(data){
+    handlPlay(flag, row) {
+      console.log("currentTaskId:"+ this.currentTaskId+ "rowid"+ row.id) ;
+      if(flag){
+
+        if(this.currentTaskId == undefined) {
+          this.currentTaskId = row.id ;
+
+          this.str = this.$notify({
+            title: row.taskName + "任务进行中...",
+            message: this.realmin + " : "+ this.realsec,
+            duration: 0,
+            position: 'bottom-right',
+          });
+        } else if (this.currentTaskId != row.id) {
+          this.currentTaskId = row.id ;
+
+          this.realmin = this.min ;
+          this.realsec = this.sec ;
+          console.log("切换任务重新开始"+ row.taskName + this.realmin +" : "+ this.realsec);
+          clearInterval(this.timer);
+        }
+
         this.play = false ;
         this.pause = true ;
 
-        var cd = new Date();
-        this.timer = this.zeroPadding(cd.getHours(), 2) + ':' + this.zeroPadding(cd.getMinutes(), 2) + ':' + this.zeroPadding(cd.getSeconds(), 2);
+        this.str.title =  row.taskName + "任务进行中...";
+        this.timer = setInterval(()=>{
+          console.log("time" + this.realmin + ":" + this.realsec) ;
+          this.num++ ;
+          if (this.realsec === 0 && this.realmin !== 0) {
+            this.realsec = 59;
+            this.realmin -= 1;
+          } else if (this.realmin === 0 && this.realsec === 0) {  // 任务自然到时结束
+            this.realsec = 0;
+            clearInterval(this.timer);
+            this.str.title =  row.taskName + "任务结束";
 
-        this.str = this.$notify({
-          title: '任务开始',
-          message: this.min + " : "+ this.sec,
-          duration: 0,
-          position: 'bottom-right',
-        });
+            // 设置按钮为待开始样式
+            this.play = true ;
+            this.pause = false ;
 
-        setInterval(this.changeMsg,1000);
+            // TODO任务结束番茄数加一
+
+          } else {
+            this.realsec -= 1;
+            this.str.message = this.realmin +":" + this.realsec ;
+          }
+        },1000);
 
       }else{
         this.play = true ;
         this.pause = false ;
 
-        //setInterval(this.clog, 1000);
+        clearInterval(this.timer);
+        this.str.title =  row.taskName + "任务暂停";
+        console.log("暂停当前任务" + row.taskName);
       }
     },
 
-    zeroPadding(num, digit) {
-      var zero = '';
-      for(var i = 0; i < digit; i++) {
-        zero += '0';
-      }
-    return (zero + num).slice(-digit);
-    },
-    changeMsg() {
-      console.log("this.timer" + this.min + ":" + this.sec) ;
-      this.num++ ;
-      if (this.sec === 0 && this.min !== 0) {
-        this.sec = 59;
-        this.min -= 1;
-      } else if (this.min === 0 && this.sec === 0) {
-        this.sec = 0;
-      } else {
-        this.sec -= 1;
-        this.str.message = this.min +":" + this.sec ;
-      }
-    },
-    countdown () {
-      this.timer = setInterval(function () {
 
-        this.min--
-        if(this.min===0){
-          clearInterval(this.timer)
-        }
-        console.log(this.min)
-        this.str.message = this.min  ;
-
-        // if (this.seconds === 0 && this.minutes !== 0) {
-        //   this.seconds = 59;
-        //   this.minutes -= 1;
-        // } else if (this.minutes === 0 && this.seconds === 0) {
-        //   this.seconds = 0;
-        //   clearInterval(this.timer);
-        // } else {
-        //   this.seconds -= 1;
-        //   console.log(this.minutes + "," + this.seconds) ;
-        //   this.str.message = this.minutes + ":"+ this.seconds ;
-        // }
-      }, 1000)
-    }
 
   }
 };
