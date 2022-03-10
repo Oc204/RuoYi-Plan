@@ -568,7 +568,7 @@ export default {
             this.play = true ;
             this.pause = false ;
 
-            // TODO任务结束番茄数加一
+            // 任务结束番茄数加一
             this.addTomatoNum(row.id);
           } else {
             this.realsec -= 1;
