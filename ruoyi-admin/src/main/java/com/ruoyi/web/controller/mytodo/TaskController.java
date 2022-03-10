@@ -115,14 +115,7 @@ public class TaskController extends BaseController
     @GetMapping("/autoAddTomatoNum/{taskId}")
     public AjaxResult autoAddTomatoNum(@PathVariable("taskId")Long taskId)
     {
-        Task task = taskService.selectTaskById(taskId) ;
-
-        int tomatoNum = 1 ;
-        if(!task.getTomatoNumber().equals("")) {
-            tomatoNum = Integer.parseInt(task.getTomatoNumber()) + 1 ;
-        }
-        task.setTomatoNumber(String.valueOf(tomatoNum));
-        return toAjax(taskService.updateTask(task));
+        return toAjax(taskService.updateTomato(taskId));
     }
 
     /**

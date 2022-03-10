@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TomatoMapper;
@@ -54,6 +55,7 @@ public class TomatoServiceImpl implements ITomatoService
     public int insertTomato(Tomato tomato)
     {
         tomato.setCreateTime(DateUtils.getNowDate());
+        tomato.setUserId(SecurityUtils.getUserId());
         return tomatoMapper.insertTomato(tomato);
     }
 

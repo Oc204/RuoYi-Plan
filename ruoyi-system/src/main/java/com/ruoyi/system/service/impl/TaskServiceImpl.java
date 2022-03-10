@@ -3,11 +3,15 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.domain.Tomato;
+import com.ruoyi.system.mapper.TomatoMapper;
+import com.ruoyi.system.service.ITomatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TaskMapper;
 import com.ruoyi.system.domain.Task;
 import com.ruoyi.system.service.ITaskService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 任务Service业务层处理
@@ -15,15 +19,19 @@ import com.ruoyi.system.service.ITaskService;
  * @author ruoyi
  * @date 2022-03-01
  */
+@Transactional
 @Service
 public class TaskServiceImpl implements ITaskService 
 {
     @Autowired
     private TaskMapper taskMapper;
 
+    @Autowired
+    private ITomatoService tomatoService ;
+
     /**
      * 查询任务
-     * 
+     *
      * @param id 任务主键
      * @return 任务
      */
@@ -56,6 +64,7 @@ public class TaskServiceImpl implements ITaskService
     {
         task.setCreateTime(DateUtils.getNowDate());
         task.setUserId(SecurityUtils.getUserId());
+        task.setTomatoNumber("0");
         return taskMapper.insertTask(task);
     }
 
@@ -94,5 +103,25 @@ public class TaskServiceImpl implements ITaskService
     public int deleteTaskById(Long id)
     {
         return taskMapper.deleteTaskById(id);
+    }
+
+    @Override
+    public int updateTomato(Long taskId) {
+
+        Task task = this.selectTaskById(taskId) ;
+
+        int tomatoNum = 1 ;
+        if(!task.getTomatoNumber().equals("")) {
+            tomatoNum = Integer.parseInt(task.getTomatoNumber()) + 1 ;
+        }
+        task.setTomatoNumber(String.valueOf(tomatoNum));
+
+        Tomato tomato = new Tomato() ;
+        tomato.setTaskId(taskId);
+        tomatoService.insertTomato(tomato) ;
+
+        this.updateTask(task) ;
+
+        return this.updateTask(task);
     }
 }

@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.Task;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 任务Service接口
@@ -58,4 +59,10 @@ public interface ITaskService
      * @return 结果
      */
     public int deleteTaskById(Long id);
+
+    /**
+     * 更新番茄
+     * @return
+     */
+    public int updateTomato(Long taskId);
 }
