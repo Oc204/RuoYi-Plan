@@ -95,4 +95,14 @@ public class SalaryServiceImpl implements ISalaryService
     {
         return salaryMapper.deleteSalaryById(id);
     }
+
+    @Override
+    public String anaylysisByYear(Salary salary) {
+        return salaryMapper.anaylysisByYear(salary);
+    }
+
+    @Override
+    public String anaylysisByMonth(Salary salary) {
+        return salaryMapper.anaylysisByMonth(salary);
+    }
 }

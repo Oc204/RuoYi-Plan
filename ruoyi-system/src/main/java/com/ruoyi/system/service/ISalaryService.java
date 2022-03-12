@@ -58,4 +58,18 @@ public interface ISalaryService
      * @return 结果
      */
     public int deleteSalaryById(Long id);
+
+    /**
+     * 按年分析收入情况
+     * @param salary
+     * @return
+     */
+    String anaylysisByYear(Salary salary);
+
+    /**
+     * 按月分析收入情况
+     * @param salary
+     * @return
+     */
+    String anaylysisByMonth(Salary salary);
 }

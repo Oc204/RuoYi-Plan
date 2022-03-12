@@ -58,4 +58,8 @@ public interface SalaryMapper
      * @return 结果
      */
     public int deleteSalaryByIds(Long[] ids);
+
+    String anaylysisByMonth(Salary salary);
+
+    String anaylysisByYear(Salary salary);
 }

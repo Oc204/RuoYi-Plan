@@ -78,6 +78,20 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
+<!--        <el-form-item>
+          <el-form-item label="番茄时长">
+            <el-radio-group >
+              <el-radio
+                v-for="dict in dict.type.sys_tomato_length"
+                :key="dict.value"
+                :label="dict.value"
+              >{{dict.label}}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <span>番茄时长：{{dict.type.sys_user_sex}}</span>
+        </el-form-item>-->
+        <el-input v-model="sys_tomato_length" v-show="false">{{dict.type.sys_tomato_length}}
+        </el-input>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -297,7 +311,7 @@ import IconSelect from "@/components/IconSelect";
 
 export default {
   name: "Menu",
-  dicts: ['sys_show_hide', 'sys_normal_disable'],
+  dicts: ['sys_user_sex', 'sys_tomato_length'],
   components: { Treeselect, IconSelect },
   data() {
     return {
@@ -330,6 +344,8 @@ export default {
       pause: false,
       // 计时器
       currentTaskId: undefined,
+      // 番茄钟
+      sys_tomato_length: undefined,
       str: undefined,
       num: 0,
       min: 0,
@@ -387,8 +403,10 @@ export default {
       this.plistId = this.$route.query && this.$route.query.plistId ;
       this.form.plistId = this.plistId ;
 
-      this.realmin = this.min = 0 ;
-      this.realsec = this.sec = 5 ;
+      // console.log(sys_tomato_length) ;
+      // console.log(dict.type.sys_tomato_length) ;
+      this.realmin = this.min = 25 ;
+      this.realsec = this.sec = 0 ;
       // this.plistName = this.$route.query && this.$route.query.plistName ;
       // console.log("get plistId" + this.plistId + "  this.plistName: " + this.plistName) ;
       //this.queryParams.plistId = this.plistId ;
