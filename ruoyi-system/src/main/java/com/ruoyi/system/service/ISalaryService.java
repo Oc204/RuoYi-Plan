@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.system.domain.Salary;
 
 /**
@@ -61,10 +63,10 @@ public interface ISalaryService
 
     /**
      * 按年分析收入情况
-     * @param salary
+     * @param year
      * @return
      */
-    String anaylysisByYear(Salary salary);
+    Map<String ,Object> anaylysisByYear(String year);
 
     /**
      * 按月分析收入情况

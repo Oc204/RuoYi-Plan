@@ -22,8 +22,8 @@ public class SalaryAnalysisController {
     }
 
     @GetMapping("/year")
-    public AjaxResult YearAnalysis(Salary salary) {
+    public AjaxResult YearAnalysis(String year) {
 
-        return AjaxResult.success(salaryService.anaylysisByYear(salary));
+        return AjaxResult.success(salaryService.anaylysisByYear(year));
     }
 }

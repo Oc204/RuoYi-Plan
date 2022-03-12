@@ -98,4 +98,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="anaylysisByYear" resultType="java.util.HashMap">
+        select DATE_FORMAT(salary_date, '%Y-%m'),sum(salary_detail)
+        FROM salary
+        <where>
+            user_id = #{userId}
+            <if test="year != null  and year != ''"> and YEAR(salary_date)= = #{year}</if>
+        </where>
+    </select>
+
 </mapper>

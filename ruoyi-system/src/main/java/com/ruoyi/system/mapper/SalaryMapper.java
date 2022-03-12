@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.system.domain.Salary;
 
 /**
@@ -61,5 +63,5 @@ public interface SalaryMapper
 
     String anaylysisByMonth(Salary salary);
 
-    String anaylysisByYear(Salary salary);
+    Map<String ,Object> anaylysisByYear(Long userId, String year);
 }
