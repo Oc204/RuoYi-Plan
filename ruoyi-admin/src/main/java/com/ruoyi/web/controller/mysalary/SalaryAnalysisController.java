@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/mysalary/analysis")
@@ -31,6 +28,10 @@ public class SalaryAnalysisController {
     @GetMapping("/year/{year}")
     public AjaxResult YearAnalysis(@PathVariable("year") String year) {
 
+        if("undefined".equals(year)){
+            Calendar cal = Calendar.getInstance();
+            year = String.valueOf(cal.get(Calendar.YEAR));
+        }
         Map<String, Object[]> result = new HashMap<>() ;
         List<Map<String,Object>> list = salaryService.anaylysisByYear(year) ;
         List<Object> month = new ArrayList<>() ;

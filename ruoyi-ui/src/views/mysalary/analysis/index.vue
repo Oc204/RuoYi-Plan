@@ -18,6 +18,7 @@
 
 <script>
 import { getAnalysisByYear} from "@/api/mysalary/salary";
+import year from "../../../components/Crontab/year";
 
 export default {
   name: "SalaryAnalysis",
@@ -31,6 +32,7 @@ export default {
     }
   },
   created() {
+
     this.getAnalysisByYear() ;
 
   },
