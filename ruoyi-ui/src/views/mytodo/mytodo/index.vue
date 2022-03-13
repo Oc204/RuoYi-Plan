@@ -226,6 +226,7 @@
     <!-- 添加或修改菜单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="680px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-input v-model="form.plistId" v-show="false"></el-input>
         <el-row>
           <el-col :span="24">
             <el-form-item label="上级任务">
@@ -301,7 +302,7 @@
 
 <script>
 
-import { listTask, getTask, delTask, addTask, updateTask ,currentTaskList, autoAddTomatoNum} from "@/api/mytodo/task";
+import { getTask, delTask, addTask, updateTask ,currentTaskList, autoAddTomatoNum} from "@/api/mytodo/task";
 import {treeselect } from "@/api/mytodo/plist";
 
 
@@ -495,8 +496,11 @@ export default {
       } else {
         this.form.parentId = 0;
       }
+      this.form.plistId = this.queryParams.plistId ;
+      console.log("this.queryParams.plistId" + this.queryParams.plistId) ;
+      console.log("this.plistId" + this.plistId) ;
       this.open = true;
-      this.title = "添加清单";
+      this.title = "添加任务";
     },
     /** 展开/折叠操作 */
     toggleExpandAll() {
@@ -572,7 +576,7 @@ export default {
 
         this.str.title =  row.taskName + "任务进行中...";
         this.timer = setInterval(()=>{
-          console.log("time" + this.realmin + ":" + this.realsec) ;
+          // console.log("time" + this.realmin + ":" + this.realsec) ;
           this.num++ ;
           if (this.realsec === 0 && this.realmin !== 0) {
             this.realsec = 59;
