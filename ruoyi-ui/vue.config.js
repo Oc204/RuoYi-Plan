@@ -67,6 +67,8 @@ module.exports = {
         minRatio: 0.8                   // 压缩率小于1才会压缩
       })
     ],
+    // 使用源代码调试
+    devtool: 'source-map'
   },
   chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test

@@ -54,3 +54,11 @@ export function picTest() {
     // }
   })
 }
+
+// 查询年度分析
+export function getAnalysisByYear(year) {
+  return request({
+    url: '/mysalary/analysis/year/' + year,
+    method: 'get',
+  })
+}

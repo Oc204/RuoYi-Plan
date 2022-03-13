@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.system.domain.Salary;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 计划Mapper接口
@@ -63,5 +64,5 @@ public interface SalaryMapper
 
     String anaylysisByMonth(Salary salary);
 
-    Map<String ,Object> anaylysisByYear(Long userId, String year);
+    List<Map<String ,Object>> anaylysisByYear(@Param("userId")Long userId, @Param("year")String year);
 }

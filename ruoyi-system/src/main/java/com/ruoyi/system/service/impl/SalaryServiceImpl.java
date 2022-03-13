@@ -99,7 +99,7 @@ public class SalaryServiceImpl implements ISalaryService
     }
 
     @Override
-    public Map<String ,Object> anaylysisByYear(String year) {
+    public List<Map<String ,Object>> anaylysisByYear(String year) {
 
         return salaryMapper.anaylysisByYear(SecurityUtils.getUserId(),year);
     }

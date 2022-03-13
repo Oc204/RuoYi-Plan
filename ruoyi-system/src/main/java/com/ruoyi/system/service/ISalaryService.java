@@ -66,7 +66,7 @@ public interface ISalaryService
      * @param year
      * @return
      */
-    Map<String ,Object> anaylysisByYear(String year);
+    List<Map<String ,Object>> anaylysisByYear(String year);
 
     /**
      * 按月分析收入情况
