@@ -589,8 +589,8 @@ export default {
             clearInterval(this.timer);
             this.str.title =  row.taskName + "任务结束";
 
-            // let url = "@/assets/music/Bubble.ogg" ;
-            // this.playMusic() ;
+            let url = "http://r82n1hcqf.hn-bkt.clouddn.com/Bubble.ogg" ;
+            this.playMusic(url) ;
             // 设置按钮为待开始样式
             this.play = true ;
             this.pause = false ;
@@ -603,7 +603,8 @@ export default {
           }
         },1000);
 
-        this.playMusic() ;
+        let url = "http://r82n1hcqf.hn-bkt.clouddn.com/tank.mp3" ;
+        this.playMusic(url) ;
 
       }else{
         this.play = true ;
@@ -620,8 +621,7 @@ export default {
 
       });
     },
-    playMusic(){
-      let url = "../tank.mp3" ;
+    playMusic(url){
 
       let audio = document.querySelector("audio");//在VUE中使用audio标签
       audio.src = url;//设置audio的src为上面生成的url
