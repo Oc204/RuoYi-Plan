@@ -30,8 +30,9 @@
       <el-col :span="20" :xs="24">
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
       <el-form-item label="当前列表所属清单:">{{currentPlistName}}
-
-        <!--        <el-input-->
+<!--        <audio id="audio" src="@/assets/music/tank.mp3"  />-->
+        <audio id="audio" src="@/assets/music/tank.mp3"  />
+          <!--        <el-input-->
         <!--          v-model="this.plistName"-->
         <!--        />-->
       </el-form-item>
@@ -347,6 +348,7 @@ export default {
       currentTaskId: undefined,
       // 番茄钟
       sys_tomato_length: undefined,
+      isMusicPlay: false,
       str: undefined,
       num: 0,
       min: 0,
@@ -406,8 +408,8 @@ export default {
 
       // console.log(sys_tomato_length) ;
       // console.log(dict.type.sys_tomato_length) ;
-      this.realmin = this.min = 25 ;
-      this.realsec = this.sec = 0 ;
+      this.realmin = this.min = 0 ;
+      this.realsec = this.sec = 10 ;
       // this.plistName = this.$route.query && this.$route.query.plistName ;
       // console.log("get plistId" + this.plistId + "  this.plistName: " + this.plistName) ;
       //this.queryParams.plistId = this.plistId ;
@@ -575,6 +577,7 @@ export default {
         this.pause = true ;
 
         this.str.title =  row.taskName + "任务进行中...";
+
         this.timer = setInterval(()=>{
           // console.log("time" + this.realmin + ":" + this.realsec) ;
           this.num++ ;
@@ -586,6 +589,8 @@ export default {
             clearInterval(this.timer);
             this.str.title =  row.taskName + "任务结束";
 
+            // let url = "@/assets/music/Bubble.ogg" ;
+            // this.playMusic() ;
             // 设置按钮为待开始样式
             this.play = true ;
             this.pause = false ;
@@ -597,6 +602,8 @@ export default {
             this.str.message = this.realmin +":" + this.realsec ;
           }
         },1000);
+
+        this.playMusic() ;
 
       }else{
         this.play = true ;
@@ -612,6 +619,15 @@ export default {
       autoAddTomatoNum(taskId).then(response => {
 
       });
+    },
+    playMusic(){
+      let url = "../tank.mp3" ;
+
+      let audio = document.querySelector("audio");//在VUE中使用audio标签
+      audio.src = url;//设置audio的src为上面生成的url
+
+      console.log(audio.src) ;
+      let playPromiser = audio.play();//进行播放
     }
 
   }
