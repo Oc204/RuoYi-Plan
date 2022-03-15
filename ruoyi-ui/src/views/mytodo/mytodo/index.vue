@@ -30,8 +30,7 @@
       <el-col :span="20" :xs="24">
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
       <el-form-item label="当前列表所属清单:">{{currentPlistName}}
-<!--        <audio id="audio" src="@/assets/music/tank.mp3"  />-->
-        <audio id="audio" src="@/assets/music/tank.mp3"  />
+        <audio id="audio"  />
           <!--        <el-input-->
         <!--          v-model="this.plistName"-->
         <!--        />-->
@@ -79,18 +78,6 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
-<!--        <el-form-item>
-          <el-form-item label="番茄时长">
-            <el-radio-group >
-              <el-radio
-                v-for="dict in dict.type.sys_tomato_length"
-                :key="dict.value"
-                :label="dict.value"
-              >{{dict.label}}</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <span>番茄时长：{{dict.type.sys_user_sex}}</span>
-        </el-form-item>-->
         <el-input v-model="sys_tomato_length" v-show="false">{{dict.type.sys_tomato_length}}
         </el-input>
     </el-form>
@@ -397,8 +384,8 @@ export default {
   },
   created() {
     this.initData();
-    this.getList();
     this.getPlistTreeselect();
+    this.getList();
   },
   methods: {
     /** 初始化操作*/
@@ -410,9 +397,7 @@ export default {
       // console.log(dict.type.sys_tomato_length) ;
       this.realmin = this.min = 0 ;
       this.realsec = this.sec = 10 ;
-      // this.plistName = this.$route.query && this.$route.query.plistName ;
-      // console.log("get plistId" + this.plistId + "  this.plistName: " + this.plistName) ;
-      //this.queryParams.plistId = this.plistId ;
+
     },
     // 选择图标
     selected(name) {
@@ -422,6 +407,7 @@ export default {
     getList() {
       this.loading = true;
       //this.queryParams.plistId = this.plistId ;
+      console.log(this.queryParams) ;
       currentTaskList(this.queryParams).then(response => {
         console.log("格式化查询数据"+JSON.stringify(this.queryParams)) ;
         this.taskList = this.handleTree(response.data, "id");
@@ -451,6 +437,12 @@ export default {
     getPlistTreeselect() {
       treeselect().then(response => {
         this.pListOptions = response.data;
+
+        if(this.queryParams.plistId === undefined) {
+          this.queryParams.plistId = this.pListOptions[0].id ;
+          this.currentPlistName = this.pListOptions[0].label ;
+        }
+        console.log(this.pListOptions);
       });
     },
     // 取消按钮
