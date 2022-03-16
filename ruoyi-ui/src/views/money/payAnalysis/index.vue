@@ -48,7 +48,7 @@ export default {
         for(let i in res.data.month) {
 
           this.month.push(res.data.month[i]);
-          this.salarySum.push(res.data.salarySum[i]);
+          this.salarySum.push(res.data.paySum[i]);
         }
         this.showCharts() ;
       })

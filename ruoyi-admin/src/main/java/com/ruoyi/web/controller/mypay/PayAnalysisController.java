@@ -67,7 +67,7 @@ public class PayAnalysisController {
         }
 
         result.put("month",monthNum.toArray(new Object[monthNum.size()])) ;
-        result.put("PaySum",monthPaySum.toArray(new Object[monthPaySum.size()])) ;
+        result.put("paySum",monthPaySum.toArray(new Object[monthPaySum.size()])) ;
 
         return result;
     }
