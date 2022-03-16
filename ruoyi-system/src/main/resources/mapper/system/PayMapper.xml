@@ -98,4 +98,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="anaylysisByYear" resultType="java.util.HashMap">
+        select DATE_FORMAT(pay_date, '%Y-%m') AS month  ,sum(pay_detail) AS sum
+        FROM pay
+        <where>
+            user_id = #{userId}
+            <if test="year != null  and year != ''"> and YEAR(pay_date)= #{year}</if>
+            GROUP BY MONTH(pay_date)
+        </where>
+    </select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.system.domain.Pay;
 
 /**
@@ -58,4 +60,11 @@ public interface IPayService
      * @return 结果
      */
     public int deletePayById(Long id);
+
+    /**
+     * 按年分析支出情况
+     * @param year
+     * @return
+     */
+    List<Map<String ,Object>> anaylysisByYear(String year);
 }

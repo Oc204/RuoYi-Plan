@@ -42,3 +42,11 @@ export function delPay(id) {
     method: 'delete'
   })
 }
+
+// 查询年度分析
+export function getAnalysisByYear(year) {
+  return request({
+    url: '/mypay/analysis/year/' + year,
+    method: 'get',
+  })
+}

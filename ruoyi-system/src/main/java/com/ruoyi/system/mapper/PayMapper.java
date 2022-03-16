@@ -1,7 +1,10 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.system.domain.Pay;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 计划Mapper接口
@@ -58,4 +61,6 @@ public interface PayMapper
      * @return 结果
      */
     public int deletePayByIds(Long[] ids);
+
+    List<Map<String ,Object>> anaylysisByYear(@Param("userId")Long userId, @Param("year")String year);
 }

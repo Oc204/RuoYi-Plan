@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,4 +97,8 @@ public class PayServiceImpl implements IPayService
     {
         return payMapper.deletePayById(id);
     }
+
+    @Override
+    public List<Map<String, Object>> anaylysisByYear(String year) {
+        return payMapper.anaylysisByYear(SecurityUtils.getUserId(),year);    }
 }
