@@ -29,6 +29,8 @@ public interface IPayService
      */
     public List<Pay> selectPayList(Pay pay);
 
+    public List<Pay> selectPayListByTime(String year,String month);
+
     /**
      * 新增计划
      * 

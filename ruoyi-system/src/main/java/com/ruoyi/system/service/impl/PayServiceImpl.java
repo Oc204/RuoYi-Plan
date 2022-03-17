@@ -47,6 +47,13 @@ public class PayServiceImpl implements IPayService
         return payMapper.selectPayList(pay);
     }
 
+    @Override
+    public List<Pay> selectPayListByTime(String year, String month) {
+
+        Long userId = SecurityUtils.getUserId() ;
+        return payMapper.selectPayListByTime(userId, year,month);
+    }
+
     /**
      * 新增计划
      * 

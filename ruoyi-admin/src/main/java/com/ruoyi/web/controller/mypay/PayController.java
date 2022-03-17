@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.mypay;
 
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,6 +45,19 @@ public class PayController extends BaseController
         startPage();
         pay.setUserId(getUserId());
         List<Pay> list = payService.selectPayList(pay);
+        return getDataTable(list);
+    }
+
+    @GetMapping("/time")
+    public TableDataInfo listByTime(String year,String month)
+    {
+        if("undefined".equals(year)){
+            Calendar cal = Calendar.getInstance();
+            year = String.valueOf(cal.get(Calendar.YEAR));
+        }
+
+        startPage();
+        List<Pay> list = payService.selectPayListByTime(year, month);
         return getDataTable(list);
     }
 

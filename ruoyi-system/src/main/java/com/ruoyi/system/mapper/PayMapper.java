@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.Pay;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 计划Mapper接口
+ * 支出Mapper接口
  * 
  * @author ruoyi
  * @date 2022-03-06
@@ -29,6 +29,14 @@ public interface PayMapper
      * @return 计划集合
      */
     public List<Pay> selectPayList(Pay pay);
+
+    /**
+     * 按年月查询支出列表
+     * @param year
+     * @param month
+     * @return
+     */
+    public List<Pay> selectPayListByTime(@Param("userId")Long userId, @Param("year")String year,@Param("month")String month);
 
     /**
      * 新增计划

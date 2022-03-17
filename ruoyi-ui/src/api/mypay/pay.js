@@ -1,11 +1,20 @@
 import request from '@/utils/request'
+import month from "../../components/Crontab/month";
 
-// 查询计划列表
+// 查询支出列表
 export function listPay(query) {
   return request({
     url: '/mypay/pay/list',
     method: 'get',
     params: query
+  })
+}
+
+// 查询支出列表
+export function listByTime(year, month) {
+  return request({
+    url: '/mypay/pay/time?year=' +year+"&month="+ month,
+    method: 'get'
   })
 }
 

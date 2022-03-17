@@ -34,6 +34,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="payPic != null  and payPic != ''"> and pay_pic = #{payPic}</if>
         </where>
     </select>
+
+    <select id="selectPayListByTime" resultMap="PayResult">
+        <include refid="selectPayVo"/>
+        <where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="year != null  and year != ''"> and YEAR(pay_date) = #{year}</if>
+            <if test="month != null  and month != ''"> and MONTH (pay_date) = #{month}</if>
+        </where>
+    </select>
     
     <select id="selectPayById" parameterType="Long" resultMap="PayResult">
         <include refid="selectPayVo"/>
