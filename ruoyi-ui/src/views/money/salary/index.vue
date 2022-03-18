@@ -81,7 +81,7 @@
 
     <el-table v-loading="loading" :data="salaryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" align="center"  width="50"> <!-- prop="id"-->
+      <el-table-column label="序号" align="center">
         <template scope="scope">
           <span>{{(queryParams.pageNum-1)*queryParams.pageSize+(scope.$index + 1)}} </span>
         </template>
