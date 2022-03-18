@@ -10,7 +10,7 @@
       >
       </el-date-picker>
     </div>
-    <div id="echarts_box" style="width: 600px;height:400px;"></div>
+    <div id="echarts_box" style="width: 100%;height: 400px"></div>
     <el-table v-loading="loading" :data="payList">
       <el-table-column label="序号" align="center"  width="50"> <!-- prop="id"-->
         <template scope="scope">
@@ -177,6 +177,11 @@ export default {
       console.log(this.salarySum)
       // 3. 使用刚指定的配置项和数据，显示图表
       this.myChart.setOption(this.option) ;
+
+      window.addEventListener("resize", () => {
+        // 执行echarts自带的resize方法，即可做到让echarts图表自适应
+        this.myChart.resize();
+      });
 
       this.myChart.on('click', (params)=> {
         console.log(params.name);
