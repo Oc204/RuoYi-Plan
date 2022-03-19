@@ -10,7 +10,7 @@
       >
       </el-date-picker>
     </div>
-    <div id="echarts_box" style="width: 100%;height: 400px"></div>
+    <div id="echarts_box" style="width: 100%;height: 400px;margin-top: 20px"></div>
 
   </div>
 
@@ -55,9 +55,9 @@ export default {
       this.myChart = this.$echarts.init(document.getElementById('echarts_box'))
 
       this.option = {
-        title: {
+        title: [{
           text: '工资折线图'
-        },
+        }],
         tooltip: {
           trigger: 'axis'
         },

@@ -10,7 +10,7 @@
       >
       </el-date-picker>
     </div>
-    <div id="echarts_box" style="width: 100%;height: 400px"></div>
+    <div id="echarts_box" style="width: 100%;height: 400px;margin-top: 20px"></div>
     <el-table v-loading="loading" :data="payList">
       <el-table-column label="序号" align="center"  width="50"> <!-- prop="id"-->
         <template scope="scope">
