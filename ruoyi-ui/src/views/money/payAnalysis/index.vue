@@ -139,7 +139,7 @@ export default {
     },
     getAnalysisByYear() {
       this.month = [] ;
-      this.salarySum = [] ;
+      this.paySum = [] ;
       this.payYearSum = 0;
 
       // 发起请求，获取数据
