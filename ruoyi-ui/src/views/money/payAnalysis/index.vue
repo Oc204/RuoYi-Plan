@@ -7,8 +7,8 @@
         value-format="yyyy"
         placeholder="选择年"
         @change="getAnalysisByYear"
-      >
-      </el-date-picker>
+      />
+      <span> 当年支出总和：{{payYearSum}} 元</span>
     </div>
     <div id="echarts_box" style="width: 100%;height: 400px;margin-top: 20px"></div>
     <el-table v-loading="loading" :data="payList">
@@ -94,7 +94,7 @@ export default {
     return {
       option: "" ,
       month: [] ,
-      salarySum: [],
+      paySum: [],
       year: undefined,
       myChart: "",
       // 计划表格数据
@@ -105,6 +105,8 @@ export default {
       open: false,
       // 总条数
       total: 0,
+      // 年总支出
+      payYearSum: 0,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -138,12 +140,14 @@ export default {
     getAnalysisByYear() {
       this.month = [] ;
       this.salarySum = [] ;
+      this.payYearSum = 0;
 
       // 发起请求，获取数据
       getAnalysisByYear(this.year).then(res=>{
         for(let i in res.data.month) {
           this.month.push(res.data.month[i]);
-          this.salarySum.push(res.data.paySum[i]);
+          this.paySum.push(res.data.paySum[i]);
+          this.payYearSum+=res.data.paySum[i];
         }
         this.showCharts() ;
       })
@@ -168,13 +172,13 @@ export default {
         },
         series: [
           {
-            data: this.salarySum,
+            data: this.paySum,
             type: 'line'
           }
         ]
       },
       console.log(this.month)
-      console.log(this.salarySum)
+      console.log(this.paySum)
       // 3. 使用刚指定的配置项和数据，显示图表
       this.myChart.setOption(this.option) ;
 

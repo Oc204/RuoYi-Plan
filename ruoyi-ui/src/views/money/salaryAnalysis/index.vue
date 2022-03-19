@@ -9,6 +9,7 @@
         @change="getAnalysisByYear"
       >
       </el-date-picker>
+      <span> 当年收入总和：{{salaryYearSum}} 元</span>
     </div>
     <div id="echarts_box" style="width: 100%;height: 400px;margin-top: 20px"></div>
 
@@ -28,17 +29,17 @@ export default {
       salarySum: [],
       year: undefined,
       myChart: "",
+      salaryYearSum:0
     }
   },
   created() {
-
     this.getAnalysisByYear() ;
-
   },
   methods: {
     getAnalysisByYear() {
       this.month = [] ;
       this.salarySum = [] ;
+      this.salaryYearSum = 0 ;
 
       // 发起请求，获取数据
       getAnalysisByYear(this.year).then(res=>{
@@ -46,6 +47,7 @@ export default {
 
           this.month.push(res.data.month[i]);
           this.salarySum.push(res.data.salarySum[i]);
+          this.salaryYearSum+=res.data.salarySum[i];
         }
         this.showCharts() ;
       })

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @RestController
@@ -34,12 +35,14 @@ public class SalaryAnalysisController {
         }
         Map<String, Object[]> result = new HashMap<>() ;
         List<Map<String,Object>> list = salaryService.anaylysisByYear(year) ;
+
         List<Object> month = new ArrayList<>() ;
         List<Object> salarySum = new ArrayList<>() ;
-        list.forEach(item -> {
+
+        for(Map<String,Object> item : list){
             month.add(item.get("month")) ;
             salarySum.add(item.get("sum")) ;
-        });
+        }
 
         result = setMonth(year, month, salarySum) ;
 
