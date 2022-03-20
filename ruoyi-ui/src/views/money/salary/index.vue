@@ -177,6 +177,16 @@ import { listSalary, getSalary, delSalary, addSalary, updateSalary, picTest} fro
 export default {
   name: "Salary",
   data() {
+    //  <!--金额数字-->
+    let checkMoney = (rule, value, callback) => {
+      var reg = /^(([1-9]{1}\d*)|(0{1}))(\.\d{1,2})?$/ ;
+      if (!reg.test(value)) {
+        callback(new Error('请输入金额数字，最多两位小数'))
+      } else {
+        callback()
+      }
+    }
+
     return {
       // 遮罩层
       loading: true,
@@ -210,6 +220,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        salaryDetail: [
+          { validator: checkMoney, trigger: 'change' }
+        ],
       }
     };
   },

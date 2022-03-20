@@ -293,7 +293,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    
+
     <tomatoSetting ref="dialog"></tomatoSetting>
   </div>
 </template>
