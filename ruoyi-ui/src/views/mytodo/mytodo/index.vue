@@ -397,7 +397,6 @@ export default {
   created() {
     this.initData();
     this.getPlistTreeselect();
-    this.getList();
   },
   methods: {
     /** 初始化操作*/
@@ -411,7 +410,6 @@ export default {
 
       // this.realmin = this.min = 0 ;
       // this.realsec = this.sec = 10 ;
-
     },
     // 选择图标
     selected(name) {
@@ -427,6 +425,7 @@ export default {
         this.taskList = this.handleTree(response.data, "id");
         this.loading = false;
       });
+
     },
     /** 转换菜单数据结构 */
     normalizer(node) {
@@ -455,6 +454,9 @@ export default {
         if(this.queryParams.plistId === undefined) {
           this.queryParams.plistId = this.pListOptions[0].id ;
           this.currentPlistName = this.pListOptions[0].label ;
+
+          // 进入页面时默认加载第一个plistId的任务列表
+          this.getList();
         }
         console.log(this.pListOptions);
       });
@@ -641,7 +643,6 @@ export default {
         console.log('点击提交按钮了')
       })
     }
-
-  }
+  },
 };
 </script>
