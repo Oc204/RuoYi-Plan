@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TomatoSettingMapper">
+    
+    <resultMap type="TomatoSetting" id="TomatoSettingResult">
+        <result property="id"    column="id"    />
+        <result property="tomatoTime"    column="tomato_time"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="active"    column="active"    />
+        <result property="flag"    column="flag"    />
+    </resultMap>
+
+    <sql id="selectTomatoSettingVo">
+        select id, tomato_time, user_id, create_by, create_time, update_by, update_time, remark, active, flag from tomato_setting
+    </sql>
+
+    <select id="selectTomatoSettingList" parameterType="TomatoSetting" resultMap="TomatoSettingResult">
+        <include refid="selectTomatoSettingVo"/>
+        <where>  
+            <if test="tomatoTime != null "> and tomato_time = #{tomatoTime}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="active != null "> and active = #{active}</if>
+            <if test="flag != null "> and flag = #{flag}</if>
+        </where>
+    </select>
+    
+    <select id="selectTomatoSettingById" parameterType="Long" resultMap="TomatoSettingResult">
+        <include refid="selectTomatoSettingVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTomatoSettingByUserId" parameterType="Long" resultMap="TomatoSettingResult">
+        <include refid="selectTomatoSettingVo"/>
+        where user_id = #{userId}
+    </select>
+        
+    <insert id="insertTomatoSetting" parameterType="TomatoSetting" useGeneratedKeys="true" keyProperty="id">
+        insert into tomato_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tomatoTime != null">tomato_time,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="active != null">active,</if>
+            <if test="flag != null">flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tomatoTime != null">#{tomatoTime},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="active != null">#{active},</if>
+            <if test="flag != null">#{flag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTomatoSetting" parameterType="TomatoSetting">
+        update tomato_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tomatoTime != null">tomato_time = #{tomatoTime},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="active != null">active = #{active},</if>
+            <if test="flag != null">flag = #{flag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTomatoSettingById" parameterType="Long">
+        delete from tomato_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteTomatoSettingByIds" parameterType="String">
+        delete from tomato_setting where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
