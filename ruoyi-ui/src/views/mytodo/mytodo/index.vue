@@ -326,6 +326,7 @@
 <script>
 
 import { getTask, delTask, addTask, updateTask ,currentTaskList, autoAddTomatoNum} from "@/api/mytodo/task";
+import { settingTomato } from "@/api/mytodo/tomatoSetting";
 import {treeselect } from "@/api/mytodo/plist";
 
 
@@ -429,10 +430,12 @@ export default {
       this.plistId = this.$route.query && this.$route.query.plistId ;
       this.form.plistId = this.plistId ;
 
-      // console.log(sys_tomato_length) ;
-      // console.log(dict.type.sys_tomato_length) ;
-      this.realmin = this.min = 0 ;
-      this.realsec = this.sec = 10 ;
+      settingTomato().then(response => {
+        this.realmin = response.data.tomatoTime;
+      });
+
+      // this.realmin = this.min = 0 ;
+      // this.realsec = this.sec = 10 ;
 
     },
     // 选择图标
