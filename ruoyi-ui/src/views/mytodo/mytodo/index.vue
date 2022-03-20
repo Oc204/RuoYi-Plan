@@ -293,32 +293,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-
-    <!-- 修改番茄对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="番茄时长(最大为60分钟)" prop="tomatoTime">
-          <el-input v-model="form.tomatoTime" placeholder="请输入番茄时长(最大为60分钟)" />
-        </el-form-item>
-        <el-form-item label="用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户id" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注" />
-        </el-form-item>
-        <el-form-item label="是否激活" prop="active">
-          <el-input v-model="form.active" placeholder="请输入是否激活" />
-        </el-form-item>
-        <el-form-item label="番茄钟类别：番茄时长\短时休息\长时休息" prop="flag">
-          <el-input v-model="form.flag" placeholder="请输入番茄钟类别：番茄时长\短时休息\长时休息" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
-
+    
     <tomatoSetting ref="dialog"></tomatoSetting>
   </div>
 </template>
