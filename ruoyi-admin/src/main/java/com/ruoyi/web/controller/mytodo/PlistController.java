@@ -66,6 +66,7 @@ public class PlistController extends BaseController
     @GetMapping("/treeselect")
     public AjaxResult treeselect(Plist plist)
     {
+        plist.setUserId(getUserId());
         List<Plist> result = plistService.selectPlistList(plist);
         return AjaxResult.success(plistService.buildPlistTreeSelect(result));
     }

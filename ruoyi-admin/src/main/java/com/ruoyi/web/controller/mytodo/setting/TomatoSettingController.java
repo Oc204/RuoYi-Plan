@@ -37,7 +37,6 @@ public class TomatoSettingController extends BaseController
     /**
      * 查询番茄列表
      */
-    @PreAuthorize("@ss.hasPermi('system:setting:list')")
     @GetMapping("/list")
     public TableDataInfo list(TomatoSetting tomatoSetting)
     {
@@ -49,7 +48,6 @@ public class TomatoSettingController extends BaseController
     /**
      * 导出番茄列表
      */
-    @PreAuthorize("@ss.hasPermi('system:setting:export')")
     @Log(title = "番茄", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TomatoSetting tomatoSetting)
@@ -62,7 +60,6 @@ public class TomatoSettingController extends BaseController
     /**
      * 获取番茄详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:setting:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +69,6 @@ public class TomatoSettingController extends BaseController
     /**
      * 获取当前用户番茄设置信息
      */
-    @PreAuthorize("@ss.hasPermi('system:setting:query')")
     @GetMapping(value = "/getTomato")
     public AjaxResult getTomato()
     {
@@ -90,7 +86,6 @@ public class TomatoSettingController extends BaseController
     /**
      * 新增番茄
      */
-    @PreAuthorize("@ss.hasPermi('system:setting:add')")
     @Log(title = "番茄", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TomatoSetting tomatoSetting)
@@ -101,7 +96,6 @@ public class TomatoSettingController extends BaseController
     /**
      * 修改番茄
      */
-    @PreAuthorize("@ss.hasPermi('system:setting:edit')")
     @Log(title = "番茄", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TomatoSetting tomatoSetting)
@@ -112,7 +106,6 @@ public class TomatoSettingController extends BaseController
     /**
      * 删除番茄
      */
-    @PreAuthorize("@ss.hasPermi('system:setting:remove')")
     @Log(title = "番茄", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
