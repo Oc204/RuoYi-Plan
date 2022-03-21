@@ -20,10 +20,21 @@
       </el-form-item>
       <el-form-item label="支出明细" prop="payDetail">
         <el-input
-          v-model="queryParams.payDetail"
-          placeholder="请输入支出明细"
+          v-model="queryParams.payMin"
+          placeholder="最小值"
           clearable
           size="small"
+          type="number"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>_
+      <el-form-item>
+        <el-input
+          v-model="queryParams.payMax"
+          placeholder="最大值"
+          clearable
+          size="small"
+          type="number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
@@ -201,11 +212,11 @@ export default {
         pageNum: 1,
         pageSize: 10,
         payName: null,
-        userId: null,
         weight: null,
         payDate: null,
         payDetail: null,
-        payPic: null
+        payMin: null,
+        payMax: null
       },
       // 表单参数
       form: {},
@@ -224,7 +235,7 @@ export default {
     /** 查询计划列表 */
     getList() {
       this.loading = true;
-      listPay(this.queryParams).then(response => {
+      listPay(this.addPayRange(this.queryParams)).then(response => {
         this.payList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -320,6 +331,15 @@ export default {
       this.download('system/pay/export', {
         ...this.queryParams
       }, `pay_${new Date().getTime()}.xlsx`)
+    },
+    // 添加日期范围
+    addPayRange(params) {
+      let search = params;
+      search.params = typeof (search.params) === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {};
+      search.params['payMin'] = search.payMin;
+      search.params['payMax'] = search.payMax;
+
+      return search;
     }
   }
 };

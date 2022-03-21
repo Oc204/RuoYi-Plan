@@ -31,6 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="weight != null "> and weight = #{weight}</if>
             <if test="payDate != null "> and pay_date = #{payDate}</if>
             <if test="payDetail != null "> and pay_detail = #{payDetail}</if>
+            <if test="params.payMin != null  and params.payMin != ''"> and pay_detail >= #{params.payMin}</if>
+            <if test="params.payMax != null  and params.payMax != ''"> and pay_detail &lt;= #{params.payMax}</if>
             <if test="payPic != null  and payPic != ''"> and pay_pic = #{payPic}</if>
         </where>
     </select>
