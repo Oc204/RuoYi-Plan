@@ -10,12 +10,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发薪日期" prop="salaryDate">
+      <el-form-item label="发薪日期" >
         <el-date-picker clearable size="small"
-          v-model="queryParams.salaryDate"
-          type="date"
+          v-model="dateRange"
+          type="daterange"
           value-format="yyyy-MM-dd"
-          placeholder="请选择发薪日期">
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="发薪明细" prop="salaryDetail">
@@ -158,7 +160,6 @@
         </el-form-item>
         <el-form-item label="关联图片" prop="salaryPic">
           <ImageUpload ref="salaryPic" v-model="form.salaryPic"/>
-
 <!--          <el-input v-model="form.salaryPic" placeholder="请输入关联图片" />-->
         </el-form-item>
       </el-form>
@@ -206,6 +207,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 日期区间
+      dateRange: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -233,7 +236,7 @@ export default {
     /** 查询计划列表 */
     getList() {
       this.loading = true;
-      listSalary(this.queryParams).then(response => {
+      listSalary(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.salaryList = response.rows;
         this.total = response.total;
         this.loading = false;
