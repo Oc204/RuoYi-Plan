@@ -34,6 +34,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="params.payMin != null  and params.payMin != ''"> and pay_detail >= #{params.payMin}</if>
             <if test="params.payMax != null  and params.payMax != ''"> and pay_detail &lt;= #{params.payMax}</if>
             <if test="payPic != null  and payPic != ''"> and pay_pic = #{payPic}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(pay_date,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(pay_date,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
         </where>
     </select>
 

@@ -10,15 +10,17 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="支出日期" prop="payDate">
+      <el-form-item label="支出日期">
         <el-date-picker clearable size="small"
-          v-model="queryParams.payDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择支出日期">
+                        v-model="dateRange"
+                        type="daterange"
+                        value-format="yyyy-MM-dd"
+                        range-separator="-"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="支出明细" prop="payDetail">
+      <el-form-item label="支出明细">
         <el-input
           v-model="queryParams.payMin"
           placeholder="最小值"
@@ -205,6 +207,8 @@ export default {
       payList: [],
       // 弹出层标题
       title: "",
+      // 日期区间
+      dateRange: [],
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -235,6 +239,7 @@ export default {
     /** 查询计划列表 */
     getList() {
       this.loading = true;
+      this.queryParams = this.addDateRange(this.queryParams, this.dateRange) ;
       listPay(this.addPayRange(this.queryParams)).then(response => {
         this.payList = response.rows;
         this.total = response.total;
@@ -271,6 +276,9 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.dateRange = [];
+      this.queryParams.payMax = null;
+      this.queryParams.payMin = null;
       this.resetForm("queryForm");
       this.handleQuery();
     },
