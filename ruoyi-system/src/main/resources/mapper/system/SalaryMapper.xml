@@ -106,7 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="anaylysisByYear" resultType="java.util.HashMap">
-        select DATE_FORMAT(salary_date, '%Y-%m') AS month  ,sum(salary_detail) AS sum
+        select any_value(DATE_FORMAT(salary_date, '%Y-%m')) AS month  , any_value(sum(salary_detail)) AS sum
         FROM salary
         <where>
             user_id = #{userId}
