@@ -11,6 +11,6 @@ EXPOSE 8080
 
 ADD ./target/ruoyi-admin.jar ./app.jar
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "--spring.profiles.active=dev", "-jar", "app.jar"]
 
 
