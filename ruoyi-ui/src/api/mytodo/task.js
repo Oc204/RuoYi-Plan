@@ -45,9 +45,9 @@ export function updateTask(data) {
 }
 
 // 自动增加番茄数
-export function autoAddTomatoNum(taskId) {
+export function autoAddTomatoNum(taskId , timeLong) {
   return request({
-    url: '/mytodo/task/autoAddTomatoNum/' + taskId,
+    url: '/mytodo/task/autoAddTomatoNum?taskId=' + taskId +"&timeLong="+timeLong,
     method: 'get'
   })
 }

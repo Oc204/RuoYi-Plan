@@ -106,7 +106,7 @@ public class TaskServiceImpl implements ITaskService
     }
 
     @Override
-    public int updateTomato(Long taskId) {
+    public int updateTomato(Long taskId, Long timeLong) {
 
         Task task = this.selectTaskById(taskId) ;
 
@@ -118,6 +118,7 @@ public class TaskServiceImpl implements ITaskService
 
         Tomato tomato = new Tomato() ;
         tomato.setTaskId(taskId);
+        tomato.setTimeLong(timeLong);
         tomatoService.insertTomato(tomato) ;
 
         this.updateTask(task) ;

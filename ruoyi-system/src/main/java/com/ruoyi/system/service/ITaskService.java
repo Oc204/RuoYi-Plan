@@ -64,5 +64,5 @@ public interface ITaskService
      * 更新番茄
      * @return
      */
-    public int updateTomato(Long taskId);
+    public int updateTomato(Long taskId , Long timeLong);
 }

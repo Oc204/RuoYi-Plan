@@ -625,7 +625,7 @@ export default {
     },
 
     addTomatoNum(taskId){
-      autoAddTomatoNum(taskId).then(response => {
+      autoAddTomatoNum(taskId , this.realmin).then(response => {
 
       });
     },
