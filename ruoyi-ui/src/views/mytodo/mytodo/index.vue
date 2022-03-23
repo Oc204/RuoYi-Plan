@@ -405,7 +405,7 @@ export default {
       this.form.plistId = this.plistId ;
 
       settingTomato().then(response => {
-        this.realmin = response.data.tomatoTime;
+        this.realmin = this.min= response.data.tomatoTime;
       });
 
       // this.realmin = this.min = 0 ;
@@ -605,6 +605,7 @@ export default {
 
             // 任务结束番茄数加一
             this.addTomatoNum(row.id);
+            this.realmin = this.min ;
           } else {
             this.realsec -= 1;
             this.str.message = this.realmin +":" + this.realsec ;

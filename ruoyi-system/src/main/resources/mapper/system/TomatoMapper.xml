@@ -33,6 +33,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTomatoVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectTomatoStatisticsByUserId" parameterType="Long" resultType="java.util.HashMap">
+        SELECT SUM(t.time_long)as totalTime,count(*) As totalTask ,
+               (SELECT SUM(time_long) from tomato WHERE YEARWEEK( date_format(  create_time,'%Y-%m-%d' ) ) = YEARWEEK( now() ) ) AS weekTime,
+               (SELECT count(*) from tomato WHERE YEARWEEK( date_format(  create_time,'%Y-%m-%d' ) ) = YEARWEEK( now() ) ) AS weekTask,
+               (SELECT SUM(time_long) from tomato WHERE to_days(create_time) = to_days(now()) ) AS todayTime,
+               (SELECT count(*) from tomato WHERE to_days(create_time) = to_days(now()) ) AS todayTask
+        FROM `tomato` t
+        where user_id = #{userId}
+    </select>
         
     <insert id="insertTomato" parameterType="Tomato">
         insert into tomato

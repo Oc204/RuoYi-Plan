@@ -70,6 +70,15 @@ public class TomatoController extends BaseController
     }
 
     /**
+     * 获取番茄统计信息
+     */
+    @GetMapping(value = "/index/statistics")
+    public AjaxResult getInfo()
+    {
+        return AjaxResult.success(tomatoService.selectTomatoStatisticsByUserId());
+    }
+
+    /**
      * 新增番茄
      */
     @PreAuthorize("@ss.hasPermi('mytodo:tomato:add')")

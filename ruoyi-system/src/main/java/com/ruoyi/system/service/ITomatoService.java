@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.system.domain.Tomato;
 
 /**
@@ -18,6 +20,12 @@ public interface ITomatoService
      * @return 番茄
      */
     public Tomato selectTomatoById(Long id);
+
+    /**
+     * 查询系统首页番茄统计数据
+     * @return
+     */
+    public Map<String ,Object> selectTomatoStatisticsByUserId();
 
     /**
      * 查询番茄列表

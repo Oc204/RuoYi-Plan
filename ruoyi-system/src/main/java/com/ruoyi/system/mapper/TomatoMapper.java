@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.system.domain.Tomato;
 
 /**
@@ -58,4 +60,11 @@ public interface TomatoMapper
      * @return 结果
      */
     public int deleteTomatoByIds(Long[] ids);
+
+    /**
+     * 查询系统首页番茄统计数据
+     * @param userId
+     * @return
+     */
+    Map<String, Object> selectTomatoStatisticsByUserId(Long userId);
 }

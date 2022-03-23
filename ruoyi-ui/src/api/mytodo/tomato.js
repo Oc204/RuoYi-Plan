@@ -1,0 +1,52 @@
+import request from '@/utils/request'
+
+// 查询番茄列表
+export function listTomato(query) {
+  return request({
+    url: '/system/tomato/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询番茄详细
+export function getTomato(id) {
+  return request({
+    url: '/system/tomato/' + id,
+    method: 'get'
+  })
+}
+
+// 查询番茄详细
+export function getIndexTomatoStatistics() {
+  return request({
+    url: '/mytodo/tomato/index/statistics',
+    method: 'get'
+  })
+}
+
+// 新增番茄
+export function addTomato(data) {
+  return request({
+    url: '/system/tomato',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改番茄
+export function updateTomato(data) {
+  return request({
+    url: '/system/tomato',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除番茄
+export function delTomato(id) {
+  return request({
+    url: '/system/tomato/' + id,
+    method: 'delete'
+  })
+}

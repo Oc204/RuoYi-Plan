@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,11 @@ public class TomatoServiceImpl implements ITomatoService
     public Tomato selectTomatoById(Long id)
     {
         return tomatoMapper.selectTomatoById(id);
+    }
+
+    @Override
+    public Map<String, Object> selectTomatoStatisticsByUserId() {
+        return tomatoMapper.selectTomatoStatisticsByUserId(SecurityUtils.getUserId());
     }
 
     /**
