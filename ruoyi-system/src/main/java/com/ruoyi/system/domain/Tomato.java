@@ -9,13 +9,13 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 番茄对象 tomato
  * 
  * @author ruoyi
- * @date 2022-03-10
+ * @date 2022-03-23
  */
 public class Tomato extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** $column.columnComment */
+    /**  */
     private Long id;
 
     /** 任务id */
@@ -23,8 +23,13 @@ public class Tomato extends BaseEntity
     private Long taskId;
 
     /** 用户id */
+    /** 用户id */
     @Excel(name = "用户id")
     private Long userId;
+
+    /** 时长（分钟） */
+    @Excel(name = "时长", readConverterExp = "分=钟")
+    private Long timeLong;
 
     public void setId(Long id) 
     {
@@ -53,6 +58,15 @@ public class Tomato extends BaseEntity
     {
         return userId;
     }
+    public void setTimeLong(Long timeLong) 
+    {
+        this.timeLong = timeLong;
+    }
+
+    public Long getTimeLong() 
+    {
+        return timeLong;
+    }
 
     @Override
     public String toString() {
@@ -65,6 +79,7 @@ public class Tomato extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("timeLong", getTimeLong())
             .toString();
     }
 }

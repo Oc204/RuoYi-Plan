@@ -13,10 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="timeLong"    column="time_long"    />
     </resultMap>
 
     <sql id="selectTomatoVo">
-        select id, task_id, user_id, create_by, create_time, update_by, update_time, remark from tomato
+        select id, task_id, user_id, create_by, create_time, update_by, update_time, remark, time_long from tomato
     </sql>
 
     <select id="selectTomatoList" parameterType="Tomato" resultMap="TomatoResult">
@@ -24,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="taskId != null "> and task_id = #{taskId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="timeLong != null "> and time_long = #{timeLong}</if>
         </where>
     </select>
     
@@ -43,6 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
+            <if test="timeLong != null">time_long,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -53,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
+            <if test="timeLong != null">#{timeLong},</if>
          </trim>
     </insert>
 
@@ -66,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
+            <if test="timeLong != null">time_long = #{timeLong},</if>
         </trim>
         where id = #{id}
     </update>
