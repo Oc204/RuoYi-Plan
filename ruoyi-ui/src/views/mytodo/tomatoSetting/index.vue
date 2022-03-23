@@ -127,20 +127,19 @@ export default {
             updateSetting(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
-              this.getList();
+              this.$parent.initData();
             });
           } else {
             addSetting(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
-              this.getList();
             });
           }
         }
       });
     },
     initTomatoOption() {
-      for(let i=5;i<=60; i++){
+      for(let i=1;i<=60; i++){
         let json = {
             value: i,
             label: i+'分钟'
