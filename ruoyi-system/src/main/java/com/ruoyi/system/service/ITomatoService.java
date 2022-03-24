@@ -66,4 +66,11 @@ public interface ITomatoService
      * @return 结果
      */
     public int deleteTomatoById(Long id);
+
+    /**
+     * 根据年份获取番茄曲线
+     * @param year
+     * @return
+     */
+    List<Map<String, Object>> getTomatoLineByYear(String year, String showYear, String showMonth);
 }

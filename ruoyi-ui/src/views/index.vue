@@ -44,14 +44,28 @@
     </el-card>
     </el-row>
 
+    <el-row :gutter="20">
 
-    <!--    <panel-group @handleSetLineChartData="handleSetLineChartData" />-->
+      <el-card >
+        <el-date-picker
+          v-model="lineChartYear"
+          type="year"
+          value-format="yyyy"
+          placeholder="选择年"
+          @change="getIndexTomatoLineCharts()"
+        />
+        <el-button-group style="margin-left: 20px">
+          <el-button  @click='getIndexTomatoLineCharts("YEAR")'   >年</el-button>
+          <el-button  @click='getIndexTomatoLineCharts("MONTH")'  >月</el-button>
+        </el-button-group>
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData" />
+        <div id="echarts_box" style="width: 100%;height: 400px;margin-top: 20px"></div>
+
+      </el-card>
     </el-row>
 
     <el-row :gutter="32">
+      <el-card>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <raddar-chart />
@@ -67,15 +81,15 @@
           <bar-chart />
         </div>
       </el-col>
+      </el-card>
     </el-row>
-
 
   </div>
 </template>
 
 <script>
 
-import { getIndexTomatoStatistics } from "@/api/mytodo/tomato";
+import { getIndexTomatoStatistics, getIndexTomatoLineCharts} from "@/api/mytodo/tomato";
 
 import PanelGroup from './dashboard/PanelGroup'
 import LineChart from './dashboard/LineChart'
@@ -113,22 +127,24 @@ export default {
   },
   data() {
     return {
+      lineChartYear: undefined,
+      sum: [],
+      time: [] ,
       totalTime: 0,
       totalTask: 0,
       weekTime: 0,
       weekTask: 0,
       todayTime: 0,
       todayTask: 0,
-      lineChartData: lineChartData.newVisitis
+      lineChartData: {},
+      myChart: "",
+
     }
   },
   created() {
     this.getIndexTomatoStatistics() ;
   },
   methods: {
-    handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
-    },
     getIndexTomatoStatistics(){
       getIndexTomatoStatistics().then(response =>{
 
@@ -138,8 +154,59 @@ export default {
         this.weekTask = response.data.weekTask ;
         this.todayTime = response.data.todayTime ;
         this.todayTask = response.data.todayTask ;
+
       })
-    }
+
+      this.getIndexTomatoLineCharts() ;
+    },
+    getIndexTomatoLineCharts(flag){
+      flag = flag === undefined ? "YEAR" : flag ;
+
+      getIndexTomatoLineCharts(this.lineChartYear,flag).then(response =>{
+        let count = response.data.time.length ;
+        this.sum = [] ;
+        this.time = [] ;
+        for(let i=0 ; i < count; i++){
+          this.sum.push(response.data.sum[i]);
+          this.time.push(response.data.time[i]);
+        }
+        this.showCharts() ;
+      })
+    },
+    showCharts() {
+      this.myChart = this.$echarts.init(document.getElementById('echarts_box'))
+      this.option = {
+        title: {
+          text: '番茄曲线'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        xAxis: {
+          type: 'category',
+          data: this.time
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: this.sum,
+            type: 'line'
+          }
+        ]
+      },
+        console.log(this.time)
+      console.log(this.sum)
+      // 3. 使用刚指定的配置项和数据，显示图表
+      this.myChart.setOption(this.option) ;
+
+      window.addEventListener("resize", () => {
+        // 执行echarts自带的resize方法，即可做到让echarts图表自适应
+        this.myChart.resize();
+      });
+
+    },
   }
 }
 </script>

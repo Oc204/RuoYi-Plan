@@ -102,4 +102,10 @@ public class TomatoServiceImpl implements ITomatoService
     {
         return tomatoMapper.deleteTomatoById(id);
     }
+
+    @Override
+    public List<Map<String, Object>> getTomatoLineByYear(String year, String showYear, String showMonth) {
+        return tomatoMapper.getTomatoLineByYear(showYear, showMonth, SecurityUtils.getUserId(), year);
+    }
+
 }

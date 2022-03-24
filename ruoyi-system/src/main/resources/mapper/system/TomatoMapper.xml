@@ -95,4 +95,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="getTomatoLineByYear" resultType="java.util.HashMap">
+        select any_value(sum(time_long)) AS sum ,
+        <if test="showYear != null">any_value(DATE_FORMAT(create_time, '%Y-%m-%d')) AS time  </if>
+        <if test="showMonth != null">any_value(DATE_FORMAT(create_time, '%Y-%m')) AS time  </if>
+<!--        <if test="flag == 'week'">any_value(DATE_FORMAT(create_time, '%Y-%m')) AS time  </if>-->
+        FROM tomato
+        <where>
+            user_id = #{userId}
+            <if test="year != null  and year != ''"> and YEAR(create_time)= #{year}</if>
+            <if test="showYear != null">GROUP BY DAY(create_time) </if>
+            <if test="showMonth != null">GROUP BY MONTH(create_time) </if>
+        </where>
+    </select>
+
 </mapper>

@@ -577,7 +577,7 @@ export default {
 
           this.realmin = this.min ;
           this.realsec = this.sec ;
-          console.log("切换任务重新开始"+ row.taskName + this.realmin +" : "+ this.realsec);
+          console.log("切换任务重新开始"+ row.taskName + this.realmin +" : "+ this.realsec + "  this.min :" + this.min);
           clearInterval(this.timer);
         }
 

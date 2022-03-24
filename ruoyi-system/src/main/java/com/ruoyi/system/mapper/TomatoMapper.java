@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.system.domain.Tomato;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 番茄Mapper接口
@@ -67,4 +68,6 @@ public interface TomatoMapper
      * @return
      */
     Map<String, Object> selectTomatoStatisticsByUserId(Long userId);
+
+    List<Map<String, Object>> getTomatoLineByYear(@Param("showYear")String showYear, @Param("showMonth")String showMonth, @Param("userId")Long userId, @Param("year")String year);
 }

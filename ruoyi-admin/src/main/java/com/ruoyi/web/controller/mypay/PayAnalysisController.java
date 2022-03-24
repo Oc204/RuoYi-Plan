@@ -26,7 +26,6 @@ public class PayAnalysisController {
             Calendar cal = Calendar.getInstance();
             year = String.valueOf(cal.get(Calendar.YEAR));
         }
-        Map<String, Object[]> result = new HashMap<>() ;
         List<Map<String,Object>> list = payService.anaylysisByYear(year) ;
 
         List<Object> month = new ArrayList<>() ;
@@ -37,9 +36,7 @@ public class PayAnalysisController {
             paySum.add(item.get("sum")) ;
         }
 
-        result = setMonth(year, month, paySum) ;
-
-        return AjaxResult.success(result);
+        return AjaxResult.success(setMonth(year, month, paySum));
     }
 
     public Map<String, Object[]> setMonth(String year, List<Object> month, List<Object> paySum) {

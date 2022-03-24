@@ -25,6 +25,14 @@ export function getIndexTomatoStatistics() {
   })
 }
 
+// 查询番茄时间曲线
+export function getIndexTomatoLineCharts(year, flag) {
+  return request({
+    url: '/tomato/analysis/year/'+year +"/" + flag,
+    method: 'get'
+  })
+}
+
 // 新增番茄
 export function addTomato(data) {
   return request({
