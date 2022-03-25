@@ -44,6 +44,23 @@
     </el-card>
     </el-row>
 
+    <el-row :gutter="32">
+      <el-card>
+        <el-col :xs="24" :sm="24" :lg="8">
+          <div class="chart-wrapper">
+            <div id="pie-chart" style="width: 100%;height: 400px;margin-top: 20px"></div>
+
+<!--            <pie-chart :chart-data="pieChartData"/>-->
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="24" :lg="16">
+          <div class="chart-wrapper">
+            <bar-chart />
+          </div>
+        </el-col>
+      </el-card>
+    </el-row>
+
     <el-row :gutter="20">
 
       <el-card >
@@ -63,58 +80,18 @@
 
       </el-card>
     </el-row>
-
-    <el-row :gutter="32">
-      <el-card>
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <raddar-chart />
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <pie-chart />
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <bar-chart />
-        </div>
-      </el-col>
-      </el-card>
-    </el-row>
-
   </div>
 </template>
 
 <script>
 
-import { getIndexTomatoStatistics, getIndexTomatoLineCharts} from "@/api/mytodo/tomato";
+import { getIndexTomatoStatistics, getIndexTomatoLineCharts, getIndexTomatoPieChartsData} from "@/api/mytodo/tomato";
 
 import PanelGroup from './dashboard/PanelGroup'
 import LineChart from './dashboard/LineChart'
 import RaddarChart from './dashboard/RaddarChart'
 import PieChart from './dashboard/PieChart'
 import BarChart from './dashboard/BarChart'
-
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
 
 export default {
   name: 'Index',
@@ -137,7 +114,11 @@ export default {
       todayTime: 0,
       todayTask: 0,
       lineChartData: {},
+      pieChartLegend: [],
+      pieChartSeries: [],
+      pieChartData: {},
       myChart: "",
+      pieChart: "",
 
     }
   },
@@ -147,17 +128,32 @@ export default {
   methods: {
     getIndexTomatoStatistics(){
       getIndexTomatoStatistics().then(response =>{
-
         this.totalTime = response.data.totalTime ;
         this.totalTask = response.data.totalTask ;
         this.weekTime = response.data.weekTime ;
         this.weekTask = response.data.weekTask ;
         this.todayTime = response.data.todayTime ;
         this.todayTask = response.data.todayTask ;
-
       })
 
       this.getIndexTomatoLineCharts() ;
+      this.getIndexTomatoPieChartsData() ;
+    },
+    getIndexTomatoPieChartsData(){
+      getIndexTomatoPieChartsData().then(response =>{
+        for (let i= 0;i< response.data.length; i++) {
+          this.pieChartLegend.push(response.data[i].taskName) ;
+          this.pieChartSeries.push(
+            { value: response.data[i].time, name: response.data[i].taskName }
+          ) ;
+          console.log(response.data[i])
+        }
+
+        this.pieChartData.pieChartLegend = this.pieChartLegend ;
+        this.pieChartData.pieChartSeries = this.pieChartSeries ;
+        console.log(JSON.stringify(this.pieChartData) + "father")
+        this.showPieChart();
+      })
     },
     getIndexTomatoLineCharts(flag){
       flag = flag === undefined ? "YEAR" : flag ;
@@ -177,7 +173,7 @@ export default {
       this.myChart = this.$echarts.init(document.getElementById('echarts_box'))
       this.option = {
         title: {
-          text: '番茄曲线'
+          text: '番茄时长曲线'
         },
         tooltip: {
           trigger: 'axis'
@@ -205,8 +201,47 @@ export default {
         // 执行echarts自带的resize方法，即可做到让echarts图表自适应
         this.myChart.resize();
       });
-
     },
+    showPieChart(){
+      this.pieChart = this.$echarts.init(document.getElementById('pie-chart')) ;
+      this.pieChartoption = {
+        title: {
+          text: '清单时间占比',
+          subtext: 'Fake Data',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left'
+        },
+        series: [
+          {
+            name: '清单时间占比',
+            type: 'pie',
+            radius: '50%',
+            data: this.pieChartSeries,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      },
+
+      // 3. 使用刚指定的配置项和数据，显示图表
+     this.pieChart.setOption(this.pieChartoption) ;
+
+      window.addEventListener("resize", () => {
+        // 执行echarts自带的resize方法，即可做到让echarts图表自适应
+        this.pieChart.resize();
+      });
+    }
   }
 }
 </script>

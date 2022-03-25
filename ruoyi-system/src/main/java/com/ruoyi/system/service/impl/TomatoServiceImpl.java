@@ -108,4 +108,9 @@ public class TomatoServiceImpl implements ITomatoService
         return tomatoMapper.getTomatoLineByYear(showYear, showMonth, SecurityUtils.getUserId(), year);
     }
 
+    @Override
+    public List<Map<String, Object>> getTomatoPieChartsData(String showDay, String showWeek, String showMonth) {
+        return tomatoMapper.getTomatoPieChartsData(showDay, showWeek, showMonth, SecurityUtils.getUserId());
+    }
+
 }

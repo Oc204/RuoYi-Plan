@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.system.domain.Tomato;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 番茄Service接口
@@ -73,4 +74,13 @@ public interface ITomatoService
      * @return
      */
     List<Map<String, Object>> getTomatoLineByYear(String year, String showYear, String showMonth);
+
+    /**
+     * 根据选择的日期标识获取对应的番茄时间分析数据
+     * @param showDay
+     * @param showWeek
+     * @param showMonth
+     * @return
+     */
+    List<Map<String, Object>> getTomatoPieChartsData(String showDay, String showWeek, String showMonth);
 }

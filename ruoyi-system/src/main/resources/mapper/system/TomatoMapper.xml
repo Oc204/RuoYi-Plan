@@ -110,4 +110,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="getTomatoPieChartsData" resultType="java.util.HashMap">
+        select SUM(t.time_long) as time , task_id AS taskId,t2.task_name AS taskName
+        FROM tomato t
+                 LEFT JOIN task t2 on t.task_id = t2.id
+        WHERE
+            t.user_id = #{userId}
+        <if test="showDay != null  and showDay != ''">
+            and t.create_time = now()
+         </if>
+        <if test="showWeek != null  and showWeek != ''">
+            and YEARWEEK(date_format(t.create_time,'%Y-%m-%d')) = YEARWEEK(now())
+        </if>
+        <if test="showMonth != null  and showMonth != ''">
+            and date_format(t.create_time,'%Y-%m')=date_format(now(),'%Y-%m')
+        </if>
+        GROUP BY t.task_id
+    </select>
+
 </mapper>

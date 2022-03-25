@@ -17,6 +17,8 @@ public class tomcatoAnalysisController {
 
     private static final String YEAR = "YEAR"  ;
     private static final String MONTH = "MONTH"  ;
+    private static final String WEEK = "WEEK"  ;
+    private static final String DAY = "DAY"  ;
 
     @Autowired
     private ITomatoService tomatoService ;
@@ -48,6 +50,24 @@ public class tomcatoAnalysisController {
         }
 
          return AjaxResult.success(setChartsData(year, time, sum, flag)) ;
+    }
+
+
+    @GetMapping(value = "/index/pieCharts/{flag}")
+    public AjaxResult getPieChartsData(@PathVariable("flag") String flag) {
+
+        String showDay = null ;
+        String showWeek = null ;
+        String showMonth = null ;
+        if(flag.equals(MONTH)){
+            showMonth = MONTH ;
+        } else if (flag.equals(WEEK)){
+            showMonth = WEEK ;
+        } else {
+            showDay = DAY ;
+        }
+
+        return AjaxResult.success(tomatoService.getTomatoPieChartsData(showDay, showWeek, showMonth)) ;
     }
 
     /**

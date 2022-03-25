@@ -33,6 +33,14 @@ export function getIndexTomatoLineCharts(year, flag) {
   })
 }
 
+// 查询番茄饼图
+export function getIndexTomatoPieChartsData(flag) {
+  return request({
+    url: '/tomato/analysis/index/pieCharts/'+"WEEK" ,
+    method: 'get'
+  })
+}
+
 // 新增番茄
 export function addTomato(data) {
   return request({

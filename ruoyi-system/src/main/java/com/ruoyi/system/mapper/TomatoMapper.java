@@ -70,4 +70,6 @@ public interface TomatoMapper
     Map<String, Object> selectTomatoStatisticsByUserId(Long userId);
 
     List<Map<String, Object>> getTomatoLineByYear(@Param("showYear")String showYear, @Param("showMonth")String showMonth, @Param("userId")Long userId, @Param("year")String year);
+
+    List<Map<String, Object>> getTomatoPieChartsData(@Param("showDay")String showDay, @Param("showWeek")String showWeek, @Param("showMonth")String showMonth, @Param("userId")Long userId);
 }
