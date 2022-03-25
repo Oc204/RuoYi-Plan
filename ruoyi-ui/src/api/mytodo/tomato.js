@@ -36,7 +36,7 @@ export function getIndexTomatoLineCharts(year, flag) {
 // 查询番茄饼图
 export function getIndexTomatoPieChartsData(flag) {
   return request({
-    url: '/tomato/analysis/index/pieCharts/'+"WEEK" ,
+    url: '/tomato/analysis/index/pieCharts/'+flag ,
     method: 'get'
   })
 }

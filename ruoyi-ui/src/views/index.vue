@@ -48,6 +48,11 @@
       <el-card>
         <el-col :xs="24" :sm="24" :lg="8">
           <div class="chart-wrapper">
+            <el-button-group style="margin-left: 20px">
+              <el-button  @click='getIndexTomatoPieChartsData("DAY")'  >日</el-button>
+              <el-button  @click='getIndexTomatoPieChartsData("WEEK")'  >周</el-button>
+              <el-button  @click='getIndexTomatoPieChartsData("MONTH")'  >月</el-button>
+            </el-button-group>
             <div id="pie-chart" style="width: 100%;height: 400px;margin-top: 20px"></div>
 
 <!--            <pie-chart :chart-data="pieChartData"/>-->
@@ -118,7 +123,7 @@ export default {
       pieChartSeries: [],
       pieChartData: {},
       myChart: "",
-      pieChart: "",
+      // pieChart: "",
 
     }
   },
@@ -139,20 +144,28 @@ export default {
       this.getIndexTomatoLineCharts() ;
       this.getIndexTomatoPieChartsData() ;
     },
-    getIndexTomatoPieChartsData(){
-      getIndexTomatoPieChartsData().then(response =>{
-        for (let i= 0;i< response.data.length; i++) {
-          this.pieChartLegend.push(response.data[i].taskName) ;
-          this.pieChartSeries.push(
-            { value: response.data[i].time, name: response.data[i].taskName }
-          ) ;
-          console.log(response.data[i])
-        }
+    getIndexTomatoPieChartsData(flag){
+      flag = flag === undefined ? "DAY" : flag ;
 
-        this.pieChartData.pieChartLegend = this.pieChartLegend ;
-        this.pieChartData.pieChartSeries = this.pieChartSeries ;
-        console.log(JSON.stringify(this.pieChartData) + "father")
+      this.pieChartLegend = [] ;
+      this.pieChartSeries = [] ;
+      getIndexTomatoPieChartsData(flag).then(response =>{
+        if(response.data.length>1){
+
+          for (let i= 0;i< response.data.length; i++) {
+            this.pieChartLegend.push(response.data[i].taskName) ;
+            this.pieChartSeries.push(
+              { value: response.data[i].time, name: response.data[i].taskName }
+            ) ;
+            console.log(response.data[i])
+          }
+
+          this.pieChartData.pieChartLegend = this.pieChartLegend ;
+          this.pieChartData.pieChartSeries = this.pieChartSeries ;
+          console.log(JSON.stringify(this.pieChartData) + "father")
+        }
         this.showPieChart();
+
       })
     },
     getIndexTomatoLineCharts(flag){
@@ -203,8 +216,11 @@ export default {
       });
     },
     showPieChart(){
-      this.pieChart = this.$echarts.init(document.getElementById('pie-chart')) ;
-      this.pieChartoption = {
+      // this.$echarts.init(document.getElementById('pie-chart')).dispose();
+      // document.getElementById('main').removeAttribute('_echarts_instance_');
+      let pieChart = this.$echarts.init(document.getElementById('pie-chart')) ;
+      let pieChartoption;
+      pieChartoption = {
         title: {
           text: '清单时间占比',
           subtext: 'Fake Data',
@@ -235,11 +251,11 @@ export default {
       },
 
       // 3. 使用刚指定的配置项和数据，显示图表
-     this.pieChart.setOption(this.pieChartoption) ;
+     pieChart.setOption(pieChartoption) ;
 
       window.addEventListener("resize", () => {
         // 执行echarts自带的resize方法，即可做到让echarts图表自适应
-        this.pieChart.resize();
+        pieChart.resize();
       });
     }
   }

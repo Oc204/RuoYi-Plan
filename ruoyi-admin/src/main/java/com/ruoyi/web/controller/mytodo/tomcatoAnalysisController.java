@@ -62,7 +62,7 @@ public class tomcatoAnalysisController {
         if(flag.equals(MONTH)){
             showMonth = MONTH ;
         } else if (flag.equals(WEEK)){
-            showMonth = WEEK ;
+            showWeek = WEEK ;
         } else {
             showDay = DAY ;
         }
