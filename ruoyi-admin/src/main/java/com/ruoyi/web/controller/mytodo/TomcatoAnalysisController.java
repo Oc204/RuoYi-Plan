@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.mytodo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.VariableValueType;
 import com.ruoyi.system.service.ITomatoService;
+import com.ruoyi.web.controller.BaseAnalysisController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/tomato/analysis")
-public class TomcatoAnalysisController {
+public class TomcatoAnalysisController extends BaseAnalysisController {
 
     private static final String YEAR = "YEAR"  ;
     private static final String MONTH = "MONTH"  ;
@@ -108,33 +109,12 @@ public class TomcatoAnalysisController {
      * @return
      */
     public Map<String, Object[]> dataToMonth(String year, List<Object> time, List<Object> sum) {
-        List<String> num = new ArrayList<>() ;
-        List<Object> targetSum = new ArrayList<>() ;
         Map<String, Object[]> result = new HashMap<>() ;
 
-        int j = 0 ;
-        for (int i = 0 ; i < MONTHNUMBER ;i ++) {
-            if ((i+1)>=10){
-                num.add(year+ "-" + (i+1)) ;
-            }else {
-                num.add(year+ "-0" + (i+1)) ;
-            }
+        Map<String, List<Object>> data = formatByDateTime(year, time, sum) ;
 
-            // 如果当前时间存在记录，则在对应下标记录总和值，不存在默认总和值为0
-            if (time.size()>0&&time.size()>j){
-                if (time.get(j).equals(num.get(i))){
-                    targetSum.add(sum.get(j)) ;
-                    j++;
-                }else{
-                    targetSum.add(0) ;
-                }
-            }else{
-                targetSum.add(0) ;
-            }
-        }
-
-        result.put("time",num.toArray(new Object[num.size()])) ;
-        result.put("sum",targetSum.toArray(new Object[targetSum.size()])) ;
+        result.put("time",data.get("timeResult").toArray(new Object[data.get("timeResult").size()])) ;
+        result.put("sum",data.get("sumResult").toArray(new Object[data.get("sumResult").size()])) ;
 
         return result ;
     }

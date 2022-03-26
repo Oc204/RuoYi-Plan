@@ -4,6 +4,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.VariableValueType;
 import com.ruoyi.system.domain.Salary;
 import com.ruoyi.system.service.ISalaryService;
+import com.ruoyi.web.controller.BaseAnalysisController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/mysalary/analysis")
-public class SalaryAnalysisController {
+public class SalaryAnalysisController extends BaseAnalysisController {
 
     private static final int MONTHNUMBER = 12  ;
 
@@ -57,34 +58,12 @@ public class SalaryAnalysisController {
     }
 
     public Map<String, Object[]> setMonth(String year, List<Object> month, List<Object> salarySum) {
-        List<String> monthNum = new ArrayList<>() ;
-        List<Object> monthSalarySum = new ArrayList<>() ;
         Map<String, Object[]> result = new HashMap<>() ;
 
-        int j = 0 ;
-        for (int i = 0 ; i <= MONTHNUMBER ;i ++) {
-            if ((i+1)>=10){
-                monthNum.add(year+ "-" + (i+1)) ;
-            }else {
-                monthNum.add(year+ "-0" + (i+1)) ;
-            }
+        Map<String, List<Object>> data = formatByDateTime(year, month, salarySum) ;
 
-            // 如果存在月工资记录，则记录工资详情值
-            if (month.size()>0&&month.size()>j){
-                if (month.get(j).equals(monthNum.get(i))){
-                    monthSalarySum.add(salarySum.get(j)) ;
-                    j++;
-                }else{
-                    monthSalarySum.add(0) ;
-                }
-            }else{
-                monthSalarySum.add(0) ;
-            }
-
-        }
-
-        result.put("month",monthNum.toArray(new Object[monthNum.size()])) ;
-        result.put("salarySum",monthSalarySum.toArray(new Object[monthSalarySum.size()])) ;
+        result.put("month",data.get("timeResult").toArray(new Object[data.get("timeResult").size()])) ;
+        result.put("salarySum",data.get("sumResult").toArray(new Object[data.get("sumResult").size()])) ;
 
         return result;
     }
