@@ -53,9 +53,7 @@
               <el-button  @click='getIndexTomatoPieChartsData("WEEK")'  >周</el-button>
               <el-button  @click='getIndexTomatoPieChartsData("MONTH")'  >月</el-button>
             </el-button-group>
-            <div id="pie-chart" style="width: 100%;height: 400px;margin-top: 20px"></div>
-
-<!--            <pie-chart :chart-data="pieChartData"/>-->
+            <pie-chart :chartData="pieChartData"/>
           </div>
         </el-col>
         <el-col :xs="24" :sm="24" :lg="16">
@@ -121,10 +119,11 @@ export default {
       lineChartData: {},
       pieChartLegend: [],
       pieChartSeries: [],
-      pieChartData: {},
+      pieChartData: {
+        pieChartLegend: [],
+        pieChartSeries: []
+      },
       myChart: "",
-      // pieChart: "",
-
     }
   },
   created() {
@@ -162,10 +161,7 @@ export default {
 
           this.pieChartData.pieChartLegend = this.pieChartLegend ;
           this.pieChartData.pieChartSeries = this.pieChartSeries ;
-          console.log(JSON.stringify(this.pieChartData) + "father")
         }
-        this.showPieChart();
-
       })
     },
     getIndexTomatoLineCharts(flag){
@@ -213,49 +209,6 @@ export default {
       window.addEventListener("resize", () => {
         // 执行echarts自带的resize方法，即可做到让echarts图表自适应
         this.myChart.resize();
-      });
-    },
-    showPieChart(){
-      // this.$echarts.init(document.getElementById('pie-chart')).dispose();
-      // document.getElementById('main').removeAttribute('_echarts_instance_');
-      let pieChart = this.$echarts.init(document.getElementById('pie-chart')) ;
-      let pieChartoption;
-      pieChartoption = {
-        title: {
-          text: '清单时间占比',
-          subtext: 'Fake Data',
-          left: 'center'
-        },
-        tooltip: {
-          trigger: 'item'
-        },
-        legend: {
-          orient: 'vertical',
-          left: 'left'
-        },
-        series: [
-          {
-            name: '清单时间占比',
-            type: 'pie',
-            radius: '50%',
-            data: this.pieChartSeries,
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }
-        ]
-      },
-
-      // 3. 使用刚指定的配置项和数据，显示图表
-     pieChart.setOption(pieChartoption) ;
-
-      window.addEventListener("resize", () => {
-        // 执行echarts自带的resize方法，即可做到让echarts图表自适应
-        pieChart.resize();
       });
     }
   }

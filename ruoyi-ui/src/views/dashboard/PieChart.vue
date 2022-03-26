@@ -1,5 +1,5 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" ref="echarts"/>
+  <div :class="className" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -34,7 +34,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
+      this.initChart(this.chartData)
     })
   },
   beforeDestroy() {
@@ -51,17 +51,16 @@ export default {
         this.initChart(val)
       }
     }
+
   },
   methods: {
     initChart(val) {
-      console.log(this.chartData + "chartData")
-      console.log(val.pieChartLegend + "pieChartLegend")
-      console.log(val.pieChartSeries + "pieChartSeries")
       this.chart = echarts.init(this.$el, 'macarons')
 
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
+          showContent:true,
           formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         legend: {
@@ -71,6 +70,7 @@ export default {
         },
         series: [
           {
+            name: '占比情况',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
