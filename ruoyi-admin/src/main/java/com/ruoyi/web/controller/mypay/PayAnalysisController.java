@@ -27,7 +27,7 @@ public class PayAnalysisController {
     private IPayService payService;
 
     @GetMapping("/year/{year}")
-    public AjaxResult YearAnalysis(@PathVariable("year") String year) {
+    public AjaxResult yearAnalysis(@PathVariable("year") String year) {
 
         if(VariableValueType.UNDEFINED.getCode().equals(year)){
             Calendar cal = Calendar.getInstance();
