@@ -3,16 +3,20 @@ package com.ruoyi.web.controller.mysalary;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.system.domain.Salary;
 import com.ruoyi.system.service.ISalaryService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.*;
 
+/**
+ * 收入分析Controller
+ *
+ * @author ruoyi
+ * @date 2022-03-01
+ */
 @RestController
 @RequestMapping("/mysalary/analysis")
 public class SalaryAnalysisController {

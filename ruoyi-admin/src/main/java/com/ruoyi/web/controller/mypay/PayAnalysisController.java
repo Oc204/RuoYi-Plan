@@ -1,7 +1,6 @@
 package com.ruoyi.web.controller.mypay;
 
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.system.domain.Pay;
 import com.ruoyi.system.service.IPayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,9 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.*;
 
+/**
+ * 支出分析Controller
+ *
+ * @author ruoyi
+ * @date 2022-03-01
+ */
 @RestController
 @RequestMapping("/mypay/analysis")
 public class PayAnalysisController {

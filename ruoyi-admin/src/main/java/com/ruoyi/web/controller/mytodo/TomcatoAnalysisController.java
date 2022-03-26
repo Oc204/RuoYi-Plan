@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 番茄分析Controller
+ *
+ * @author ruoyi
+ * @date 2022-03-21
+ */
 @RestController
 @RequestMapping("/tomato/analysis")
 public class TomcatoAnalysisController {
@@ -92,9 +98,9 @@ public class TomcatoAnalysisController {
 
     /**
      * 按12个月统计
-     * @param year
-     * @param time
-     * @param sum
+     * @param year 年份
+     * @param time 时间 yy-MM
+     * @param sum  番茄时间总和
      * @return
      */
     public Map<String, Object[]> dataToMonth(String year, List<Object> time, List<Object> sum) {
