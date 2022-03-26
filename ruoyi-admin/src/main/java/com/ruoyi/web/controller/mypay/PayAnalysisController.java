@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.mypay;
 
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.enums.VariableValueType;
 import com.ruoyi.system.service.IPayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class PayAnalysisController {
     @GetMapping("/year/{year}")
     public AjaxResult YearAnalysis(@PathVariable("year") String year) {
 
-        if("undefined".equals(year)){
+        if(VariableValueType.UNDEFINED.getCode().equals(year)){
             Calendar cal = Calendar.getInstance();
             year = String.valueOf(cal.get(Calendar.YEAR));
         }

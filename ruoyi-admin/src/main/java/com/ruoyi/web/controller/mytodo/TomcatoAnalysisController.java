@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.mytodo;
 
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.enums.VariableValueType;
 import com.ruoyi.system.service.ITomatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class TomcatoAnalysisController {
     @GetMapping("/year/{year}/{flag}")
     public AjaxResult tomatoLine(@PathVariable("year") String year,@PathVariable("flag") String flag){
 
-        if("undefined".equals(year)){
+        if(VariableValueType.UNDEFINED.getCode().equals(year)){
             Calendar cal = Calendar.getInstance();
             year = String.valueOf(cal.get(Calendar.YEAR));
         }
