@@ -90,7 +90,7 @@ public class TomcatoAnalysisController extends BaseAnalysisController {
      * @return
      */
     public Map<String, Object[]> setChartsData(String year, List<Object> time, List<Object> sum, String flag) {
-        Map<String, Object[]> result = new HashMap<>() ;
+        Map<String, Object[]> result = new HashMap<>(255) ;
 
         if(flag.equals(YEAR)){
             result = dataToYear(year,time, sum) ;
@@ -109,7 +109,7 @@ public class TomcatoAnalysisController extends BaseAnalysisController {
      * @return
      */
     public Map<String, Object[]> dataToMonth(String year, List<Object> time, List<Object> sum) {
-        Map<String, Object[]> result = new HashMap<>() ;
+        Map<String, Object[]> result = new HashMap<>(255) ;
 
         Map<String, List<Object>> data = formatByDateTime(year, time, sum) ;
 
@@ -128,7 +128,7 @@ public class TomcatoAnalysisController extends BaseAnalysisController {
     public Map<String, Object[]> dataToYear(String year, List<Object> time, List<Object> sum) {
         List<String> num = new ArrayList<>() ;
         List<Object> targetSum = new ArrayList<>() ;
-        Map<String, Object[]> result = new HashMap<>() ;
+        Map<String, Object[]> result = new HashMap<>(255) ;
 
         for(int i = 0 ; i < MONTHNUMBER ; i++){
             num.addAll(getMonthFullDay(Integer.valueOf(year), i)) ;

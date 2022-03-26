@@ -48,7 +48,7 @@ public class PayAnalysisController extends BaseAnalysisController {
     }
 
     public Map<String, Object[]> setMonth(String year, List<Object> month, List<Object> paySum) {
-        Map<String, Object[]> result = new HashMap<>() ;
+        Map<String, Object[]> result = new HashMap<>(255) ;
 
         Map<String, List<Object>> data = formatByDateTime(year, month, paySum) ;
 

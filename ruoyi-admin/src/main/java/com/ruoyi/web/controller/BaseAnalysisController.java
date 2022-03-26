@@ -19,7 +19,7 @@ public class BaseAnalysisController {
 
         List<Object> timeResult = new ArrayList<>() ;
         List<Object> sumResult = new ArrayList<>() ;
-        Map<String, List<Object>> result = new HashMap<>() ;
+        Map<String, List<Object>> result = new HashMap<>(255) ;
 
         int j = 0 ;
         for (int i = 0 ; i < MONTHNUMBER ;i ++) {

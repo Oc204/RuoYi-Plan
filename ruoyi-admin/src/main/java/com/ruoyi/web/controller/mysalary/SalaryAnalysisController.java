@@ -41,7 +41,7 @@ public class SalaryAnalysisController extends BaseAnalysisController {
             Calendar cal = Calendar.getInstance();
             year = String.valueOf(cal.get(Calendar.YEAR));
         }
-        Map<String, Object[]> result = new HashMap<>() ;
+        Map<String, Object[]> result;
         List<Map<String,Object>> list = salaryService.anaylysisByYear(year) ;
 
         List<Object> month = new ArrayList<>() ;
@@ -58,7 +58,7 @@ public class SalaryAnalysisController extends BaseAnalysisController {
     }
 
     public Map<String, Object[]> setMonth(String year, List<Object> month, List<Object> salarySum) {
-        Map<String, Object[]> result = new HashMap<>() ;
+        Map<String, Object[]> result = new HashMap<>(255) ;
 
         Map<String, List<Object>> data = formatByDateTime(year, month, salarySum) ;
 
