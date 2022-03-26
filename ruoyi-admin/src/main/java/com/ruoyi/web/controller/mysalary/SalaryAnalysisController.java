@@ -22,6 +22,8 @@ import java.util.*;
 @RequestMapping("/mysalary/analysis")
 public class SalaryAnalysisController {
 
+    private static final int MONTHNUMBER = 12  ;
+
     @Autowired
     private ISalaryService salaryService;
 
@@ -60,7 +62,7 @@ public class SalaryAnalysisController {
         Map<String, Object[]> result = new HashMap<>() ;
 
         int j = 0 ;
-        for (int i = 0 ; i <= 12 ;i ++) {
+        for (int i = 0 ; i <= MONTHNUMBER ;i ++) {
             if ((i+1)>=10){
                 monthNum.add(year+ "-" + (i+1)) ;
             }else {

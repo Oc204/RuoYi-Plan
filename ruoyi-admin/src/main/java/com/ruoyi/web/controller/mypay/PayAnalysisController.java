@@ -21,6 +21,8 @@ import java.util.*;
 @RequestMapping("/mypay/analysis")
 public class PayAnalysisController {
 
+    private static final int MONTHNUMBER = 12  ;
+
     @Autowired
     private IPayService payService;
 
@@ -50,7 +52,7 @@ public class PayAnalysisController {
         Map<String, Object[]> result = new HashMap<>() ;
 
         int j = 0 ;
-        for (int i = 0 ; i <= 12 ;i ++) {
+        for (int i = 0 ; i <= MONTHNUMBER ;i ++) {
             if ((i+1)>=10){
                 monthNum.add(year+ "-" + (i+1)) ;
             }else {

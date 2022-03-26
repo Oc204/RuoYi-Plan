@@ -26,6 +26,9 @@ public class TomcatoAnalysisController {
     private static final String MONTH = "MONTH"  ;
     private static final String WEEK = "WEEK"  ;
     private static final String DAY = "DAY"  ;
+    private static final int MONTHNUMBER = 12  ;
+    private static final int DAYNUMBER = 365  ;
+
 
     @Autowired
     private ITomatoService tomatoService ;
@@ -109,9 +112,8 @@ public class TomcatoAnalysisController {
         List<Object> targetSum = new ArrayList<>() ;
         Map<String, Object[]> result = new HashMap<>() ;
 
-        int count = 12 ;
         int j = 0 ;
-        for (int i = 0 ; i < count ;i ++) {
+        for (int i = 0 ; i < MONTHNUMBER ;i ++) {
             if ((i+1)>=10){
                 num.add(year+ "-" + (i+1)) ;
             }else {
@@ -148,14 +150,12 @@ public class TomcatoAnalysisController {
         List<Object> targetSum = new ArrayList<>() ;
         Map<String, Object[]> result = new HashMap<>() ;
 
-        for(int i = 0 ; i < 12 ; i++){
+        for(int i = 0 ; i < MONTHNUMBER ; i++){
             num.addAll(getMonthFullDay(Integer.valueOf(year), i)) ;
         }
 
-        // 一年365天
-        int count = 365 ;
         int j = 0 ;
-        for (int i = 0 ; i < count ;i ++) {
+        for (int i = 0 ; i < DAYNUMBER ;i ++) {
             // 如果当前时间存在记录，则在对应下标记录总和值，不存在默认总和值为0
             if (time.size()>0&&time.size()>j){
                 if (time.get(j).equals(num.get(i))){
