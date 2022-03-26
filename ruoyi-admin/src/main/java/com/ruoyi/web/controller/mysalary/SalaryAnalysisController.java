@@ -28,13 +28,13 @@ public class SalaryAnalysisController {
     private ISalaryService salaryService;
 
     @GetMapping("/month")
-    public AjaxResult MonthAnalysis(Salary salary) {
+    public AjaxResult monthAnalysis(Salary salary) {
 
         return AjaxResult.success(salaryService.anaylysisByMonth(salary));
     }
 
     @GetMapping("/year/{year}")
-    public AjaxResult YearAnalysis(@PathVariable("year") String year) {
+    public AjaxResult yearAnalysis(@PathVariable("year") String year) {
 
         if(VariableValueType.UNDEFINED.getCode().equals(year)){
             Calendar cal = Calendar.getInstance();
