@@ -13,7 +13,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/tomato/analysis")
-public class tomcatoAnalysisController {
+public class TomcatoAnalysisController {
 
     private static final String YEAR = "YEAR"  ;
     private static final String MONTH = "MONTH"  ;
