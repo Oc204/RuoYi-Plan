@@ -3,6 +3,8 @@ package com.ruoyi.web.controller.mypay;
 import java.util.Calendar;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.enums.VariableValueType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +53,7 @@ public class PayController extends BaseController
     @GetMapping("/time")
     public TableDataInfo listByTime(String year,String month)
     {
-        if("undefined".equals(year)){
+        if(VariableValueType.UNDEFINED.getCode().equals(year)){
             Calendar cal = Calendar.getInstance();
             year = String.valueOf(cal.get(Calendar.YEAR));
         }
