@@ -52,7 +52,7 @@
               <el-button  @click='getIndexTomatoPieChartsData("WEEK")'  >周</el-button>
               <el-button  @click='getIndexTomatoPieChartsData("MONTH")'  >月</el-button>
             </el-button-group>
-            <span style="margin-left: 10px">当前总时长：{{this.pieChartTotalTime}}分</span>
+            <span style="margin-left: 10px">当前总时长：{{this.pieChartTotalTime}}分钟</span>
 <!--            <span style="margin-left: 10px">计量单位：分</span>-->
             <pie-chart :chartData="pieChartData"/>
           </div>
@@ -164,7 +164,7 @@ export default {
       this.pieChartTotalTime = 0;
       // 获取饼图数据
       getIndexTomatoPieChartsData(flag).then(response =>{
-        if(response.data.length>1){
+        if(response.data.length>0){
           for (let i= 0;i< response.data.length; i++) {
             // 饼图番茄总时长
             this.pieChartTotalTime+=response.data[i].time ;
