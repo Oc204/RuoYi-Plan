@@ -80,8 +80,7 @@
           <el-button  @click='getIndexTomatoLineCharts("MONTH")'  >月</el-button>
         </el-button-group>
 
-        <div id="echarts_box" style="width: 100%;height: 400px;margin-top: 20px"></div>
-
+        <div id="linecharts" style="width: 100%;height: 400px;margin-top: 20px"></div>
       </el-card>
     </el-row>
   </div>
@@ -91,7 +90,6 @@
 
 import { getIndexTomatoStatistics, getIndexTomatoLineCharts, getIndexTomatoPieChartsData} from "@/api/mytodo/tomato";
 
-import PanelGroup from './dashboard/PanelGroup'
 import LineChart from './dashboard/LineChart'
 import RaddarChart from './dashboard/RaddarChart'
 import PieChart from './dashboard/PieChart'
@@ -100,7 +98,6 @@ import BarChart from './dashboard/BarChart'
 export default {
   name: 'Index',
   components: {
-    PanelGroup,
     LineChart,
     RaddarChart,
     PieChart,
@@ -108,30 +105,40 @@ export default {
   },
   data() {
     return {
+      // 番茄时长曲线图选中的值
       lineChartYear: undefined,
-      sum: [],
-      time: [] ,
+      lineChartSum: [],
+      lineChartTime: [] ,
+      // 累计专注时间
       totalTime: 0,
-      totalTask: 0,
+      // 本周专注时间
       weekTime: 0,
-      weekTask: 0,
+      // 今日专注时间
       todayTime: 0,
+      // 累计完成任务
+      totalTask: 0,
+      // 本周完成任务
+      weekTask: 0,
+      // 今日完成任务
       todayTask: 0,
+      // 番茄曲线数据
       lineChartData: {},
-      pieChartLegend: [],
-      pieChartSeries: [],
+      // 饼图数据
       pieChartData: {
         pieChartLegend: [],
         pieChartSeries: []
       },
+      // 饼图当前总时长
       pieChartTotalTime: 0,
-      myChart: "",
+      // 番茄曲线实例
+      lineChart: "",
     }
   },
   created() {
     this.getIndexTomatoStatistics() ;
   },
   methods: {
+    // 渲染当前页面的图表
     getIndexTomatoStatistics(){
       getIndexTomatoStatistics().then(response =>{
         this.totalTime = response.data.totalTime ;
@@ -145,49 +152,52 @@ export default {
       this.getIndexTomatoLineCharts() ;
       this.getIndexTomatoPieChartsData() ;
     },
+    // 根据日、周、月标识获取饼图数据
     getIndexTomatoPieChartsData(flag){
+      // 默认获取当日
       flag = flag === undefined ? "DAY" : flag ;
-
-      this.pieChartLegend = [] ;
-      this.pieChartSeries = [] ;
+      // 绘画前对数据置空
       this.pieChartData = {
         pieChartLegend: [],
         pieChartSeries: []
       } ;
       this.pieChartTotalTime = 0;
+      // 获取饼图数据
       getIndexTomatoPieChartsData(flag).then(response =>{
         if(response.data.length>1){
           for (let i= 0;i< response.data.length; i++) {
+            // 饼图番茄总时长
             this.pieChartTotalTime+=response.data[i].time ;
-            this.pieChartLegend.push(response.data[i].taskName) ;
-            this.pieChartSeries.push(
+            // 添加饼图数据
+            this.pieChartData.pieChartLegend.push(response.data[i].taskName) ;
+            this.pieChartData.pieChartSeries.push(
               { value: response.data[i].time, name: response.data[i].taskName }
             ) ;
             console.log(response.data[i])
           }
 
-          this.pieChartData.pieChartLegend = this.pieChartLegend ;
-          this.pieChartData.pieChartSeries = this.pieChartSeries ;
         }
       })
     },
+    // 番茄时长曲线数据获取
     getIndexTomatoLineCharts(flag){
+      // 默认获取当年数据
       flag = flag === undefined ? "YEAR" : flag ;
 
       getIndexTomatoLineCharts(this.lineChartYear,flag).then(response =>{
         let count = response.data.time.length ;
-        this.sum = [] ;
-        this.time = [] ;
+        this.lineChartSum = [] ;
+        this.lineChartTime = [] ;
         for(let i=0 ; i < count; i++){
-          this.sum.push(response.data.sum[i]);
-          this.time.push(response.data.time[i]);
+          this.lineChartSum.push(response.data.sum[i]);
+          this.lineChartTime.push(response.data.time[i]);
         }
-        this.showCharts() ;
+        this.showLineCharts() ;
       })
     },
-    showCharts() {
-      this.myChart = this.$echarts.init(document.getElementById('echarts_box'))
-      this.option = {
+    showLineCharts() {
+      this.lineChart = this.$echarts.init(document.getElementById('linecharts'))
+      this.lineChartOption = {
         title: {
           text: '番茄时长曲线'
         },
@@ -196,26 +206,25 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: this.time
+          data: this.lineChartTime
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
-            data: this.sum,
+            data: this.lineChartSum,
             type: 'line'
           }
         ]
       },
-        console.log(this.time)
-      console.log(this.sum)
-      // 3. 使用刚指定的配置项和数据，显示图表
-      this.myChart.setOption(this.option) ;
+      console.log(this.lineChartSum)
+      // 使用刚指定的配置项和数据，显示图表
+      this.lineChart.setOption(this.lineChartOption) ;
 
       window.addEventListener("resize", () => {
         // 执行echarts自带的resize方法，即可做到让echarts图表自适应
-        this.myChart.resize();
+        this.lineChart.resize();
       });
     }
   }
