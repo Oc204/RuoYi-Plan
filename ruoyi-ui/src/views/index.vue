@@ -1,7 +1,6 @@
 <template>
   <div class="app-container home">
     <el-row :gutter="20">
-
     <el-card class="box-card">
       <el-row>
         <el-col :span="4" align="center">
@@ -53,6 +52,8 @@
               <el-button  @click='getIndexTomatoPieChartsData("WEEK")'  >周</el-button>
               <el-button  @click='getIndexTomatoPieChartsData("MONTH")'  >月</el-button>
             </el-button-group>
+            <span style="margin-left: 10px">当前总时长：{{this.pieChartTotalTime}}分</span>
+<!--            <span style="margin-left: 10px">计量单位：分</span>-->
             <pie-chart :chartData="pieChartData"/>
           </div>
         </el-col>
@@ -123,6 +124,7 @@ export default {
         pieChartLegend: [],
         pieChartSeries: []
       },
+      pieChartTotalTime: 0,
       myChart: "",
     }
   },
@@ -148,10 +150,15 @@ export default {
 
       this.pieChartLegend = [] ;
       this.pieChartSeries = [] ;
+      this.pieChartData = {
+        pieChartLegend: [],
+        pieChartSeries: []
+      } ;
+      this.pieChartTotalTime = 0;
       getIndexTomatoPieChartsData(flag).then(response =>{
         if(response.data.length>1){
-
           for (let i= 0;i< response.data.length; i++) {
+            this.pieChartTotalTime+=response.data[i].time ;
             this.pieChartLegend.push(response.data[i].taskName) ;
             this.pieChartSeries.push(
               { value: response.data[i].time, name: response.data[i].taskName }
