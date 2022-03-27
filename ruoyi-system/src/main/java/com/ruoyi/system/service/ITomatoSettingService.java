@@ -19,6 +19,10 @@ public interface ITomatoSettingService
      */
     public TomatoSetting selectTomatoSettingById(Long id);
 
+    /**
+     * 根据用户id查询番茄设置
+     * @return
+     */
     public TomatoSetting selectTomatoSettingByUserId();
 
     /**
