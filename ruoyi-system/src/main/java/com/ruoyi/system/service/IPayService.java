@@ -6,7 +6,7 @@ import java.util.Map;
 import com.ruoyi.system.domain.Pay;
 
 /**
- * 计划Service接口
+ * 支出Service接口
  * 
  * @author ruoyi
  * @date 2022-03-06
@@ -14,51 +14,57 @@ import com.ruoyi.system.domain.Pay;
 public interface IPayService 
 {
     /**
-     * 查询计划
+     * 查询支出
      * 
-     * @param id 计划主键
-     * @return 计划
+     * @param id 支出主键
+     * @return 支出
      */
     public Pay selectPayById(Long id);
 
     /**
-     * 查询计划列表
+     * 查询支出列表
      * 
-     * @param pay 计划
-     * @return 计划集合
+     * @param pay 支出
+     * @return 支出集合
      */
     public List<Pay> selectPayList(Pay pay);
 
+    /**
+     * 根据时间段查询支出记录
+     * @param year 所属年份
+     * @param month 所属月份
+     * @return
+     */
     public List<Pay> selectPayListByTime(String year,String month);
 
     /**
-     * 新增计划
+     * 新增支出
      * 
-     * @param pay 计划
+     * @param pay 支出
      * @return 结果
      */
     public int insertPay(Pay pay);
 
     /**
-     * 修改计划
+     * 修改支出
      * 
-     * @param pay 计划
+     * @param pay 支出
      * @return 结果
      */
     public int updatePay(Pay pay);
 
     /**
-     * 批量删除计划
+     * 批量删除支出
      * 
-     * @param ids 需要删除的计划主键集合
+     * @param ids 需要删除的支出主键集合
      * @return 结果
      */
     public int deletePayByIds(Long[] ids);
 
     /**
-     * 删除计划信息
+     * 删除支出信息
      * 
-     * @param id 计划主键
+     * @param id 支出主键
      * @return 结果
      */
     public int deletePayById(Long id);
