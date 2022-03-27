@@ -62,7 +62,18 @@ public interface SalaryMapper
      */
     public int deleteSalaryByIds(Long[] ids);
 
+    /**
+     * 根据月份查询收入数据
+     * @param salary 收入对象
+     * @return
+     */
     String anaylysisByMonth(Salary salary);
 
+    /**
+     * 根据月份查询收入数据
+     * @param userId 用户id
+     * @param year 年份值
+     * @return
+     */
     List<Map<String ,Object>> anaylysisByYear(@Param("userId")Long userId, @Param("year")String year);
 }
