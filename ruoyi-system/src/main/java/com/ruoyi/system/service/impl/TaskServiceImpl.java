@@ -4,7 +4,6 @@ import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.domain.Tomato;
-import com.ruoyi.system.mapper.TomatoMapper;
 import com.ruoyi.system.service.ITomatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,7 +110,7 @@ public class TaskServiceImpl implements ITaskService
         Task task = this.selectTaskById(taskId) ;
 
         int tomatoNum = 1 ;
-        if(!task.getTomatoNumber().equals("")) {
+        if(!("").equals(task.getTomatoNumber())) {
             tomatoNum = Integer.parseInt(task.getTomatoNumber()) + 1 ;
         }
         task.setTomatoNumber(String.valueOf(tomatoNum));
