@@ -449,16 +449,19 @@ export default {
     },
     getPlistTreeselect() {
       treeselect().then(response => {
-        this.pListOptions = response.data;
+        if(response.data.length!=0){
+          this.pListOptions = response.data;
 
-        if(this.queryParams.plistId === undefined) {
-          this.queryParams.plistId = this.pListOptions[0].id ;
-          this.currentPlistName = this.pListOptions[0].label ;
+          if(this.queryParams.plistId === undefined) {
+            this.queryParams.plistId = this.pListOptions[0].id ;
+            this.currentPlistName = this.pListOptions[0].label ;
 
-          // 进入页面时默认加载第一个plistId的任务列表
-          this.getList();
+          }
+          console.log(this.pListOptions);
         }
-        console.log(this.pListOptions);
+        // 进入页面时默认加载第一个plistId的任务列表
+        this.getList();
+
       });
     },
     // 取消按钮
