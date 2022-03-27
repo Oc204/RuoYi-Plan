@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ruoyi
  * @date 2022-03-01
  */
-@Transactional
 @Service
 public class TaskServiceImpl implements ITaskService 
 {
@@ -105,6 +104,7 @@ public class TaskServiceImpl implements ITaskService
     }
 
     @Override
+    @Transactional
     public int updateTomato(Long taskId, Long timeLong) {
 
         Task task = this.selectTaskById(taskId) ;
