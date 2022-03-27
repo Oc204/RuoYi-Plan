@@ -32,8 +32,9 @@ public interface PayMapper
 
     /**
      * 按年月查询支出列表
-     * @param year
-     * @param month
+     * @param userId 用户id
+     * @param year 年份值
+     * @param month 月份值
      * @return
      */
     public List<Pay> selectPayListByTime(@Param("userId")Long userId, @Param("year")String year,@Param("month")String month);
@@ -70,5 +71,11 @@ public interface PayMapper
      */
     public int deletePayByIds(Long[] ids);
 
+    /**
+     * 根据年份获取支出数据
+     * @param userId 用户id
+     * @param year 年份值
+     * @return
+     */
     List<Map<String ,Object>> anaylysisByYear(@Param("userId")Long userId, @Param("year")String year);
 }
