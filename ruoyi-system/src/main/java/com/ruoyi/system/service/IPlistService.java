@@ -64,10 +64,15 @@ public interface IPlistService
     /**
      * 构建前端所需要树结构
      *
-     * @param plist 清单列表
+     * @param plists 清单列表
      * @return 树结构列表
      */
     public List<Plist> buildPlistTree(List<Plist> plists);
 
+    /**
+     * 构建前端树形选择组件的数据
+     * @param result 结果
+     * @return
+     */
     List<TreeSelect> buildPlistTreeSelect(List<Plist> result);
 }
