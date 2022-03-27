@@ -69,17 +69,19 @@ public interface ITomatoService
     public int deleteTomatoById(Long id);
 
     /**
-     * 根据年份获取番茄曲线
-     * @param year
+     * 根据年份和显示标识获取番茄曲线
+     * @param year 年份值
+     * @param showYear 年标识
+     * @param showMonth 月标识
      * @return
      */
     List<Map<String, Object>> getTomatoLineByYear(String year, String showYear, String showMonth);
 
     /**
      * 根据选择的日期标识获取对应的番茄时间分析数据
-     * @param showDay
-     * @param showWeek
-     * @param showMonth
+     * @param showDay 日显示标识
+     * @param showWeek 周显示标识
+     * @param showMonth 月显示标识
      * @return
      */
     List<Map<String, Object>> getTomatoPieChartsData(String showDay, String showWeek, String showMonth);
