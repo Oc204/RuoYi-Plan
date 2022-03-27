@@ -61,7 +61,9 @@ public interface ITaskService
     public int deleteTaskById(Long id);
 
     /**
-     * 更新番茄
+     * 完成任务后更新番茄记录
+     * @param taskId 任务id
+     * @param timeLong 番茄时长
      * @return
      */
     public int updateTomato(Long taskId , Long timeLong);
