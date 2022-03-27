@@ -164,7 +164,13 @@ export default {
       this.pieChartTotalTime = 0;
       // 获取饼图数据
       getIndexTomatoPieChartsData(flag).then(response =>{
-        if(response.data.length>0){
+        if(response.data.length===0){
+          this.pieChartData.pieChartLegend.push("暂无数据") ;
+          this.pieChartData.pieChartSeries.push(
+            { value: 0, name: "暂无数据" }
+          ) ;
+
+        } else {
           for (let i= 0;i< response.data.length; i++) {
             // 饼图番茄总时长
             this.pieChartTotalTime+=response.data[i].time ;
@@ -175,7 +181,6 @@ export default {
             ) ;
             console.log(response.data[i])
           }
-
         }
       })
     },
