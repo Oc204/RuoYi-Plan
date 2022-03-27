@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ## 安装依赖
-npm install
+npm install --registry=https://registry.npm.taobao.org
 
 ## 打包
 npm run build:prod
