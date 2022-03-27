@@ -59,5 +59,10 @@ public interface TomatoSettingMapper
      */
     public int deleteTomatoSettingByIds(Long[] ids);
 
+    /**
+     * 根据用户查询番茄设置
+     * @param userId 用户id
+     * @return
+     */
     public TomatoSetting selectTomatoSettingByUserId(Long userId);
 }
