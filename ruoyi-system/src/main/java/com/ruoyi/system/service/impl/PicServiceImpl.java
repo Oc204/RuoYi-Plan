@@ -2,11 +2,13 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.bean.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.PicMapper;
 import com.ruoyi.system.domain.Pic;
 import com.ruoyi.system.service.IPicService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 图片Service业务层处理
@@ -51,9 +53,22 @@ public class PicServiceImpl implements IPicService
      * @return 结果
      */
     @Override
+    @Transactional
     public int insertPic(Pic pic)
     {
         pic.setCreateTime(DateUtils.getNowDate());
+
+        String [] picArr = pic.getPicPath().split(",") ;
+        if (picArr.length>1){
+            for(String picPath : picArr){
+                Pic newPic = new Pic() ;
+                BeanUtils.copyProperties(pic, newPic);
+                newPic.setPicPath(picPath);
+
+                picMapper.insertPic(newPic) ;
+            }
+            return 1 ;
+        }
         return picMapper.insertPic(pic);
     }
 

@@ -1,15 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户id" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入用户id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="权重" prop="weight">
         <el-input
           v-model="queryParams.weight"
@@ -100,11 +91,16 @@
 
     <el-table v-loading="loading" :data="picList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="" align="center" prop="id" />
+<!--      <el-table-column label="" align="center" prop="id" />-->
       <el-table-column label="用户id" align="center" prop="userId" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="权重" align="center" prop="weight" />
-      <el-table-column label="图片地址" align="center" prop="picPath" />
+      <el-table-column label="图片地址" align="center" prop="picPath">
+        <template slot-scope="scope">
+          <ImagePreview :src="scope.row.picPath" width="50%" height="50%" />
+        </template>
+      </el-table-column>
+<!--      <el-table-column label="图片地址" align="center" prop="picPath" />-->
       <el-table-column label="是否删除" align="center" prop="hasDelete" />
       <el-table-column label="是否审批" align="center" prop="approve" />
       <el-table-column label="下载次数" align="center" prop="downloadTimes" />
@@ -139,9 +135,6 @@
     <!-- 添加或修改图片对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户id" />
-        </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
@@ -149,16 +142,13 @@
           <el-input v-model="form.weight" placeholder="请输入权重" />
         </el-form-item>
         <el-form-item label="图片地址" prop="picPath">
-          <el-input v-model="form.picPath" type="textarea" placeholder="请输入内容" />
+          <ImageUpload ref="picPath" v-model="form.picPath"/>
         </el-form-item>
         <el-form-item label="是否删除" prop="hasDelete">
           <el-input v-model="form.hasDelete" placeholder="请输入是否删除" />
         </el-form-item>
         <el-form-item label="是否审批" prop="approve">
           <el-input v-model="form.approve" placeholder="请输入是否审批" />
-        </el-form-item>
-        <el-form-item label="下载次数" prop="downloadTimes">
-          <el-input v-model="form.downloadTimes" placeholder="请输入下载次数" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
