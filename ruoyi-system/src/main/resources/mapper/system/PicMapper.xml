@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PicMapper">
+    
+    <resultMap type="Pic" id="PicResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="weight"    column="weight"    />
+        <result property="picPath"    column="pic_path"    />
+        <result property="hasDelete"    column="has_delete"    />
+        <result property="approve"    column="approve"    />
+        <result property="downloadTimes"    column="download_times"    />
+    </resultMap>
+
+    <sql id="selectPicVo">
+        select id, user_id, create_by, create_time, update_by, update_time, remark, weight, pic_path, has_delete, approve, download_times from pic
+    </sql>
+
+    <select id="selectPicList" parameterType="Pic" resultMap="PicResult">
+        <include refid="selectPicVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="picPath != null  and picPath != ''"> and pic_path = #{picPath}</if>
+            <if test="hasDelete != null "> and has_delete = #{hasDelete}</if>
+            <if test="approve != null "> and approve = #{approve}</if>
+            <if test="downloadTimes != null "> and download_times = #{downloadTimes}</if>
+        </where>
+    </select>
+    
+    <select id="selectPicById" parameterType="Long" resultMap="PicResult">
+        <include refid="selectPicVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPic" parameterType="Pic" useGeneratedKeys="true" keyProperty="id">
+        insert into pic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="weight != null">weight,</if>
+            <if test="picPath != null">pic_path,</if>
+            <if test="hasDelete != null">has_delete,</if>
+            <if test="approve != null">approve,</if>
+            <if test="downloadTimes != null">download_times,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="picPath != null">#{picPath},</if>
+            <if test="hasDelete != null">#{hasDelete},</if>
+            <if test="approve != null">#{approve},</if>
+            <if test="downloadTimes != null">#{downloadTimes},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePic" parameterType="Pic">
+        update pic
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="picPath != null">pic_path = #{picPath},</if>
+            <if test="hasDelete != null">has_delete = #{hasDelete},</if>
+            <if test="approve != null">approve = #{approve},</if>
+            <if test="downloadTimes != null">download_times = #{downloadTimes},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePicById" parameterType="Long">
+        delete from pic where id = #{id}
+    </delete>
+
+    <delete id="deletePicByIds" parameterType="String">
+        delete from pic where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
