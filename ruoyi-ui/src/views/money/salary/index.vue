@@ -92,7 +92,7 @@
       <el-table-column label="工资名称" align="center" prop="salaryName" />
 <!--      <el-table-column label="用户id" align="center" prop="userId" />-->
       <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="排序号" align="center" prop="weight" />
+<!--      <el-table-column label="排序号" align="center" prop="weight" />-->
       <el-table-column label="发薪日期" align="center" prop="salaryDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.salaryDate, '{y}-{m}-{d}') }}</span>
@@ -101,12 +101,10 @@
       <el-table-column label="发薪明细" align="center" prop="salaryDetail" />
       <el-table-column label="关联图片" align="center" prop="salaryPic">
         <template slot-scope="scope">
-<!--          　　<img v-for="item in scope.row.salaryPic" :src="item" width="40" height="40" class="head_pic"/>-->
           <ImagePreview v-for="item in scope.row.salaryPic" :src="item" width="50%" height="50%" class="head_pic" />
         </template>
       </el-table-column>
 
-<!--      <el-table-column label="关联图片" align="center" prop="salaryPic" />-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
