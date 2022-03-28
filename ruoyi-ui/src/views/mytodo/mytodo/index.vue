@@ -243,7 +243,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="番茄数" prop="tomatoNumber">
-              <el-input type="number" v-model="form.tomatoNumber" placeholder="请输入番茄数" />
+              <el-input type="number" v-model="form.tomatoNumber" placeholder="番茄数无需手动输入" readonly="true" :disabled="true"/>
             </el-form-item>
           </el-col>
           <el-col :span="24">
