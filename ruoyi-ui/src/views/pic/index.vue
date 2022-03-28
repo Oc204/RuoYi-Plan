@@ -145,10 +145,16 @@
           <ImageUpload ref="picPath" v-model="form.picPath"/>
         </el-form-item>
         <el-form-item label="是否删除" prop="hasDelete">
-          <el-input v-model="form.hasDelete" placeholder="请输入是否删除" />
+          <el-radio-group v-model="form.hasDelete">
+            <el-radio :label="0">否</el-radio>
+            <el-radio :abel="1">是</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="是否审批" prop="approve">
-          <el-input v-model="form.approve" placeholder="请输入是否审批" />
+          <el-radio-group v-model="form.approve">
+            <el-radio :label="0">否</el-radio>
+            <el-radio :label="1">是</el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
