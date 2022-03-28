@@ -8,7 +8,12 @@ spring:
             master:
                 url: jdbc:mysql://localhost:3306/ruoyi-plan?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                 username: root
-                password: 1234Qwer!
+                password: root
+            # 主库数据源
+#            master:
+#                url: jdbc:mysql://124.222.90.146:3306/ruoyi-plan?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+#                username: root
+#                password: 1234Qwer!
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭
