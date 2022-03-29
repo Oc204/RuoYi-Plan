@@ -42,6 +42,18 @@ public class Pic extends BaseEntity
     @Excel(name = "下载次数")
     private Long downloadTimes;
 
+    /** 是否审批通过 */
+    @Excel(name = "是否审批通过")
+    private Long isPass;
+
+    public Long getIsPass() {
+        return isPass;
+    }
+
+    public void setIsPass(Long isPass) {
+        this.isPass = isPass;
+    }
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -108,19 +120,15 @@ public class Pic extends BaseEntity
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .append("weight", getWeight())
-            .append("picPath", getPicPath())
-            .append("hasDelete", getHasDelete())
-            .append("approve", getApprove())
-            .append("downloadTimes", getDownloadTimes())
-            .toString();
+        return "Pic{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", weight=" + weight +
+                ", picPath='" + picPath + '\'' +
+                ", hasDelete=" + hasDelete +
+                ", approve=" + approve +
+                ", downloadTimes=" + downloadTimes +
+                ", isPass=" + isPass +
+                '}';
     }
 }

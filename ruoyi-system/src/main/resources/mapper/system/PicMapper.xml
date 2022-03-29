@@ -17,10 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="hasDelete"    column="has_delete"    />
         <result property="approve"    column="approve"    />
         <result property="downloadTimes"    column="download_times"    />
+        <result property="isPass"    column="is_pass"    />
     </resultMap>
 
     <sql id="selectPicVo">
-        select id, user_id, create_by, create_time, update_by, update_time, remark, weight, pic_path, has_delete, approve, download_times from pic
+        select id, user_id, create_by, create_time, update_by, update_time, remark, weight, pic_path, has_delete, approve, download_times, is_pass from pic
     </sql>
 
     <select id="selectPicList" parameterType="Pic" resultMap="PicResult">
@@ -32,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasDelete != null "> and has_delete = #{hasDelete}</if>
             <if test="approve != null "> and approve = #{approve}</if>
             <if test="downloadTimes != null "> and download_times = #{downloadTimes}</if>
+            <if test="isPass != null "> and is_pass = #{isPass}</if>
         </where>
     </select>
     
@@ -54,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasDelete != null">has_delete,</if>
             <if test="approve != null">approve,</if>
             <if test="downloadTimes != null">download_times,</if>
+            <if test="isPass != null">is_pass,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -67,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasDelete != null">#{hasDelete},</if>
             <if test="approve != null">#{approve},</if>
             <if test="downloadTimes != null">#{downloadTimes},</if>
+            <if test="isPass != null">#{isPass},</if>
          </trim>
     </insert>
 
@@ -84,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasDelete != null">has_delete = #{hasDelete},</if>
             <if test="approve != null">approve = #{approve},</if>
             <if test="downloadTimes != null">download_times = #{downloadTimes},</if>
+            <if test="isPass != null">is_pass = #{isPass},</if>
         </trim>
         where id = #{id}
     </update>
