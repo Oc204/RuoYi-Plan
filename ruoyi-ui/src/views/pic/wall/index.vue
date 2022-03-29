@@ -39,7 +39,9 @@
     </el-row>
 
     <div class="demo-image__lazy">
-    <el-image v-for="url in imageList" :key="url" :src="url" lazy style="width: 200px;height: 100px"></el-image>
+      <ImagePreview v-for="url in picList" :key="url" :src="url.picPath" lazy width="30%" height="30%" />
+
+<!--      <el-image v-for="url in imageList" :key="url" :src="url" lazy style="width: 200px;height: 100px"></el-image>-->
     </div>
     <el-table v-loading="loading" :data="picList" @selection-change="handleSelectionChange" v-show="false">
       <el-table-column label="备注" align="center" prop="remark" />
