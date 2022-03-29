@@ -87,8 +87,6 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 选中数组
-      ids: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -103,8 +101,6 @@ export default {
       imageList: [],
       // 弹出层标题
       title: "",
-      // 是否显示弹出层
-      open: false,
       // 是否显示弹出层
       upload_open: false,
       // 查询参数
