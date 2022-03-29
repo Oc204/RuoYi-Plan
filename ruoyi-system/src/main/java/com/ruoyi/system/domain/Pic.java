@@ -30,11 +30,11 @@ public class Pic extends BaseEntity
     @Excel(name = "图片地址")
     private String picPath;
 
-    /** 是否删除 */
+    /** 是否删除 1未删除 0已删除*/
     @Excel(name = "是否删除")
     private Long hasDelete;
 
-    /** 是否审批 */
+    /** 是否审核 1已审核 0未审核*/
     @Excel(name = "是否审批")
     private Long approve;
 
@@ -42,8 +42,8 @@ public class Pic extends BaseEntity
     @Excel(name = "下载次数")
     private Long downloadTimes;
 
-    /** 是否审批通过 */
-    @Excel(name = "是否审批通过")
+    /** 是否审核通过 1通过 0未通过*/
+    @Excel(name = "是否审核通过")
     private Long isPass;
 
     public Long getIsPass() {
@@ -72,12 +72,12 @@ public class Pic extends BaseEntity
     {
         return userId;
     }
-    public void setWeight(Long weight) 
+    public void setWeight(Long weight)
     {
         this.weight = weight;
     }
 
-    public Long getWeight() 
+    public Long getWeight()
     {
         return weight;
     }
@@ -90,30 +90,30 @@ public class Pic extends BaseEntity
     {
         return picPath;
     }
-    public void setHasDelete(Long hasDelete) 
+    public void setHasDelete(Long hasDelete)
     {
         this.hasDelete = hasDelete;
     }
 
-    public Long getHasDelete() 
+    public Long getHasDelete()
     {
         return hasDelete;
     }
-    public void setApprove(Long approve) 
+    public void setApprove(Long approve)
     {
         this.approve = approve;
     }
 
-    public Long getApprove() 
+    public Long getApprove()
     {
         return approve;
     }
-    public void setDownloadTimes(Long downloadTimes) 
+    public void setDownloadTimes(Long downloadTimes)
     {
         this.downloadTimes = downloadTimes;
     }
 
-    public Long getDownloadTimes() 
+    public Long getDownloadTimes()
     {
         return downloadTimes;
     }

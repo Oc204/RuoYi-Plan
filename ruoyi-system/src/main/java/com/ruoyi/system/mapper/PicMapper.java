@@ -58,4 +58,11 @@ public interface PicMapper
      * @return 结果
      */
     public int deletePicByIds(Long[] ids);
+
+    /**
+     * 获取公开的图片列表
+     * @param pic
+     * @return
+     */
+    List<Pic> selectPicPublicList(Pic pic);
 }

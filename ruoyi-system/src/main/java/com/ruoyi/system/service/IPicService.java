@@ -58,4 +58,11 @@ public interface IPicService
      * @return 结果
      */
     public int deletePicById(Long id);
+
+    /**
+     * 获取公开的图片列表
+     * @param pic
+     * @return
+     */
+    List<Pic> selectPicPublicList(Pic pic);
 }

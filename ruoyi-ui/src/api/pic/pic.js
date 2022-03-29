@@ -26,6 +26,15 @@ export function addPic(data) {
   })
 }
 
+// 上传图片(所有用户通用方式)
+export function uploadPic(data) {
+  return request({
+    url: '/pic/upload',
+    method: 'post',
+    data: data
+  })
+}
+
 // 修改图片
 export function updatePic(data) {
   return request({

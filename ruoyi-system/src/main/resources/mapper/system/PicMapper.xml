@@ -36,6 +36,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isPass != null "> and is_pass = #{isPass}</if>
         </where>
     </select>
+
+    <select id="selectPicPublicList" parameterType="Pic" resultMap="PicResult">
+        <include refid="selectPicVo"/>
+        <where>
+            <!-- 未删除且已审核并审核通过 -->
+            and has_delete = 1 and approve = 1 and is_pass = 1
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="picPath != null  and picPath != ''"> and pic_path = #{picPath}</if>
+            <if test="downloadTimes != null "> and download_times = #{downloadTimes}</if>
+        </where>
+    </select>
     
     <select id="selectPicById" parameterType="Long" resultMap="PicResult">
         <include refid="selectPicVo"/>

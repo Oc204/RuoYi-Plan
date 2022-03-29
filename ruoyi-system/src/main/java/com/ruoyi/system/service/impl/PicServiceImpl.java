@@ -108,4 +108,14 @@ public class PicServiceImpl implements IPicService
     {
         return picMapper.deletePicById(id);
     }
+
+    /**
+     * 获取公开的图片列表
+     * @param pic
+     * @return
+     */
+    @Override
+    public List<Pic> selectPicPublicList(Pic pic) {
+        return picMapper.selectPicPublicList(pic);
+    }
 }

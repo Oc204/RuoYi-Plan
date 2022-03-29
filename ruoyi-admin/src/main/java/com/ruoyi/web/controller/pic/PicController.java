@@ -47,6 +47,16 @@ public class PicController extends BaseController
     }
 
     /**
+     * 查询公开的图片列表
+     */
+    @GetMapping("/public/list")
+    public TableDataInfo publicList(Pic pic)
+    {
+        List<Pic> list = picService.selectPicPublicList(pic);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出图片列表
      */
     @PreAuthorize("@ss.hasPermi('system:pic:export')")
@@ -77,6 +87,21 @@ public class PicController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Pic pic)
     {
+        return toAjax(picService.insertPic(pic));
+    }
+
+    /**
+     * 上传图片
+     */
+    @Log(title = "图片", businessType = BusinessType.INSERT)
+    @PostMapping("/upload")
+    public AjaxResult uploadPic(@RequestBody Pic pic)
+    {
+        // 设置为未审核
+        pic.setApprove(0L);
+        // 设置为未删除
+        pic.setHasDelete(1L);
+
         return toAjax(picService.insertPic(pic));
     }
 

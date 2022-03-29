@@ -56,6 +56,15 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleUpload"
+        >上传图片</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
           type="success"
           plain
           icon="el-icon-edit"
@@ -76,16 +85,6 @@
           v-hasPermi="['system:pic:remove']"
         >删除</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['system:pic:export']"
-        >导出</el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -100,9 +99,48 @@
           <ImagePreview :src="scope.row.picPath" width="50%" height="50%" />
         </template>
       </el-table-column>
-<!--      <el-table-column label="图片地址" align="center" prop="picPath" />-->
-      <el-table-column label="是否删除" align="center" prop="hasDelete" />
-      <el-table-column label="是否审批" align="center" prop="approve" />
+      <el-table-column label="是否已经删除" align="center" prop="hasDelete" >
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.hasDelete === 1 "
+            type="success"
+            size="mini"
+          >否</el-button>
+          <el-button
+            v-else-if="scope.row.hasDelete === 0"
+            type="danger"
+            size="mini"
+          >是</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="是否已审批" align="center" prop="approve" >
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.approve === 0 "
+            type="danger"
+            size="mini"
+          >否</el-button>
+          <el-button
+            v-else-if="scope.row.approve === 1"
+            type="success"
+            size="mini"
+          >是</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="是否通过审核" align="center" prop="isPass" >
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.isPass === 0 "
+            type="danger"
+            size="mini"
+          >否</el-button>
+          <el-button
+            v-else-if="scope.row.isPass === 1"
+            type="success"
+            size="mini"
+          >是</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="下载次数" align="center" prop="downloadTimes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -146,20 +184,38 @@
         </el-form-item>
         <el-form-item label="是否删除" prop="hasDelete">
           <el-radio-group v-model="form.hasDelete">
-            <el-radio :label="0">否</el-radio>
-            <el-radio :abel="1">是</el-radio>
+            <el-radio :label=0>否</el-radio>
+            <el-radio :label=1>是</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="是否审批" prop="approve">
-          <el-radio-group v-model="form.approve">
-            <el-radio :label="0">否</el-radio>
-            <el-radio :label="1">是</el-radio>
+        <el-form-item label="审核意见" prop="isPass">
+          <el-radio-group v-model="form.isPass">
+            <el-radio :label=0>不通过</el-radio>
+            <el-radio :label=1>通过</el-radio>
           </el-radio-group>
         </el-form-item>
+<!--        <el-form-item label="是否审批" prop="approve">-->
+<!--          <el-radio-group v-model="form.approve">-->
+<!--            <el-radio :label="0">否</el-radio>-->
+<!--            <el-radio :label="1">是</el-radio>-->
+<!--          </el-radio-group>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+    <!-- 上传图片对话框 -->
+    <el-dialog :title="title" :visible.sync="upload_open" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="图片" prop="picPath">
+          <ImageUpload ref="picPath" v-model="form.picPath"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitPic">确 定</el-button>
+        <el-button @click="cancelUpload">取 消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -167,6 +223,7 @@
 
 <script>
 import { listPic, getPic, delPic, addPic, updatePic } from "@/api/pic/pic";
+import {uploadPic} from "../../api/pic/pic";
 
 export default {
   name: "Pic",
@@ -190,6 +247,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示弹出层
+      upload_open: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -199,7 +258,8 @@ export default {
         picPath: null,
         hasDelete: null,
         approve: null,
-        downloadTimes: null
+        downloadTimes: null,
+        isPass: null,
       },
       // 表单参数
       form: {},
@@ -224,6 +284,11 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.reset();
+    },
+    // 取消按钮
+    cancelUpload() {
+      this.upload_open = false;
       this.reset();
     },
     // 表单重置
@@ -266,6 +331,12 @@ export default {
       this.open = true;
       this.title = "添加图片";
     },
+    /** 上传图片按钮操作 */
+    handleUpload() {
+      this.reset();
+      this.upload_open = true;
+      this.title = "上传图片";
+    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -296,6 +367,18 @@ export default {
         }
       });
     },
+    /** 提交上传图片按钮 */
+    submitPic() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          uploadPic(this.form).then(response => {
+            this.$modal.msgSuccess("新增成功");
+            this.upload_open = false;
+            this.getList();
+          });
+        }
+      });
+    },
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
@@ -306,12 +389,6 @@ export default {
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      this.download('system/pic/export', {
-        ...this.queryParams
-      }, `pic_${new Date().getTime()}.xlsx`)
-    }
   }
 };
 </script>
