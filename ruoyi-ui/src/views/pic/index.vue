@@ -222,8 +222,7 @@
 </template>
 
 <script>
-import { listPic, getPic, delPic, addPic, updatePic } from "@/api/pic/pic";
-import {uploadPic} from "../../api/pic/pic";
+import { listPic, getPic, delPic, addPic, updatePic, uploadPic } from "@/api/pic/pic";
 
 export default {
   name: "Pic",

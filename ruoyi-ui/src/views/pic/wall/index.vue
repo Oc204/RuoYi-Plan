@@ -78,8 +78,7 @@
 </template>
 
 <script>
-import { listPic, getPic, delPic, addPic, updatePic } from "@/api/pic/pic";
-import {uploadPic} from "../../../api/pic/pic";
+import {uploadPic, publicPic } from "@/api/pic/pic";
 
 export default {
   name: "Pic",
@@ -129,7 +128,7 @@ export default {
     /** 查询图片列表 */
     getList() {
       this.loading = true;
-      listPic(this.queryParams).then(response => {
+      publicPic(this.queryParams).then(response => {
         this.picList = response.rows;
         this.total = response.total;
         this.loading = false;

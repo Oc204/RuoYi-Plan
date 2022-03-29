@@ -9,6 +9,15 @@ export function listPic(query) {
   })
 }
 
+// 查询公开图片墙列表
+export function publicPic(query) {
+  return request({
+    url: '/pic/public/list',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询图片详细
 export function getPic(id) {
   return request({

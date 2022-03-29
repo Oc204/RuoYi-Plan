@@ -50,8 +50,9 @@ public class PicController extends BaseController
      * 查询公开的图片列表
      */
     @GetMapping("/public/list")
-    public TableDataInfo publicList(Pic pic)
+    public TableDataInfo publicList()
     {
+        Pic pic = new Pic() ;
         List<Pic> list = picService.selectPicPublicList(pic);
         return getDataTable(list);
     }
