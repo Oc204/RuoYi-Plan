@@ -1,30 +1,5 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" disabled="false">
-      <el-form-item label="权重" prop="weight">
-        <el-input
-          v-model="queryParams.weight"
-          placeholder="请输入权重"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="下载次数" prop="downloadTimes">
-        <el-input
-          v-model="queryParams.downloadTimes"
-          placeholder="请输入下载次数"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
-
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -66,7 +41,7 @@
     <el-dialog :title="title" :visible.sync="upload_open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图片" prop="picPath">
-          <ImageUpload ref="picPath" v-model="form.picPath"/>
+          <PublicImageUpload ref="picPath" v-model="form.picPath"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -79,9 +54,13 @@
 
 <script>
 import {uploadPic, publicPic } from "@/api/pic/pic";
+import PublicImageUpload from "@/components/PublicImageUpload"
 
 export default {
   name: "Wall",
+  components:{
+    PublicImageUpload
+  },
   data() {
     return {
       // 遮罩层
