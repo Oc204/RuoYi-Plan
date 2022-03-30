@@ -81,7 +81,7 @@
 import {uploadPic, publicPic } from "@/api/pic/pic";
 
 export default {
-  name: "Pic",
+  name: "Wall",
   data() {
     return {
       // 遮罩层

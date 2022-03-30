@@ -95,7 +95,7 @@ public class PicController extends BaseController
      * 上传图片
      */
     @Log(title = "图片", businessType = BusinessType.INSERT)
-    @PostMapping("/upload")
+    @PostMapping("/public/upload")
     public AjaxResult uploadPic(@RequestBody Pic pic)
     {
         // 设置为未审核
