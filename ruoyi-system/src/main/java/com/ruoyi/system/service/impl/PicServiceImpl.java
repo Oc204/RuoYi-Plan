@@ -118,4 +118,14 @@ public class PicServiceImpl implements IPicService
     public List<Pic> selectPicPublicList(Pic pic) {
         return picMapper.selectPicPublicList(pic);
     }
+
+    @Override
+    public int approvePassByIds(Long[] ids) {
+        return picMapper.approvePassByIds(ids);
+    }
+
+    @Override
+    public int approveNoPassByIds(Long[] ids) {
+        return picMapper.approveNoPassByIds(ids);
+    }
 }

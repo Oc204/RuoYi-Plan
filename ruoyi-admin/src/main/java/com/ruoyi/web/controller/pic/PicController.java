@@ -127,4 +127,22 @@ public class PicController extends BaseController
     {
         return toAjax(picService.deletePicByIds(ids));
     }
+
+    @PreAuthorize("@ss.hasPermi('system:pic:approve')")
+    @Log(title = "图片", businessType = BusinessType.DELETE)
+	@GetMapping("/pass/{ids}")
+    public AjaxResult approvePass(@PathVariable Long[] ids)
+    {
+        return toAjax(picService.approvePassByIds(ids));
+    }
+
+    @PreAuthorize("@ss.hasPermi('system:pic:approve')")
+    @Log(title = "图片", businessType = BusinessType.DELETE)
+	@GetMapping("/noPass/{ids}")
+    public AjaxResult approveNoPass(@PathVariable Long[] ids)
+    {
+        return toAjax(picService.approveNoPassByIds(ids));
+    }
+
+
 }

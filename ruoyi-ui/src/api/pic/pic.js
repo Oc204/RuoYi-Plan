@@ -60,3 +60,19 @@ export function delPic(id) {
     method: 'delete'
   })
 }
+
+// 审核通过
+export function approvePass(id) {
+  return request({
+    url: '/pic/pass/' + id,
+    method: 'get'
+  })
+}
+
+// 审核不通过
+export function approveNoPass(id) {
+  return request({
+    url: '/pic/noPass/' + id,
+    method: 'get'
+  })
+}

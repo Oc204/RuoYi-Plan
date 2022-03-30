@@ -115,4 +115,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <update id="approvePassByIds" parameterType="String">
+        update pic
+        set has_delete = 1 , approve = 1 , is_pass = 1
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="approveNoPassByIds" parameterType="String">
+        update pic
+        set has_delete = 1 , approve = 1 , is_pass = 0
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

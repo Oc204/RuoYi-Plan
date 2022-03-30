@@ -65,4 +65,18 @@ public interface IPicService
      * @return
      */
     List<Pic> selectPicPublicList(Pic pic);
+
+    /**
+     * 批量通过审核
+     * @param ids 审核通过的主键集合
+     * @return
+     */
+    public int approvePassByIds(Long[] ids) ;
+
+    /**
+     * 批量不通过审核
+     * @param ids 审核不通过的图片主键集合
+     * @return
+     */
+    public int approveNoPassByIds(Long[] ids) ;
 }

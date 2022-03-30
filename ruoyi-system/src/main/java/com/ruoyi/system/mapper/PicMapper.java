@@ -65,4 +65,18 @@ public interface PicMapper
      * @return
      */
     List<Pic> selectPicPublicList(Pic pic);
+
+    /**
+     * 批量通过审核
+     * @param ids 审核通过的主键集合
+     * @return
+     */
+    int approvePassByIds(Long[] ids);
+
+    /**
+     * 批量不通过审核
+     * @param ids 审核不通过的图片主键集合
+     * @return
+     */
+    int approveNoPassByIds(Long[] ids);
 }

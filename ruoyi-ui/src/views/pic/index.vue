@@ -76,6 +76,28 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
+          type="success"
+          plain
+          icon="el-icon-edit"
+          size="mini"
+          :disabled="multiple"
+          @click="handleApprovePass"
+          v-hasPermi="['system:pic:approve']"
+        >一键审核通过</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-edit"
+          size="mini"
+          :disabled="multiple"
+          @click="handleApproveNoPass"
+          v-hasPermi="['system:pic:approve']"
+        >一键审核不通过</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
           type="danger"
           plain
           icon="el-icon-delete"
@@ -113,7 +135,7 @@
           >是</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="是否已审批" align="center" prop="approve" >
+      <el-table-column label="是否已审核" align="center" prop="approve" >
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.approve === 0 "
@@ -184,8 +206,8 @@
         </el-form-item>
         <el-form-item label="是否删除" prop="hasDelete">
           <el-radio-group v-model="form.hasDelete">
-            <el-radio :label=0>否</el-radio>
-            <el-radio :label=1>是</el-radio>
+            <el-radio :label=0>是</el-radio>
+            <el-radio :label=1>否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="审核意见" prop="isPass">
@@ -194,12 +216,12 @@
             <el-radio :label=1>通过</el-radio>
           </el-radio-group>
         </el-form-item>
-<!--        <el-form-item label="是否审批" prop="approve">-->
-<!--          <el-radio-group v-model="form.approve">-->
-<!--            <el-radio :label="0">否</el-radio>-->
-<!--            <el-radio :label="1">是</el-radio>-->
-<!--          </el-radio-group>-->
-<!--        </el-form-item>-->
+        <el-form-item label="是否审批" prop="approve">
+          <el-radio-group v-model="form.approve">
+            <el-radio :label="0">否</el-radio>
+            <el-radio :label="1">是</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -222,7 +244,7 @@
 </template>
 
 <script>
-import { listPic, getPic, delPic, addPic, updatePic, uploadPic } from "@/api/pic/pic";
+import { listPic, getPic, delPic, addPic, updatePic, uploadPic, approvePass, approveNoPass } from "@/api/pic/pic";
 
 export default {
   name: "Pic",
@@ -284,6 +306,26 @@ export default {
     cancel() {
       this.open = false;
       this.reset();
+    },
+    // 一键审核通过
+    handleApprovePass(row){
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否审核通过编号为"' + ids + '"的数据项？').then(function() {
+        return approvePass(ids);
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("审核成功");
+      }).catch(() => {});
+    },
+    // 一键审核不通过
+    handleApproveNoPass(row){
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否审核不通过编号为"' + ids + '"的数据项？').then(function() {
+        return approveNoPass(ids);
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("审核成功");
+      }).catch(() => {});
     },
     // 取消按钮
     cancelUpload() {
