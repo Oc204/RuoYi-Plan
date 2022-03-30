@@ -11,22 +11,40 @@
         />
       </el-form-item>
       <el-form-item label="是否删除" prop="hasDelete">
-        <el-input
+        <el-select
           v-model="queryParams.hasDelete"
-          placeholder="请输入是否删除"
+          placeholder="是否删除"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option label="是" value="0"></el-option>
+          <el-option label="否" value="1"></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="是否审批" prop="approve">
-        <el-input
+      <el-form-item label="是否审核" prop="approve">
+        <el-select
           v-model="queryParams.approve"
-          placeholder="请输入是否审批"
+          placeholder="是否审核"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option label="是" value="1"></el-option>
+          <el-option label="否" value="0"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="审核情况" prop="isPass" >
+        <el-select
+          v-model="queryParams.isPass"
+          placeholder="是否通过"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option label="已通过" value="1"></el-option>
+          <el-option label="不通过" value="0"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="下载次数" prop="downloadTimes">
         <el-input
