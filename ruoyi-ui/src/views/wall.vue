@@ -20,7 +20,6 @@
 
     <div class="demo-image__lazy">
       <PublicImagePreview v-for="url in picList"  :src="url.picPath" :id="url.id" lazy  style="width: 18%;height: 18%;margin-right: 10px" />
-<!--      <el-image v-for="url in imageList" :key="url" :src="url" lazy style="width: 200px;height: 100px"></el-image>-->
     </div>
 
     <!-- 上传图片对话框 -->
