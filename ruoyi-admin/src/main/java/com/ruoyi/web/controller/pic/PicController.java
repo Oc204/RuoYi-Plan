@@ -120,8 +120,8 @@ public class PicController extends BaseController
         pic.setApprove(0L);
         // 设置为未删除
         pic.setHasDelete(1L);
-        pic.setDownloadTimes(0);
-        pic.setClickTimes(0);
+        pic.setDownloadTimes(0L);
+        pic.setClickTimes(0L);
 
         return toAjax(picService.insertPic(pic));
     }

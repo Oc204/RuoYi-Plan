@@ -1,5 +1,10 @@
 <template>
   <div class="app-container">
+    <el-header>
+      <span style="font-size: large;font-family: Bahnschrift;font-weight: bold">丁真の博物馆</span>
+    <el-image :src="require('@/assets/images/head.png')" style="height: 100%"></el-image>
+    </el-header>
+    <el-main>
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -18,14 +23,6 @@
 <!--      <el-image v-for="url in imageList" :key="url" :src="url" lazy style="width: 200px;height: 100px"></el-image>-->
     </div>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-
     <!-- 上传图片对话框 -->
     <el-dialog :title="title" :visible.sync="upload_open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -38,7 +35,9 @@
         <el-button @click="cancelUpload">取 消</el-button>
       </div>
     </el-dialog>
+    </el-main>
   </div>
+
 </template>
 
 <script>
