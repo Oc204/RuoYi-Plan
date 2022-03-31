@@ -40,11 +40,11 @@ public class Pic extends BaseEntity
 
     /** 下载次数 */
     @Excel(name = "下载次数")
-    private Long downloadTimes;
+    private int downloadTimes;
 
     /** 点击次数 */
     @Excel(name = "点击次数")
-    private Long clickTimes;
+    private int clickTimes;
 
     /** 是否审核通过 1通过 0未通过*/
     @Excel(name = "是否审核通过")
@@ -112,20 +112,20 @@ public class Pic extends BaseEntity
     {
         return approve;
     }
-    public void setDownloadTimes(Long downloadTimes)
+    public void setDownloadTimes(int downloadTimes)
     {
         this.downloadTimes = downloadTimes;
     }
 
-    public Long getClickTimes() {
+    public int getClickTimes() {
         return clickTimes;
     }
 
-    public void setClickTimes(Long clickTimes) {
+    public void setClickTimes(int clickTimes) {
         this.clickTimes = clickTimes;
     }
 
-    public Long getDownloadTimes()
+    public int getDownloadTimes()
     {
         return downloadTimes;
     }
