@@ -14,20 +14,9 @@
     </el-row>
 
     <div class="demo-image__lazy">
-      <ImagePreview v-for="url in picList" :key="url" :src="url.picPath" lazy  style="width: 18%;height: 18%;margin-right: 10px" />
-
+      <PublicImagePreview v-for="url in picList"  :src="url.picPath" :id="url.id" lazy  style="width: 18%;height: 18%;margin-right: 10px" />
 <!--      <el-image v-for="url in imageList" :key="url" :src="url" lazy style="width: 200px;height: 100px"></el-image>-->
     </div>
-    <el-table v-loading="loading" :data="picList" @selection-change="handleSelectionChange" v-show="false">
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="权重" align="center" prop="weight" />
-      <el-table-column label="图片地址" align="center" prop="picPath">
-        <template slot-scope="scope">
-          <ImagePreview :src="scope.row.picPath" width="50%" height="50%" />
-        </template>
-      </el-table-column>
-      <el-table-column label="下载次数" align="center" prop="downloadTimes" />
-    </el-table>
 
     <pagination
       v-show="total>0"
@@ -55,11 +44,13 @@
 <script>
 import {uploadPic, publicPic } from "@/api/pic/pic";
 import PublicImageUpload from "@/components/PublicImageUpload"
+import PublicImagePreview from "@/components/PublicImagePreview"
 
 export default {
   name: "Wall",
   components:{
-    PublicImageUpload
+    PublicImageUpload,
+    PublicImagePreview
   },
   data() {
     return {
@@ -122,9 +113,8 @@ export default {
     setImageList(picList){
       this.imageList = [];
       picList.forEach(item => {
-        return this.imageList.push(process.env.VUE_APP_BASE_API + item.picPath);
+        this.imageList.push(process.env.VUE_APP_BASE_API + item.picPath);
       });
-      return this.imageList;
     },
     // 取消按钮
     cancelUpload() {

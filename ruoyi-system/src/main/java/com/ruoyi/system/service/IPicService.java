@@ -79,4 +79,10 @@ public interface IPicService
      * @return
      */
     public int approveNoPassByIds(Long[] ids) ;
+
+    /**
+     * 图片增加点击数
+     * @param id pic id
+     */
+    void addPicClickNum(Long id);
 }

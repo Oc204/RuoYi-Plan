@@ -35,6 +35,14 @@ export function addPic(data) {
   })
 }
 
+// 添加图片点击数
+export function addPicClickNum(id) {
+  return request({
+    url: '/pic/public/click/' + id,
+    method: 'get',
+  })
+}
+
 // 上传图片(所有用户通用方式)
 export function uploadPic(data) {
   return request({

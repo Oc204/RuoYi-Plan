@@ -18,10 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="approve"    column="approve"    />
         <result property="downloadTimes"    column="download_times"    />
         <result property="isPass"    column="is_pass"    />
+        <result property="clickTimes"    column="click_times"    />
     </resultMap>
 
     <sql id="selectPicVo">
-        select id, user_id, create_by, create_time, update_by, update_time, remark, weight, pic_path, has_delete, approve, download_times, is_pass from pic
+        select id, user_id, create_by, create_time, update_by, update_time, remark, weight, pic_path, has_delete, approve, download_times, is_pass, click_times from pic
     </sql>
 
     <select id="selectPicList" parameterType="Pic" resultMap="PicResult">
@@ -34,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="approve != null "> and approve = #{approve}</if>
             <if test="downloadTimes != null "> and download_times = #{downloadTimes}</if>
             <if test="isPass != null "> and is_pass = #{isPass}</if>
+            <if test="clickTimes != null "> and click_times = #{clickTimes}</if>
         </where>
     </select>
 
@@ -46,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="weight != null "> and weight = #{weight}</if>
             <if test="picPath != null  and picPath != ''"> and pic_path = #{picPath}</if>
             <if test="downloadTimes != null "> and download_times = #{downloadTimes}</if>
+            <if test="clickTimes != null "> and click_times = #{clickTimes}</if>
         </where>
     </select>
     
@@ -69,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="approve != null">approve,</if>
             <if test="downloadTimes != null">download_times,</if>
             <if test="isPass != null">is_pass,</if>
+            <if test="clickTimes != null">click_times,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -83,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="approve != null">#{approve},</if>
             <if test="downloadTimes != null">#{downloadTimes},</if>
             <if test="isPass != null">#{isPass},</if>
+            <if test="clickTimes != null">#{clickTimes},</if>
          </trim>
     </insert>
 
@@ -101,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="approve != null">approve = #{approve},</if>
             <if test="downloadTimes != null">download_times = #{downloadTimes},</if>
             <if test="isPass != null">is_pass = #{isPass},</if>
+            <if test="clickTimes != null">click_times = #{clickTimes},</if>
         </trim>
         where id = #{id}
     </update>
@@ -132,5 +138,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </update>
+
+    <update id="addPicClickNum" parameterType="Long">
+        update pic
+        set click_times = click_times+1
+        where id = #{id}
     </update>
 </mapper>

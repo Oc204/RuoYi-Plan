@@ -42,6 +42,10 @@ public class Pic extends BaseEntity
     @Excel(name = "下载次数")
     private Long downloadTimes;
 
+    /** 点击次数 */
+    @Excel(name = "点击次数")
+    private Long clickTimes;
+
     /** 是否审核通过 1通过 0未通过*/
     @Excel(name = "是否审核通过")
     private Long isPass;
@@ -111,6 +115,14 @@ public class Pic extends BaseEntity
     public void setDownloadTimes(Long downloadTimes)
     {
         this.downloadTimes = downloadTimes;
+    }
+
+    public Long getClickTimes() {
+        return clickTimes;
+    }
+
+    public void setClickTimes(Long clickTimes) {
+        this.clickTimes = clickTimes;
     }
 
     public Long getDownloadTimes()

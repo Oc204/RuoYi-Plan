@@ -128,4 +128,9 @@ public class PicServiceImpl implements IPicService
     public int approveNoPassByIds(Long[] ids) {
         return picMapper.approveNoPassByIds(ids);
     }
+
+    @Override
+    public void addPicClickNum(Long id) {
+        picMapper.addPicClickNum(id) ;
+    }
 }

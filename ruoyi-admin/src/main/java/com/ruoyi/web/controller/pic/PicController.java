@@ -67,6 +67,15 @@ public class PicController extends BaseController
     }
 
     /**
+     * 图片点击事件统计
+     */
+    @GetMapping("/public/click/{id}")
+    public void addPicClickNum(@PathVariable("id")Long id)
+    {
+        picService.addPicClickNum(id);
+    }
+
+    /**
      * 导出图片列表
      */
     @PreAuthorize("@ss.hasPermi('system:pic:export')")
