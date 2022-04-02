@@ -46,9 +46,9 @@
           <el-option label="不通过" value="0"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="下载次数" prop="downloadTimes">
+      <el-form-item label="点击次数" prop="clickTimes">
         <el-input
-          v-model="queryParams.downloadTimes"
+          v-model="queryParams.clickTimes"
           placeholder="请输入下载次数"
           clearable
           size="small"
@@ -181,7 +181,7 @@
           >是</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="下载次数" align="center" prop="downloadTimes" />
+      <el-table-column label="点击次数" align="center" prop="clickTimes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -297,7 +297,7 @@ export default {
         picPath: null,
         hasDelete: null,
         approve: null,
-        downloadTimes: null,
+        clickTimes: null,
         isPass: null,
       },
       // 表单参数
