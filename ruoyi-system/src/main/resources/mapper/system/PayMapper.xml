@@ -41,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 and date_format(pay_date,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectPayListByTime" resultMap="PayResult">
