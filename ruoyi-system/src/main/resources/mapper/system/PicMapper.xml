@@ -37,6 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isPass != null "> and is_pass = #{isPass}</if>
             <if test="clickTimes != null "> and click_times = #{clickTimes}</if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectPicPublicList" parameterType="Pic" resultMap="PicResult">
