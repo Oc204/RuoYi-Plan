@@ -36,6 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="downloadTimes != null "> and download_times = #{downloadTimes}</if>
             <if test="isPass != null "> and is_pass = #{isPass}</if>
             <if test="clickTimes != null "> and click_times = #{clickTimes}</if>
+            <if test="params.clickTimesMin != null  and params.clickTimesMin != ''"> and click_times >= #{params.clickTimesMin}</if>
+            <if test="params.clickTimesMax != null  and params.clickTimesMax != ''"> and click_times &lt;= #{params.clickTimesMax}</if>
         </where>
         order by create_time desc
     </select>

@@ -10,6 +10,26 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="点击次数">
+        <el-input
+          v-model="queryParams.clickTimesMin"
+          placeholder="最小值"
+          clearable
+          size="small"
+          type="number"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>_
+      <el-form-item>
+        <el-input
+          v-model="queryParams.clickTimesMax"
+          placeholder="最大值"
+          clearable
+          size="small"
+          type="number"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="是否删除" prop="hasDelete">
         <el-select
           v-model="queryParams.hasDelete"
@@ -45,15 +65,6 @@
           <el-option label="已通过" value="1"></el-option>
           <el-option label="不通过" value="0"></el-option>
         </el-select>
-      </el-form-item>
-      <el-form-item label="点击次数" prop="clickTimes">
-        <el-input
-          v-model="queryParams.clickTimes"
-          placeholder="请输入下载次数"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -299,6 +310,9 @@ export default {
         approve: null,
         clickTimes: null,
         isPass: null,
+        clickTimesMax:null,
+        clickTimesMin: null
+
       },
       // 表单参数
       form: {},
@@ -314,7 +328,7 @@ export default {
     /** 查询图片列表 */
     getList() {
       this.loading = true;
-      listPic(this.queryParams).then(response => {
+      listPic(this.addClickTimesRange(this.queryParams)).then(response => {
         this.picList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -364,7 +378,9 @@ export default {
         picPath: null,
         hasDelete: null,
         approve: null,
-        downloadTimes: null
+        downloadTimes: null,
+        clickTimesMax:null,
+        clickTimesMin: null
       };
       this.resetForm("form");
     },
@@ -376,6 +392,8 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm("queryForm");
+      this.queryParams.clickTimesMax = null;
+      this.queryParams.clickTimesMin = null
       this.handleQuery();
     },
     // 多选框选中数据
@@ -448,6 +466,15 @@ export default {
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     },
+    // 添加点击范围
+    addClickTimesRange(params) {
+      let search = params;
+      search.params = typeof (search.params) === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {};
+      search.params['clickTimesMin'] = search.clickTimesMin;
+      search.params['clickTimesMax'] = search.clickTimesMax;
+
+      return search;
+    }
   }
 };
 </script>
