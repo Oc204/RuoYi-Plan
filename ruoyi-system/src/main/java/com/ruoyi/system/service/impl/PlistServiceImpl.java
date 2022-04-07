@@ -68,7 +68,11 @@ public class PlistServiceImpl implements IPlistService
         plist.setUserId(SecurityUtils.getUserId());
 
         Plist info = plistMapper.selectPlistById(plist.getParentId());
-        plist.setAncestors(info.getAncestors() + "," + plist.getParentId());
+        if(info!=null){
+            plist.setAncestors(info.getAncestors() + "," + plist.getParentId());
+        }else{
+            plist.setAncestors(plist.getParentId().toString());
+        }
 
         return plistMapper.insertPlist(plist);
     }
