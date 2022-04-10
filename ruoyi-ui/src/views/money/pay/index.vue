@@ -342,7 +342,7 @@ export default {
         ...this.queryParams
       }, `pay_${new Date().getTime()}.xlsx`)
     },
-    // 添加日期范围
+    // 添加支出范围
     addPayRange(params) {
       let search = params;
       search.params = typeof (search.params) === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {};

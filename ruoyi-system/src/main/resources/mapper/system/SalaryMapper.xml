@@ -31,6 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="weight != null "> and weight = #{weight}</if>
             <if test="salaryDate != null "> and salary_date = #{salaryDate}</if>
             <if test="salaryDetail != null "> and salary_detail = #{salaryDetail}</if>
+            <if test="params.salaryMin != null  and params.salaryMin != ''"> and salary_detail >= #{params.salaryMin}</if>
+            <if test="params.salaryMax != null  and params.salaryMax != ''"> and salary_detail &lt;= #{params.salaryMax}</if>
             <if test="salaryPic != null  and salaryPic != ''"> and salary_pic = #{salaryPic}</if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 and date_format(salary_date,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')

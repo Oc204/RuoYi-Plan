@@ -20,13 +20,26 @@
           end-placeholder="结束日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="发薪明细" prop="salaryDetail">
+      <el-form-item label="发薪明细">
         <el-input
-          v-model="queryParams.salaryDetail"
-          placeholder="请输入发薪明细"
+          v-model="queryParams.salaryMin"
+          placeholder="最小值"
           clearable
           size="small"
+          type="number"
+          style="width: 130px"
           @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>_
+      <el-form-item>
+        <el-input
+          v-model="queryParams.salaryMax"
+          placeholder="最大值"
+          clearable
+          size="small"
+          type="number"
+          @keyup.enter.native="handleQuery"
+          style="width: 130px"
         />
       </el-form-item>
       <el-form-item>
@@ -215,7 +228,9 @@ export default {
         weight: null,
         salaryDate: null,
         salaryDetail: null,
-        salaryPic: null
+        salaryPic: null,
+        salaryMin: null,
+        salaryMax: null
       },
       // 表单参数
       form: {},
@@ -234,7 +249,9 @@ export default {
     /** 查询计划列表 */
     getList() {
       this.loading = true;
-      listSalary(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+      this.queryParams = this.addDateRange(this.queryParams, this.dateRange) ;
+
+      listSalary(this.addSalaryRange(this.queryParams)).then(response => {
         this.salaryList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -270,6 +287,8 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.dateRange = [];
+      this.queryParams.salaryMax = null;
+      this.queryParams.salaryMin = null;
       this.resetForm("queryForm");
       this.handleQuery();
     },
@@ -330,6 +349,15 @@ export default {
       this.download('mysalary/salary/export', {
         ...this.queryParams
       }, `salary_${new Date().getTime()}.xlsx`)
+    },
+    // 添加支出范围
+    addSalaryRange(params) {
+      let search = params;
+      search.params = typeof (search.params) === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {};
+      search.params['salaryMin'] = search.salaryMin;
+      search.params['salaryMax'] = search.salaryMax;
+
+      return search;
     }
   }
 };
