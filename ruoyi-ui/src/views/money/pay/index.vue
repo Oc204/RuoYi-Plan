@@ -21,14 +21,15 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item label="支出明细">
-        <el-input
-          v-model="queryParams.payMin"
-          placeholder="最小值"
-          clearable
-          size="small"
-          type="number"
-          @keyup.enter.native="handleQuery"
-        />
+          <el-input
+            v-model="queryParams.payMin"
+            placeholder="最小值"
+            clearable
+            size="small"
+            type="number"
+            style="width: 130px"
+            @keyup.enter.native="handleQuery"
+          />
       </el-form-item>_
       <el-form-item>
         <el-input
@@ -38,6 +39,7 @@
           size="small"
           type="number"
           @keyup.enter.native="handleQuery"
+          style="width: 130px"
         />
       </el-form-item>
       <el-form-item>

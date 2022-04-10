@@ -55,7 +55,7 @@
           placeholder="任务优先级"
           clearable
           size="small"
-          style="width: 240px"
+          style="width: 130px"
         >
           <el-option label="低" value="0"></el-option>
           <el-option label="中" value="1"></el-option>
@@ -68,7 +68,7 @@
           placeholder="完成状态"
           clearable
           size="small"
-          style="width: 240px"
+          style="width: 130px"
         >
           <el-option label="是" value="1"></el-option>
           <el-option label="否" value="0"></el-option>
