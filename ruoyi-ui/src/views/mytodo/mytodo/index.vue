@@ -169,13 +169,6 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <!--          <el-button-->
-          <!--            size="mini"-->
-          <!--            type="text"-->
-          <!--            icon="el-icon-search"-->
-          <!--            @click="handleDetail(scope.row)"-->
-          <!--            v-hasPermi="['mytodo:plist:edit']"-->
-          <!--          >查看详情</el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -263,7 +256,6 @@
                 <el-radio label="1">中</el-radio>
                 <el-radio label="2">高</el-radio>
               </el-radio-group>
-              <!--            <el-input v-model="form.level" placeholder="请输入优先级" />-->
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -272,7 +264,6 @@
                 <el-radio label="0">否</el-radio>
                 <el-radio label="1">是</el-radio>
               </el-radio-group>
-              <!--            <el-input v-model="form.finish" placeholder="请输入是否完成" />-->
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -299,11 +290,9 @@
 </template>
 
 <script>
-
 import { getTask, delTask, addTask, updateTask ,currentTaskList, autoAddTomatoNum} from "@/api/mytodo/task";
 import { settingTomato } from "@/api/mytodo/tomatoSetting";
 import {treeselect } from "@/api/mytodo/plist";
-
 
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
@@ -347,15 +336,20 @@ export default {
       currentTaskId: undefined,
       // 番茄钟
       sys_tomato_length: undefined,
+      // 音乐播放标识
       isMusicPlay: false,
-      str: undefined,
+      // 任务消息弹框
+      taskNotify: undefined,
       num: 0,
-      min: 0,
-      sec: 0,
+      // 用户配置的番茄时间 - 分
+      systemMin: 0,
+      // 用户配置的番茄秒
+      systemSec: 0,
       // 实时分
-      realmin: 0,
+      realMin: 0,
       // 实时秒
-      realsec: 0,
+      realSec: 0,
+      // 计时器
       timer: undefined,
       // 是否展开，默认全部折叠
       isExpandAll: false,
@@ -396,6 +390,7 @@ export default {
   },
   created() {
     this.initData();
+    // 获取清单树
     this.getPlistTreeselect();
   },
   methods: {
@@ -405,11 +400,11 @@ export default {
       this.form.plistId = this.plistId ;
 
       settingTomato().then(response => {
-        this.realmin = this.min= response.data.tomatoTime;
+        this.realmin = this.systemMin= response.data.tomatoTime;
       });
 
-      // this.realmin = this.min = 0 ;
-      // this.realsec = this.sec = 10 ;
+      // this.realmin = this.systemMin = 0 ;
+      // this.realSec = this.systemSec = 10 ;
     },
     // 选择图标
     selected(name) {
@@ -455,13 +450,11 @@ export default {
           if(this.queryParams.plistId === undefined) {
             this.queryParams.plistId = this.pListOptions[0].id ;
             this.currentPlistName = this.pListOptions[0].label ;
-
           }
-          console.log(this.pListOptions);
+          // console.log(this.pListOptions);
         }
         // 进入页面时默认加载第一个plistId的任务列表
         this.getList();
-
       });
     },
     // 取消按钮
@@ -565,40 +558,38 @@ export default {
     handlPlay(flag, row) {
       console.log("currentTaskId:"+ this.currentTaskId+ "rowid"+ row.id) ;
       if(flag){
-
         if(this.currentTaskId == undefined) {
           this.currentTaskId = row.id ;
 
-          this.str = this.$notify({
+          this.taskNotify = this.$notify({
             title: row.taskName + "任务进行中...",
-            message: this.realmin + " : "+ this.realsec,
+            message: this.realmin + " : "+ this.realSec,
             duration: 0,
             position: 'bottom-right',
           });
         } else if (this.currentTaskId != row.id) {
           this.currentTaskId = row.id ;
 
-          this.realmin = this.min ;
-          this.realsec = this.sec ;
-          console.log("切换任务重新开始"+ row.taskName + this.realmin +" : "+ this.realsec + "  this.min :" + this.min);
+          this.realmin = this.systemMin ;
+          this.realSec = this.systemSec ;
+          console.log("切换任务重新开始"+ row.taskName + this.realmin +" : "+ this.realSec + "  this.min :" + this.systemMin);
           clearInterval(this.timer);
         }
 
         this.play = false ;
         this.pause = true ;
-
-        this.str.title =  row.taskName + "任务进行中...";
+        this.taskNotify.title =  row.taskName + "任务进行中...";
 
         this.timer = setInterval(()=>{
-          // console.log("time" + this.realmin + ":" + this.realsec) ;
+          // console.log("time" + this.realmin + ":" + this.realSec) ;
           this.num++ ;
-          if (this.realsec === 0 && this.realmin !== 0) {
-            this.realsec = 59;
+          if (this.realSec === 0 && this.realmin !== 0) {
+            this.realSec = 59;
             this.realmin -= 1;
-          } else if (this.realmin === 0 && this.realsec === 0) {  // 任务自然到时结束
-            this.realsec = 0;
+          } else if (this.realmin === 0 && this.realSec === 0) {  // 任务自然到时结束
+            this.realSec = 0;
             clearInterval(this.timer);
-            this.str.title =  row.taskName + "任务结束";
+            this.taskNotify.title =  row.taskName + "任务结束";
 
             let url = "http://r82n1hcqf.hn-bkt.clouddn.com/Bubble.ogg" ;
             this.playMusic(url) ;
@@ -608,10 +599,10 @@ export default {
 
             // 任务结束番茄数加一
             this.addTomatoNum(row.id);
-            this.realmin = this.min ;
+            this.realmin = this.systemMin ;
           } else {
-            this.realsec -= 1;
-            this.str.message = this.realmin +":" + this.realsec ;
+            this.realSec -= 1;
+            this.taskNotify.message = this.realmin +":" + this.realSec ;
           }
         },1000);
 
@@ -623,18 +614,16 @@ export default {
         this.pause = false ;
 
         clearInterval(this.timer);
-        this.str.title =  row.taskName + "任务暂停";
+        this.taskNotify.title =  row.taskName + "任务暂停";
         console.log("暂停当前任务" + row.taskName);
       }
     },
 
     addTomatoNum(taskId){
       autoAddTomatoNum(taskId , this.realmin).then(response => {
-
       });
     },
     playMusic(url){
-
       let audio = document.querySelector("audio");//在VUE中使用audio标签
       audio.src = url;//设置audio的src为上面生成的url
 
