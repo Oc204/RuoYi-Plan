@@ -86,17 +86,22 @@
 </template>
 
 <script>
-import { listPay, getPay, getAnalysisByYear, listByTime} from "@/api/mypay/pay";
+import { getPay, getAnalysisByYear, listByTime} from "@/api/mypay/pay";
 
 export default {
   name: "payAnalysis",
   data() {
     return {
+      // 支出折线图
       option: "" ,
+      // 月份数组
       month: [] ,
+      // 支出数组
       paySum: [],
+      // 选中的年份
       year: undefined,
-      myChart: "",
+      // 折线图实例
+      lineCharts: "",
       // 计划表格数据
       payList: [],
       // 遮罩层
@@ -155,7 +160,7 @@ export default {
       this.getList(this.year,"");
     },
     showCharts() {
-      this.myChart = this.$echarts.init(document.getElementById('echarts_box'))
+      this.lineCharts = this.$echarts.init(document.getElementById('echarts_box'))
       this.option = {
         title: {
           text: '支出折线图'
@@ -177,17 +182,17 @@ export default {
           }
         ]
       },
-      console.log(this.month)
-      console.log(this.paySum)
-      // 3. 使用刚指定的配置项和数据，显示图表
-      this.myChart.setOption(this.option) ;
+      // console.log(this.month)
+      // console.log(this.paySum)
+      // 使用刚指定的配置项和数据，显示图表
+      this.lineCharts.setOption(this.option) ;
 
       window.addEventListener("resize", () => {
         // 执行echarts自带的resize方法，即可做到让echarts图表自适应
-        this.myChart.resize();
+        this.lineCharts.resize();
       });
 
-      this.myChart.on('click', (params)=> {
+      this.lineCharts.on('click', (params)=> {
         console.log(params.name);
         let data = params.name.split("-");
         this.getList(data[0],data[1]);

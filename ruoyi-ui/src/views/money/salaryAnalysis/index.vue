@@ -12,7 +12,6 @@
       <span> 当年收入总和：{{salaryYearSum}} 元</span>
     </div>
     <div id="echarts_box" style="width: 100%;height: 400px;margin-top: 20px"></div>
-
   </div>
 
 </template>
@@ -25,10 +24,15 @@ export default {
   data() {
     return {
       option: "" ,
+      // 月份数组
       month: [] ,
+      // 收入总和数组
       salarySum: [],
+      // 年搜索条件
       year: undefined,
-      myChart: "",
+      // 折现图实例
+      lineCharts: "",
+      // 当前年收入总和
       salaryYearSum:0
     }
   },
@@ -54,8 +58,7 @@ export default {
 
     },
     showCharts() {
-      this.myChart = this.$echarts.init(document.getElementById('echarts_box'))
-
+      this.lineCharts = this.$echarts.init(document.getElementById('echarts_box'))
       this.option = {
         title: [{
           text: '工资折线图'
@@ -77,20 +80,16 @@ export default {
           }
         ]
       },
-      console.log(this.month)
-      console.log(this.salarySum)
-      // 3. 使用刚指定的配置项和数据，显示图表
-      this.myChart.setOption(this.option)
+      // console.log(this.month)
+      // console.log(this.salarySum)
+      // 使用刚指定的配置项和数据，显示图表
+      this.lineCharts.setOption(this.option)
 
       window.addEventListener("resize", () => {
         // 执行echarts自带的resize方法，即可做到让echarts图表自适应
-        this.myChart.resize();
+        this.lineCharts.resize();
       });
     }
-  },
-  // DOM 渲染完成触发
-  mounted() {
-
   }
 }
 </script>
