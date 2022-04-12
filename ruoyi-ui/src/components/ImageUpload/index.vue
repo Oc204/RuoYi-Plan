@@ -2,6 +2,7 @@
   <div class="component-upload-image">
     <el-upload
       multiple
+      drag
       :action="uploadImgUrl"
       list-type="picture-card"
       :on-success="handleUploadSuccess"
@@ -19,9 +20,9 @@
     >
       <i class="el-icon-plus"></i>
     </el-upload>
-    
+
     <!-- 上传提示 -->
-    <div class="el-upload__tip" slot="tip" v-if="showTip">
+    <div class="el-upload__tip" slot="tip" v-if="showTip" style="margin-top: 55px">
       请上传
       <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
       <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
@@ -208,5 +209,17 @@ export default {
     opacity: 0;
     transform: translateY(0);
 }
+
+::v-deep .el-upload--picture-card{
+  width: 100px;
+  height: 100px;
+}
+
+::v-deep .el-upload-dragger{
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+}
+
 </style>
 
