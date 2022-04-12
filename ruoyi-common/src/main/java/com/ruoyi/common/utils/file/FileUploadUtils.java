@@ -3,6 +3,9 @@ package com.ruoyi.common.utils.file;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.config.RuoYiConfig;
@@ -118,11 +121,15 @@ public class FileUploadUtils
 
     /**
      * 编码文件名
+     * 需要去除特殊符号，否则网页会将特殊符号转义，导致无法正常显示文件
      */
     public static final String extractFilename(MultipartFile file)
     {
+        // 去掉特殊符号
+        String fileName = StringUtils.filterSpecialStr(file.getOriginalFilename()) ;
+
         return StringUtils.format("{}/{}_{}.{}", DateUtils.datePath(),
-                FilenameUtils.getBaseName(file.getOriginalFilename()), Seq.getId(Seq.uploadSeqType), getExtension(file));
+                FilenameUtils.getBaseName(fileName), Seq.getId(Seq.uploadSeqType), getExtension(file));
     }
 
     public static final File getAbsoluteFile(String uploadDir, String fileName) throws IOException
@@ -229,4 +236,5 @@ public class FileUploadUtils
         }
         return extension;
     }
+
 }
