@@ -40,6 +40,7 @@ public class PlistController extends BaseController
      * 查询清单列表
      */
     @PreAuthorize("@ss.hasPermi('mytodo:plist:list')")
+    @Log(title = "清单列表", businessType = BusinessType.SELECT)
     @GetMapping("/list")
     public TableDataInfo list(Plist plist)
     {
@@ -53,6 +54,7 @@ public class PlistController extends BaseController
      */
     @ApiOperation("查询当前登录用户的清单列表")
     @PreAuthorize("@ss.hasPermi('mytodo:plist:list')")
+    @Log(title = "当前登录用户的清单列表", businessType = BusinessType.SELECT)
     @GetMapping("/user/list")
     public AjaxResult currentUserList(Plist plist) {
         plist.setUserId(getUserId());
@@ -64,6 +66,7 @@ public class PlistController extends BaseController
      * 获取清单下拉树列表
      */
     @GetMapping("/treeselect")
+    @Log(title = "清单下拉树", businessType = BusinessType.SELECT)
     public AjaxResult treeselect(Plist plist)
     {
         plist.setUserId(getUserId());
@@ -88,6 +91,7 @@ public class PlistController extends BaseController
      * 获取清单详细信息
      */
     @PreAuthorize("@ss.hasPermi('mytodo:plist:query')")
+    @Log(title = "清单详细", businessType = BusinessType.SELECT)
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
