@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="20">
 
-    <!--部门数据-->
+    <!--清单数据-->
     <el-col :span="4" :xs="24">
       <div class="head-container">
         <el-input
@@ -31,9 +31,6 @@
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
       <el-form-item label="当前列表所属清单:">{{currentPlistName}}
         <audio id="audio"  />
-          <!--        <el-input-->
-        <!--          v-model="this.plistName"-->
-        <!--        />-->
       </el-form-item>
       <el-form-item label="任务名称" prop="taskName">
         <el-input
@@ -212,7 +209,7 @@
       </el-col>
     </el-row>
 
-    <!-- 添加或修改菜单对话框 -->
+    <!-- 添加或修改清单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="680px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-input v-model="form.plistId" v-show="false"></el-input>
@@ -300,7 +297,7 @@ import IconSelect from "@/components/IconSelect";
 import tomatoSetting from "@/views/mytodo/tomatoSetting";
 
 export default {
-  name: "Menu",
+  name: "Mytodo",
   dicts: ['sys_user_sex', 'sys_tomato_length'],
   components: { Treeselect, IconSelect, tomatoSetting},
   data() {
@@ -319,6 +316,7 @@ export default {
       pListOptions: [],
       // 当前任务列表所属清单
       currentPlistName: undefined,
+      // 清单名称
       plistName: undefined,
       defaultProps: {
         children: "children",

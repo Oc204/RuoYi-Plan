@@ -3,9 +3,6 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
       <el-form-item label="当前列表所属清单：">{{plistName}}
 
-<!--        <el-input-->
-<!--          v-model="this.plistName"-->
-<!--        />-->
       </el-form-item>
       <el-form-item label="任务名称" prop="taskName">
         <el-input
@@ -131,13 +128,6 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-search"-->
-<!--            @click="handleDetail(scope.row)"-->
-<!--            v-hasPermi="['system:menu:edit']"-->
-<!--          >查看详情</el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -206,7 +196,6 @@
               <el-radio label="1">中</el-radio>
               <el-radio label="2">高</el-radio>
             </el-radio-group>
-<!--            <el-input v-model="form.level" placeholder="请输入优先级" />-->
           </el-form-item>
           </el-col>
             <el-col :span="24">
@@ -215,7 +204,6 @@
               <el-radio label="0">否</el-radio>
               <el-radio label="1">是</el-radio>
             </el-radio-group>
-<!--            <el-input v-model="form.finish" placeholder="请输入是否完成" />-->
           </el-form-item>
             </el-col>
           <el-col :span="24">
@@ -309,8 +297,7 @@ export default {
       this.plistId = this.$route.query && this.$route.query.plistId ;
       this.form.plistId = this.plistId ;
       this.plistName = this.$route.query && this.$route.query.plistName ;
-      console.log("get plistId" + this.plistId + "  this.plistName: " + this.plistName) ;
-      //this.queryParams.plistId = this.plistId ;
+      // console.log("get plistId" + this.plistId + "  this.plistName: " + this.plistName) ;
     },
     // 选择图标
     selected(name) {
@@ -321,8 +308,7 @@ export default {
       this.loading = true;
       this.queryParams.plistId = this.plistId ;
       currentTaskList(this.queryParams).then(response => {
-
-        console.log("格式化查询数据"+JSON.stringify(this.queryParams)) ;
+        // console.log("格式化查询数据"+JSON.stringify(this.queryParams)) ;
         this.taskList = this.handleTree(response.data, "id");
         this.loading = false;
       });
@@ -371,12 +357,6 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-   // /**查看清单下的任务操作 */
-    // handleDetail(row) {
-    //   this.$router.push({ path: '/order/order-detail/index', query: {
-    //       plistId: row.id
-    //     } });
-    // },
     /** 新增按钮操作 */
     handleAdd(row) {
       this.reset();

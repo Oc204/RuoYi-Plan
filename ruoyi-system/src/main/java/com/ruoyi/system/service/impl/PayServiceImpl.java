@@ -12,7 +12,7 @@ import com.ruoyi.system.domain.Pay;
 import com.ruoyi.system.service.IPayService;
 
 /**
- * 计划Service业务层处理
+ * 支出Service业务层处理
  * 
  * @author ruoyi
  * @date 2022-03-06

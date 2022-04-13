@@ -4,7 +4,6 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="番茄时长" prop="tomatoTime">
-<!--          <el-input v-model="form.tomatoTime" placeholder="请输入番茄时长(最大为60分钟)" />-->
           <el-select v-model="form.tomatoTime" placeholder="请选择番茄时长">
             <el-option
               v-for="item in tomatoOption"
