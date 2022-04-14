@@ -104,7 +104,7 @@ public class TaskServiceImpl implements ITaskService
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int updateTomato(Long taskId, Long timeLong) {
 
         Task task = this.selectTaskById(taskId) ;

@@ -53,7 +53,7 @@ public class PicServiceImpl implements IPicService
      * @return 结果
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int insertPic(Pic pic)
     {
         pic.setCreateTime(DateUtils.getNowDate());
