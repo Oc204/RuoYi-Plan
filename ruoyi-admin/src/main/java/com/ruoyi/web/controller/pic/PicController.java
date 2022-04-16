@@ -112,7 +112,7 @@ public class PicController extends BaseController
     /**
      * 上传图片
      */
-    @Log(title = "图片", businessType = BusinessType.INSERT)
+    @Log(title = "公开图片保存数据库", businessType = BusinessType.INSERT)
     @PostMapping("/public/upload")
     public AjaxResult uploadPic(@RequestBody Pic pic)
     {
@@ -168,6 +168,7 @@ public class PicController extends BaseController
     /**
      * 通用上传请求（单个）
      */
+    @Log(title = "公开图片上传", businessType = BusinessType.INSERT)
     @PostMapping("/public/uploadImage")
     public AjaxResult uploadFile(MultipartFile file) throws Exception
     {
