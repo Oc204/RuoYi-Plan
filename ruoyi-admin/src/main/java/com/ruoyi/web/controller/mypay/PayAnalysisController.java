@@ -22,8 +22,6 @@ import java.util.*;
 @RequestMapping("/mypay/analysis")
 public class PayAnalysisController extends BaseAnalysisController {
 
-    private static final int MONTHNUMBER = 12  ;
-
     @Autowired
     private IPayService payService;
 

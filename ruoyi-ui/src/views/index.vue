@@ -91,7 +91,6 @@
 import { getIndexTomatoStatistics, getIndexTomatoLineCharts, getIndexTomatoPieChartsData} from "@/api/mytodo/tomato";
 
 import LineChart from './dashboard/LineChart'
-import RaddarChart from './dashboard/RaddarChart'
 import PieChart from './dashboard/PieChart'
 import BarChart from './dashboard/BarChart'
 
@@ -99,7 +98,6 @@ export default {
   name: 'Index',
   components: {
     LineChart,
-    RaddarChart,
     PieChart,
     BarChart
   },
