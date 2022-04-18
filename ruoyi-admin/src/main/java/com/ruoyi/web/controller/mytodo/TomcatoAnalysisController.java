@@ -34,6 +34,12 @@ public class TomcatoAnalysisController extends BaseAnalysisController {
     @Autowired
     private ITomatoService tomatoService ;
 
+    /**
+     * 根据查询标识返回对应年份的折线图数据
+     * @param year 年份
+     * @param flag 查询标识
+     * @return
+     */
     @GetMapping("/year/{year}/{flag}")
     public AjaxResult tomatoLine(@PathVariable("year") String year,@PathVariable("flag") String flag){
 
@@ -64,6 +70,11 @@ public class TomcatoAnalysisController extends BaseAnalysisController {
     }
 
 
+    /**
+     * 根据查询标识返回饼图数据
+     * @param flag 查询标识
+     * @return
+     */
     @GetMapping(value = "/index/pieCharts/{flag}")
     public AjaxResult getPieChartsData(@PathVariable("flag") String flag) {
 
