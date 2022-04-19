@@ -106,6 +106,7 @@ public class PicController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Pic pic)
     {
+        pic.setCreateBy(getUsername());
         return toAjax(picService.insertPic(pic));
     }
 
@@ -134,6 +135,7 @@ public class PicController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Pic pic)
     {
+        pic.setUpdateBy(getUsername());
         return toAjax(picService.updatePic(pic));
     }
 
