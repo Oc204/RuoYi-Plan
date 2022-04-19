@@ -1,28 +1,22 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="用户id" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入用户id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="是否删除" prop="hasDelete">
-        <el-input
+        <el-select
           v-model="queryParams.hasDelete"
-          placeholder="请输入是否删除"
+          placeholder="是否删除"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option label="是" value="0"></el-option>
+          <el-option label="否" value="1"></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="使用的地方" prop="usePlace">
+      <el-form-item label="使用位置" prop="usePlace">
         <el-input
           v-model="queryParams.usePlace"
-          placeholder="请输入使用的地方"
+          placeholder="请输入使用位置"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -82,12 +76,23 @@
 
     <el-table v-loading="loading" :data="fileList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="用户id" align="center" prop="userId" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="文件地址" align="center" prop="filePath" />
-      <el-table-column label="是否删除" align="center" prop="hasDelete" />
-      <el-table-column label="使用的地方" align="center" prop="usePlace" />
+      <el-table-column label="是否删除" align="center" prop="hasDelete" >
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.hasDelete === 1 "
+            type="success"
+            size="mini"
+          >否</el-button>
+          <el-button
+            v-else-if="scope.row.hasDelete === 0"
+            type="danger"
+            size="mini"
+          >是</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="使用位置" align="center" prop="usePlace" />
       <el-table-column label="使用类型" align="center" prop="usageType" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -108,7 +113,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -120,20 +125,23 @@
     <!-- 添加或修改文件对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户id" />
+        <el-form-item label="" prop="filePath">
+          <file-upload v-model="form.filePath"></file-upload>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
-        <el-form-item label="文件地址" prop="filePath">
-          <el-input v-model="form.filePath" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
         <el-form-item label="是否删除" prop="hasDelete">
-          <el-input v-model="form.hasDelete" placeholder="请输入是否删除" />
+          <el-radio-group v-model="form.hasDelete">
+            <el-radio :label=0>是</el-radio>
+            <el-radio :label=1>否</el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="使用的地方" prop="usePlace">
-          <el-input v-model="form.usePlace" placeholder="请输入使用的地方" />
+        <el-form-item label="使用位置" prop="usePlace">
+          <el-input v-model="form.usePlace" placeholder="请输入使用位置" />
+        </el-form-item>
+        <el-form-item label="使用类型" prop="usageType">
+          <el-input v-model="form.usageType" placeholder="请输入使用类型" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -149,6 +157,13 @@ import { listFile, getFile, delFile, addFile, updateFile } from "@/api/system/fi
 
 export default {
   name: "File",
+  props: {
+    // 文件数量限制
+    limit: {
+      type: Number,
+      default: 1,
+    },
+  },
   data() {
     return {
       // 遮罩层
@@ -173,7 +188,6 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        userId: null,
         filePath: null,
         hasDelete: null,
         usePlace: null,

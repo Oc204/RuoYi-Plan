@@ -77,6 +77,7 @@ public class FileController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody File file)
     {
+        file.setCreateBy(getUsername());
         return toAjax(fileService.insertFile(file));
     }
 
@@ -88,6 +89,7 @@ public class FileController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody File file)
     {
+        file.setUpdateBy(getUsername());
         return toAjax(fileService.updateFile(file));
     }
 

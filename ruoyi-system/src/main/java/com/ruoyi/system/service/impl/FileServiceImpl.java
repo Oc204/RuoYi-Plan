@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.FileMapper;
@@ -54,6 +55,7 @@ public class FileServiceImpl implements IFileService
     public int insertFile(File file)
     {
         file.setCreateTime(DateUtils.getNowDate());
+        file.setUserId(SecurityUtils.getUserId());
         return fileMapper.insertFile(file);
     }
 
@@ -67,6 +69,7 @@ public class FileServiceImpl implements IFileService
     public int updateFile(File file)
     {
         file.setUpdateTime(DateUtils.getNowDate());
+//        file.setUpdateBy(SecurityUtils.getUserId().toString());
         return fileMapper.updateFile(file);
     }
 
