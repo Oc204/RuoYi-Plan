@@ -76,7 +76,11 @@
 
     <el-table v-loading="loading" :data="fileList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="备注" align="center" prop="remark" />
+      <el-table-column label="序号" align="center" width="55">
+        <template scope="scope">
+          <span>{{(queryParams.pageNum-1)*queryParams.pageSize+(scope.$index + 1)}} </span>
+        </template>
+      </el-table-column>
       <el-table-column label="文件地址" align="center" prop="filePath" />
       <el-table-column label="是否删除" align="center" prop="hasDelete" >
         <template slot-scope="scope">
@@ -94,6 +98,7 @@
       </el-table-column>
       <el-table-column label="使用位置" align="center" prop="usePlace" />
       <el-table-column label="使用类型" align="center" prop="usageType" />
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
