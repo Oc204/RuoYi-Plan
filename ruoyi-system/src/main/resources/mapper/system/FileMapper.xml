@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.FileMapper">
+    
+    <resultMap type="File" id="FileResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="hasDelete"    column="has_delete"    />
+        <result property="usePlace"    column="use_place"    />
+        <result property="usageType"    column="usage_type"    />
+    </resultMap>
+
+    <sql id="selectFileVo">
+        select id, user_id, create_by, create_time, update_by, update_time, remark, file_path, has_delete, use_place, usage_type from file
+    </sql>
+
+    <select id="selectFileList" parameterType="File" resultMap="FileResult">
+        <include refid="selectFileVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="hasDelete != null "> and has_delete = #{hasDelete}</if>
+            <if test="usePlace != null  and usePlace != ''"> and use_place = #{usePlace}</if>
+            <if test="usageType != null  and usageType != ''"> and usage_type = #{usageType}</if>
+        </where>
+    </select>
+    
+    <select id="selectFileById" parameterType="Long" resultMap="FileResult">
+        <include refid="selectFileVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFile" parameterType="File" useGeneratedKeys="true" keyProperty="id">
+        insert into file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="hasDelete != null">has_delete,</if>
+            <if test="usePlace != null">use_place,</if>
+            <if test="usageType != null">usage_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="hasDelete != null">#{hasDelete},</if>
+            <if test="usePlace != null">#{usePlace},</if>
+            <if test="usageType != null">#{usageType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFile" parameterType="File">
+        update file
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="hasDelete != null">has_delete = #{hasDelete},</if>
+            <if test="usePlace != null">use_place = #{usePlace},</if>
+            <if test="usageType != null">usage_type = #{usageType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFileById" parameterType="Long">
+        delete from file where id = #{id}
+    </delete>
+
+    <delete id="deleteFileByIds" parameterType="String">
+        delete from file where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
