@@ -119,7 +119,13 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column label="任务名称" align="center" prop="taskName" />
-      <el-table-column label="番茄数" align="center" prop="tomatoNumber" />
+      <el-table-column label="番茄数" align="center" prop="tomatoNumber">
+          <template slot-scope="scope">
+            <i class="el-icon-alarm-clock" style="color: #00afff">
+            <span>{{scope.row.tomatoNumber}}</span>
+            </i>
+          </template>
+      </el-table-column>.
       <el-table-column label="到期日" align="center" prop="dueDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.dueDate, '{y}-{m}-{d}') }}</span>
