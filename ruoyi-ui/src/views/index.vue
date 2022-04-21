@@ -69,7 +69,7 @@
 
       <el-card >
         <el-date-picker
-          v-model="lineChartYear"
+          v-model="chartSelectYear"
           type="year"
           value-format="yyyy"
           placeholder="选择年"
@@ -103,9 +103,11 @@ export default {
   },
   data() {
     return {
-      // 番茄时长曲线图选中的值
-      lineChartYear: undefined,
+      // 番茄时长曲线图选中的年份值
+      chartSelectYear: undefined,
+      // 折线图纵坐标时间总和数据
       lineChartSum: [],
+      // 折线图横坐标日期数据
       lineChartTime: [] ,
       // 累计专注时间
       totalTime: 0,
@@ -187,7 +189,7 @@ export default {
       // 默认获取当年数据
       flag = flag === undefined ? "YEAR" : flag ;
 
-      getIndexTomatoLineCharts(this.lineChartYear,flag).then(response =>{
+      getIndexTomatoLineCharts(this.chartSelectYear,flag).then(response =>{
         let count = response.data.time.length ;
         this.lineChartSum = [] ;
         this.lineChartTime = [] ;
