@@ -418,7 +418,7 @@ export default {
     getList() {
       this.loading = true;
       //this.queryParams.plistId = this.plistId ;
-      console.log(this.queryParams) ;
+      // console.log(this.queryParams) ;
       currentTaskList(this.queryParams).then(response => {
         console.log("格式化查询数据"+JSON.stringify(this.queryParams)) ;
         this.taskList = this.handleTree(response.data, "id");
@@ -507,8 +507,8 @@ export default {
         this.form.parentId = 0;
       }
       this.form.plistId = this.queryParams.plistId ;
-      console.log("this.queryParams.plistId" + this.queryParams.plistId) ;
-      console.log("this.plistId" + this.plistId) ;
+      // console.log("this.queryParams.plistId" + this.queryParams.plistId) ;
+      // console.log("this.plistId" + this.plistId) ;
       this.open = true;
       this.title = "添加任务";
     },
@@ -590,7 +590,7 @@ export default {
           if (this.realSec === 0 && this.realmin !== 0) {
             this.realSec = 59;
             this.realmin -= 1;
-          } else if (this.realmin === 0 && this.realSec === 0) {  // 任务自然到时结束
+          } else if (this.realmin === 0 && this.realSec === 0) {  // 任务时间到，自然结束
             this.realSec = 0;
             clearInterval(this.timer);
             this.taskNotify.title =  row.taskName + "任务结束";
@@ -619,10 +619,9 @@ export default {
 
         clearInterval(this.timer);
         this.taskNotify.title =  row.taskName + "任务暂停";
-        console.log("暂停当前任务" + row.taskName);
+        // console.log("暂停当前任务" + row.taskName);
       }
     },
-
     addTomatoNum(taskId){
       autoAddTomatoNum(taskId , this.realmin).then(response => {
       });
