@@ -27,6 +27,9 @@ function start()
 	    echo "$AppName is running..."
 	else
 		nohup java $JVM_OPTS -jar $AppName --spring.profiles.active=prod &
+
+		PID=`ps -ef |grep java|grep $AppName|grep -v grep|awk '{print $2}'`
+    echo $PID
 		echo "Start $AppName success..."
 	fi
 }
