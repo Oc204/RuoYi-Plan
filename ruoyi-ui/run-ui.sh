@@ -7,4 +7,4 @@ npm install --registry=https://registry.npm.taobao.org
 npm run build:prod
 
 ## 移动到指定文件夹让nginx读取
-\cp -r /home/project/ruo-yi-plan/ruoyi-ui/dist /home/project/ruo-yi-plan-ui
+\cp -r ${WORKSAPCE}/ruoyi-ui/dist /home/project/ruo-yi-plan-ui
