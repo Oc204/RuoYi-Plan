@@ -26,7 +26,7 @@ function start()
 	if [ x"$PID" != x"" ]; then
 	    echo "$AppName is running..."
 	else
-		nohup java $JVM_OPTS -jar $AppName --spring.profiles.active=prod &&
+		nohup java $JVM_OPTS -jar $AppName --spring.profiles.active=prod > ruoyi-plan-admin.log 2>&1 &
 
 		PID=`ps -ef |grep java|grep $AppName|grep -v grep|awk '{print $2}'`
     echo $PID
