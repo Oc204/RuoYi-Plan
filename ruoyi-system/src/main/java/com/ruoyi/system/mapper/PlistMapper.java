@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import com.ruoyi.common.core.domain.entity.Plist;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -72,5 +74,5 @@ public interface PlistMapper
      * @param children
      * @return
      */
-    public int updatePlistChildren(List<Plist> children);
+    public int updatePlistChildren(@Param("plist") List<Plist> children);
 }

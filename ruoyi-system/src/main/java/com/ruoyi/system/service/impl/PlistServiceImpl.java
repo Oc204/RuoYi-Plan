@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.PlistMapper;
 import com.ruoyi.system.service.IPlistService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 清单Service业务层处理
@@ -84,6 +85,7 @@ public class PlistServiceImpl implements IPlistService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updatePlist(Plist plist)
     {
         plist.setUpdateTime(DateUtils.getNowDate());
