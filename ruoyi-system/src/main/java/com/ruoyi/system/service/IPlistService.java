@@ -75,4 +75,11 @@ public interface IPlistService
      * @return
      */
     List<TreeSelect> buildPlistTreeSelect(List<Plist> result);
+
+    /**
+     * 校验清单名称是否唯一
+     * @param plist 清单实体
+     * @return
+     */
+    String checkPlistNameUnique(Plist plist);
 }

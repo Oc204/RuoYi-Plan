@@ -128,4 +128,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{item.id}
         </foreach>
     </update>
+
+    <select id="checkPlistNameUnique" parameterType="Plist" resultMap="PlistResult">
+        <include refid="selectPlistVo"/>
+        where list_Name=#{listName} and parent_id = #{parentId} limit 1
+    </select>
 </mapper>

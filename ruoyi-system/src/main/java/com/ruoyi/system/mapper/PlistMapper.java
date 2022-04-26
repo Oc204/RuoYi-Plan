@@ -1,6 +1,7 @@
 package com.ruoyi.system.mapper;
 
 import com.ruoyi.common.core.domain.entity.Plist;
+import com.ruoyi.common.core.domain.entity.SysMenu;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -75,4 +76,12 @@ public interface PlistMapper
      * @return
      */
     public int updatePlistChildren(@Param("plist") List<Plist> children);
+
+    /**
+     * 校验清单名称是否唯一
+     * @param listName 清单名称
+     * @param parentId 父ID
+     * @return
+     */
+    Plist checkPlistNameUnique(@Param("listName") String listName,@Param("parentId")  Long parentId);
 }

@@ -3,6 +3,8 @@ package com.ruoyi.web.controller.mytodo;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.utils.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +120,14 @@ public class PlistController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Plist plist)
     {
+        if (UserConstants.NOT_UNIQUE.equals(plistService.checkPlistNameUnique(plist)))
+        {
+            return AjaxResult.error("修改清单'" + plist.getListName() + "'失败，清单名称已存在");
+        }
+        else if (plist.getId().equals(plist.getParentId()))
+        {
+            return AjaxResult.error("修改清单'" + plist.getListName() + "'失败，上级清单不能选择自己");
+        }
         plist.setUpdateBy(getUsername());
         return toAjax(plistService.updatePlist(plist));
     }

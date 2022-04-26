@@ -9,6 +9,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.TreeSelect;
 import com.ruoyi.common.core.domain.entity.Plist;
 import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.DateUtils;
@@ -177,6 +178,17 @@ public class PlistServiceImpl implements IPlistService
 
         List<Plist> deptTrees = buildPlistTree(result);
         return deptTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public String checkPlistNameUnique(Plist plist) {
+        Long id = StringUtils.isNull(plist.getId()) ? -1L : plist.getId();
+        Plist info = plistMapper.checkPlistNameUnique(plist.getListName(), plist.getParentId());
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != id.longValue())
+        {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
     }
 
     /**
