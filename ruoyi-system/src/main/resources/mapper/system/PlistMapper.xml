@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <select id="selectChildrenPlisttById" parameterType="Long" resultMap="PlistResult">
+    <select id="selectChildrenPlistById" parameterType="Long" resultMap="PlistResult">
         select * from plist where find_in_set(#{id}, ancestors)
     </select>
         
