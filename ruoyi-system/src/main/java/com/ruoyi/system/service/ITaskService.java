@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.Plist;
 import com.ruoyi.system.domain.Task;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,4 +69,11 @@ public interface ITaskService
      * @return
      */
     public int updateTomato(Long taskId , Long timeLong);
+
+    /**
+     * 校验任务名称是否唯一
+     * @param task 任务实体
+     * @return
+     */
+    String checkTaskNameUnique(Task task);
 }

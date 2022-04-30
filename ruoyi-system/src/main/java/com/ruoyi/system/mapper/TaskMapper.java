@@ -1,7 +1,10 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.Plist;
 import com.ruoyi.system.domain.Task;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 任务Mapper接口
@@ -58,4 +61,12 @@ public interface TaskMapper
      * @return 结果
      */
     public int deleteTaskByIds(Long[] ids);
+
+    /**
+     * 校验任务名称是否唯一
+     * @param taskName 任务名称
+     * @param parentId 父ID
+     * @return
+     */
+    Task checkTaskNameUnique(@Param("taskName") String taskName, @Param("parentId")  Long parentId);
 }

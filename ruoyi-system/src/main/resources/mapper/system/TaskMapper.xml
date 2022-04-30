@@ -115,4 +115,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="checkTaskNameUnique" parameterType="Task" resultMap="TaskResult">
+        <include refid="selectTaskVo"/>
+        where task_name=#{taskName} and parent_id = #{parentId} limit 1
+    </select>
 </mapper>

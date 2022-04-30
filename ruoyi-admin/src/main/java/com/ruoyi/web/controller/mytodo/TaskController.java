@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.mytodo;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.constant.UserConstants;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,9 @@ public class TaskController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Task task)
     {
+        if(UserConstants.NOT_UNIQUE.equals(taskService.checkTaskNameUnique(task))){
+            return AjaxResult.error("新增任务'" + task.getTaskName() + "'失败，任务名称已存在");
+        }
         task.setCreateBy(getUsername());
         return toAjax(taskService.insertTask(task));
     }
@@ -96,6 +100,9 @@ public class TaskController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody Task task)
     {
+        if(UserConstants.NOT_UNIQUE.equals(taskService.checkTaskNameUnique(task))){
+            return AjaxResult.error("修改任务'" + task.getTaskName() + "'失败，任务名称已存在");
+        }
         task.setUpdateBy(getUsername());
         return toAjax(taskService.updateTask(task));
     }

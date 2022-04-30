@@ -1,8 +1,12 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.core.domain.entity.Plist;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.Tomato;
 import com.ruoyi.system.service.ITomatoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,5 +127,17 @@ public class TaskServiceImpl implements ITaskService
         this.updateTask(task) ;
 
         return this.updateTask(task);
+    }
+
+    @Override
+    public String checkTaskNameUnique(Task task) {
+
+        Long id = StringUtils.isNull(task.getId()) ? -1L : task.getId();
+        Task info = taskMapper.checkTaskNameUnique(task.getTaskName(), task.getParentId());
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != id.longValue())
+        {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
     }
 }
