@@ -108,6 +108,10 @@ public class PlistController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Plist plist)
     {
+        if (UserConstants.NOT_UNIQUE.equals(plistService.checkPlistNameUnique(plist)))
+        {
+            return AjaxResult.error("新增清单'" + plist.getListName() + "'失败，清单名称已存在");
+        }
         plist.setCreateBy(getUsername());
         return toAjax(plistService.insertPlist(plist));
     }
