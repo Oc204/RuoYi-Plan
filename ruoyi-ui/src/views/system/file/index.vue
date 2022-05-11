@@ -35,6 +35,16 @@
           plain
           icon="el-icon-plus"
           size="mini"
+          @click="handleAddBigFile"
+          v-hasPermi="['system:file:add']"
+        >大文件上传</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
           @click="handleAdd"
           v-hasPermi="['system:file:add']"
         >新增</el-button>
@@ -154,6 +164,34 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 添加或修改文件对话框 -->
+    <el-dialog :title="title" :visible.sync="openAddBigFile" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="" prop="filePath">
+          <big-file-upload v-model="form.filePath"></big-file-upload>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" placeholder="请输入备注" />
+        </el-form-item>
+        <el-form-item label="是否删除" prop="hasDelete">
+          <el-radio-group v-model="form.hasDelete">
+            <el-radio :label=0>是</el-radio>
+            <el-radio :label=1>否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="使用位置" prop="usePlace">
+          <el-input v-model="form.usePlace" placeholder="请输入使用位置" />
+        </el-form-item>
+        <el-form-item label="使用类型" prop="usageType">
+          <el-input v-model="form.usageType" placeholder="请输入使用类型" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -189,6 +227,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示大文件上传弹出层
+      openAddBigFile: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -261,6 +301,12 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加文件";
+    },
+    /** 新增大文件按钮操作 */
+    handleAddBigFile() {
+      this.reset();
+      this.openAddBigFile = true;
+      this.title = "添加大文件文件";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
