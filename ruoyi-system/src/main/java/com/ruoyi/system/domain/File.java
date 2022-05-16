@@ -38,6 +38,18 @@ public class File extends BaseEntity
     @Excel(name = "使用类型")
     private String usageType;
 
+    /** 文件大小*/
+    @Excel(name = "文件大小")
+    private Long totalSize;
+
+    public Long getTotalSize() {
+        return totalSize;
+    }
+
+    public void setTotalSize(Long totalSize) {
+        this.totalSize = totalSize;
+    }
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -95,18 +107,14 @@ public class File extends BaseEntity
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .append("filePath", getFilePath())
-            .append("hasDelete", getHasDelete())
-            .append("usePlace", getUsePlace())
-            .append("usageType", getUsageType())
-            .toString();
+        return "File{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", filePath='" + filePath + '\'' +
+                ", hasDelete=" + hasDelete +
+                ", usePlace='" + usePlace + '\'' +
+                ", usageType='" + usageType + '\'' +
+                ", totalSize=" + totalSize +
+                '}';
     }
 }

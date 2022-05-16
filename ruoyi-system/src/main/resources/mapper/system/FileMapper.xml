@@ -16,10 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="hasDelete"    column="has_delete"    />
         <result property="usePlace"    column="use_place"    />
         <result property="usageType"    column="usage_type"    />
+        <result property="totalSize"    column="total_size"    />
     </resultMap>
 
     <sql id="selectFileVo">
-        select id, user_id, create_by, create_time, update_by, update_time, remark, file_path, has_delete, use_place, usage_type from file
+        select id, user_id, create_by, create_time, update_by, update_time, remark, file_path, has_delete, use_place, usage_type, total_size from file
     </sql>
 
     <select id="selectFileList" parameterType="File" resultMap="FileResult">
@@ -51,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasDelete != null">has_delete,</if>
             <if test="usePlace != null">use_place,</if>
             <if test="usageType != null">usage_type,</if>
+            <if test="totalSize != null">total_size,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -63,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasDelete != null">#{hasDelete},</if>
             <if test="usePlace != null">#{usePlace},</if>
             <if test="usageType != null">#{usageType},</if>
+            <if test="totalSize != null">#{totalSize},</if>
          </trim>
     </insert>
 
@@ -79,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="hasDelete != null">has_delete = #{hasDelete},</if>
             <if test="usePlace != null">use_place = #{usePlace},</if>
             <if test="usageType != null">usage_type = #{usageType},</if>
+            <if test="totalSize != null">total_size = #{totalSize},</if>
         </trim>
         where id = #{id}
     </update>
