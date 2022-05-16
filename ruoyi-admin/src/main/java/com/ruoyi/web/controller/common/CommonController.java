@@ -1,9 +1,18 @@
 package com.ruoyi.web.controller.common;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.domain.File;
+import com.ruoyi.system.domain.dto.ChunkInfo;
+import com.ruoyi.system.domain.vo.FileInfoVO;
+import com.ruoyi.system.service.IChunkInfoService;
+import com.ruoyi.system.service.IFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +43,12 @@ public class CommonController
 
     @Autowired
     private ServerConfig serverConfig;
+
+    @Autowired
+    private IChunkInfoService chunkInfoService ;
+
+    @Autowired
+    private IFileService fileService ;
 
     private static final String FILE_DELIMETER = ",";
 
@@ -160,4 +175,67 @@ public class CommonController
             log.error("下载文件失败", e);
         }
     }
+
+    @PostMapping("/chunk")
+    public AjaxResult uploadChunk(ChunkInfo chunkInfo){
+
+        String result = "200" ;
+        MultipartFile file = chunkInfo.getUpfile() ;
+        log.info("file originName: {}, chunkNumber: {}", file.getOriginalFilename(), chunkInfo.getChunkNumber());
+
+        try{
+            byte[] bytes = file.getBytes() ;
+            Path path = Paths.get(FileInfoUtils.generatePath(RuoYiConfig.getUploadPath(), chunkInfo)) ;
+
+            Files.write(path, bytes) ;
+            if(chunkInfoService.insertChunkInfo(chunkInfo) < 0) {
+                result = "415" ;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            result = "415";
+        }
+
+        return AjaxResult.success(result) ;
+    }
+
+    @PostMapping("/mergeFile")
+    public AjaxResult mergeFile(FileInfoVO fileInfoVO){
+
+        String result = "FALURE" ;
+
+        File file = new File() ;
+        file.setFilePath(fileInfoVO.getRelativePath());
+//        file.setId(fileInfoVO.getId());
+        // todo 记录文件大小
+//        file.setTotalSize(fileInfoVO.getSize());
+
+        // 进行文件合并操作
+        String fileName = fileInfoVO.getName() ;
+        String fileLocat = RuoYiConfig.getUploadPath() + "/" + fileInfoVO.getUniqueIdentifier() + "/" + fileName ;
+        String folder = RuoYiConfig.getUploadPath() + "/" + fileInfoVO.getUniqueIdentifier() ;
+        String fileSuccess = FileInfoUtils.merge(fileLocat, folder, fileName) ;
+
+        if ("200".equals(fileSuccess)) {
+            if (fileService.insertFile(file) > 0){
+                result = "SUCCESS" ;
+            }
+        }
+
+        //如果已经存在，则判断是否同一个项目，同一个项目的不用新增记录，否则新增
+        if("300".equals(fileSuccess)) {
+            List<File> fileList = fileService.selectFileList(file) ;
+            if(fileList != null) {
+                if(fileList.size() == 0 ){
+                    if(fileService.insertFile(file) > 0){
+                        result = "SUCCESS" ;
+                    }
+                }
+            }
+
+        }
+
+        return AjaxResult.success(result) ;
+    }
 }
+

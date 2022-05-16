@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ChunkInfoMapper">
+    
+    <resultMap type="ChunkInfo" id="ChunkInfoResult">
+        <result property="id"    column="id"    />
+        <result property="chunkNumber"    column="chunk_number"    />
+        <result property="chunkSize"    column="chunk_size"    />
+        <result property="currentChunksize"    column="current_chunkSize"    />
+        <result property="identifier"    column="identifier"    />
+        <result property="filename"    column="filename"    />
+        <result property="relativePath"    column="relative_path"    />
+        <result property="totalChunks"    column="total_chunks"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectChunkInfoVo">
+        select id, chunk_number, chunk_size, current_chunkSize, identifier, filename, relative_path, total_chunks, type from chunk_info
+    </sql>
+
+    <select id="selectChunkInfoList" parameterType="ChunkInfo" resultMap="ChunkInfoResult">
+        <include refid="selectChunkInfoVo"/>
+        <where>  
+            <if test="chunkNumber != null "> and chunk_number = #{chunkNumber}</if>
+            <if test="chunkSize != null "> and chunk_size = #{chunkSize}</if>
+            <if test="currentChunksize != null "> and current_chunkSize = #{currentChunksize}</if>
+            <if test="identifier != null  and identifier != ''"> and identifier = #{identifier}</if>
+            <if test="filename != null  and filename != ''"> and filename like concat('%', #{filename}, '%')</if>
+            <if test="relativePath != null  and relativePath != ''"> and relative_path = #{relativePath}</if>
+            <if test="totalChunks != null "> and total_chunks = #{totalChunks}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectChunkInfoById" parameterType="String" resultMap="ChunkInfoResult">
+        <include refid="selectChunkInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChunkInfo" parameterType="ChunkInfo">
+        insert into chunk_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="chunkNumber != null">chunk_number,</if>
+            <if test="chunkSize != null">chunk_size,</if>
+            <if test="currentChunksize != null">current_chunkSize,</if>
+            <if test="identifier != null and identifier != ''">identifier,</if>
+            <if test="filename != null">filename,</if>
+            <if test="relativePath != null and relativePath != ''">relative_path,</if>
+            <if test="totalChunks != null">total_chunks,</if>
+            <if test="type != null">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="chunkNumber != null">#{chunkNumber},</if>
+            <if test="chunkSize != null">#{chunkSize},</if>
+            <if test="currentChunksize != null">#{currentChunksize},</if>
+            <if test="identifier != null and identifier != ''">#{identifier},</if>
+            <if test="filename != null">#{filename},</if>
+            <if test="relativePath != null and relativePath != ''">#{relativePath},</if>
+            <if test="totalChunks != null">#{totalChunks},</if>
+            <if test="type != null">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChunkInfo" parameterType="ChunkInfo">
+        update chunk_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="chunkNumber != null">chunk_number = #{chunkNumber},</if>
+            <if test="chunkSize != null">chunk_size = #{chunkSize},</if>
+            <if test="currentChunksize != null">current_chunkSize = #{currentChunksize},</if>
+            <if test="identifier != null and identifier != ''">identifier = #{identifier},</if>
+            <if test="filename != null">filename = #{filename},</if>
+            <if test="relativePath != null and relativePath != ''">relative_path = #{relativePath},</if>
+            <if test="totalChunks != null">total_chunks = #{totalChunks},</if>
+            <if test="type != null">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChunkInfoById" parameterType="String">
+        delete from chunk_info where id = #{id}
+    </delete>
+
+    <delete id="deleteChunkInfoByIds" parameterType="String">
+        delete from chunk_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
