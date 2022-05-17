@@ -42,3 +42,12 @@ export function delFile(id) {
     method: 'delete'
   })
 }
+
+// 删除文件
+export function mergeFile(data) {
+  return request({
+    url: '/common/mergeFile',
+    method: 'post',
+    data: data
+  })
+}
