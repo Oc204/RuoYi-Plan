@@ -236,6 +236,9 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.2.1</version>
                 <configuration>
+                    <container>
+                        <mainClass>com.ruoyi.RuoYiApplication</mainClass>
+                    </container>
                     <!--from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字-->
                     <from>
                         <!--使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8-->
