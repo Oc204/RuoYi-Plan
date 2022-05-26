@@ -261,7 +261,7 @@
 <!--                            <port>8080</port>-->
 <!--                        </ports>-->
                         <!--使用该参数将镜像的创建时间与系统时间对其-->
-                        <useCurrentTimestamp>true</useCurrentTimestamp>
+<!--                        <useCurrentTimestamp>true</useCurrentTimestamp>-->
                     </container>
                 </configuration>
             </plugin>
